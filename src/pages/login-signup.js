@@ -1,851 +1,777 @@
-import React, { useState, useRef } from 'react';
-import ReCAPTCHA from "react-google-recaptcha"; 
+'use client';
 
-function LoginSignup() {
+import { useState } from 'react';
+
+// --- PLACEHOLDER DASHBOARDS ---
+// Ye components sirf dikhane ke liye hain, jab aap asli dashboard banayenge tab inhein hata dena
+const ClientDashboard = () => (
+  <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="text-center p-5 shadow bg-white rounded">
+      <h1 className="text-primary">🏛️ Client Dashboard</h1>
+      <p className="lead">Welcome! You have successfully logged in.</p>
+    </div>
+  </div>
+);
+
+const AttorneyDashboard = () => (
+  <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="text-center p-5 shadow bg-white rounded">
+      <h1 className="text-warning text-dark">⚖️ Attorney Dashboard</h1>
+    </div>
+  </div>
+);
+
+const AdminDashboard = () => (
+  <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="text-center p-5 shadow bg-white rounded">
+      <h1 className="text-danger">💼 Admin Dashboard</h1>
+    </div>
+  </div>
+);
+
+// --- MAIN COMPONENT START ---
+// Yahan "export default" likhna zaroori hai tabhi Next.js isey pehchanega
+export default function UnifiedAuthPage() {
   
-  // --- UI STATE ---
-  const [authMode, setAuthMode] = useState('login'); // 'login', 'signup', 'forgot'
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  // --- STATES ---
+  const [activeTab, setActiveTab] = useState('Client'); // Default: Client
+  const [view, setView] = useState('login'); // 'login' or 'signup'
+  const [step, setStep] = useState(1); // 1 = Basic Info, 2 = Profile & KYC
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Messages
+  const [error, setError] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
-  // --- RECAPTCHA STATE ---
-  const [captchaToken, setCaptchaToken] = useState(null);
-  const recaptchaRef = useRef(null);
-
-  // ============================================================
-  // --- 1. SIGN IN DATA (Excel Requirement: Email/Phone/Username, Password)
-  // ============================================================
-  const [loginData, setLoginData] = useState({ 
-    identifier: '', // Single field for Email, Phone, or Username
-    password: '' 
+  // --- FORM DATA STATE ---
+  const [formData, setFormData] = useState({
+    firstName: '', lastName: '', email: '', password: '', repeatPassword: '', captcha: '',
+    street: '', apt: '', city: '', state: '', country: '', zip: '',
+    countryCode: '+91', phone: '', dob: '',
+    terms: false
   });
 
-  // ============================================================
-  // --- 2. SIGNUP DATA (Excel Requirement: FN, LN, Code, Phone, Email, Pass, Verify Pass)
-  // ============================================================
-  const [signupData, setSignupData] = useState({ 
-    firstName: '', 
-    lastName: '', 
-    countryCode: '+91', 
-    phone: '', 
-    email: '', 
-    password: '', 
-    verifyPassword: '' 
-  });
-
-  // ============================================================
-  // --- 3. FORGOT PASS DATA (Excel Requirement: Email, Phone/WhatsApp Enabled)
-  // ============================================================
-  const [forgotData, setForgotData] = useState({ 
-    email: '', 
-    whatsappEnabled: false // Checkbox logic
-  });
-
-  // --- ERROR STATE ---
-  const [errors, setErrors] = useState({});
-
-  // --- THEME COLORS ---
-  const theme = {
-    primaryBlue: '#002855',
-    accentGold: '#de9f57', 
-    white: '#ffffff',
-    errorRed: '#dc3545'
-  };
-
-  // --- HANDLERS ---
-  const handleLoginChange = (e) => setLoginData({ ...loginData, [e.target.name]: e.target.value });
-  
-  const handleSignupChange = (e) => setSignupData({ ...signupData, [e.target.name]: e.target.value });
-  
-  const handleForgotChange = (e) => {
-    // Checkbox handle karne ke liye logic
+  // Handle Inputs
+  const handleInput = (e) => {
     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    setForgotData({ ...forgotData, [e.target.name]: value });
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
-  // Google Captcha Handler
-  const onCaptchaChange = (token) => {
-    setCaptchaToken(token);
-    if (token) setErrors(prev => ({ ...prev, captcha: null }));
+  // Switch Tabs
+  const handleTabSwitch = (tab) => {
+    setActiveTab(tab);
+    setView('login');
+    setStep(1);
+    setError('');
+    setSuccessMsg('');
   };
 
-  // --- SUBMIT LOGIC ---
+  // --- ACTIONS ---
 
-  const handleLoginSubmit = (e) => {
+  // 1. LOGIN
+  const handleLogin = (e) => {
     e.preventDefault();
-    let newErrors = {};
-
-    // 1. Check Captcha
-    if (!captchaToken) newErrors.captcha = "Please verify you are not a robot";
-    
-    // 2. Check Fields
-    if (!loginData.identifier.trim()) newErrors.identifier = "Required";
-    if (!loginData.password) newErrors.password = "Required";
-    
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      alert("Login Successful!");
-      console.log("Login Payload:", loginData);
-      // Reset logic
-      recaptchaRef.current.reset();
-      setCaptchaToken(null);
+    if (formData.email === 'error@lawfirm.com') {
+      setError('Invalid Email ID or Password');
+      return;
     }
+    setIsAuthenticated(true);
   };
 
-  const handleSignupSubmit = (e) => {
+  // 2. SIGN UP STEP 1
+  const handleStep1 = (e) => {
     e.preventDefault();
-    let newErrors = {};
+    setError('');
 
-    // 1. Check Captcha
-    if (!captchaToken) newErrors.captcha = "Please verify you are not a robot";
-
-    // 2. Check Fields
-    if (!signupData.firstName.trim()) newErrors.firstName = "Required";
-    if (!signupData.lastName.trim()) newErrors.lastName = "Required";
-    if (!signupData.phone.trim()) newErrors.phone = "Required";
-    if (!signupData.email.trim()) newErrors.email = "Required";
-    if (!signupData.password) newErrors.password = "Required";
-    if (signupData.password !== signupData.verifyPassword) newErrors.verifyPassword = "Passwords do not match";
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      alert("Signup Successful!");
-      console.log("Signup Payload:", signupData);
-      recaptchaRef.current.reset();
-      setCaptchaToken(null);
+    if (formData.email === 'exist@lawfirm.com') {
+      setError('Error: This Email ID is already registered.');
+      return;
     }
+
+    if (formData.password !== formData.repeatPassword) {
+      setError('Passwords do not match!');
+      return;
+    }
+
+    if (formData.captcha.toUpperCase() !== 'X7K9B') {
+      setError('Invalid Captcha!');
+      return;
+    }
+
+    // Navigate to Form 2
+    setStep(2);
+    window.scrollTo(0, 0);
   };
 
-  const handleForgotSubmit = (e) => {
+  // 3. FINAL SUBMIT
+  const handleFinalSubmit = (e) => {
     e.preventDefault();
-    let newErrors = {};
-
-    // 1. Check Captcha
-    if (!captchaToken) newErrors.captcha = "Please verify you are not a robot";
     
-    // 2. Check Fields
-    if (!forgotData.email.trim()) newErrors.email = "Email Required";
-    
-    setErrors(newErrors);
+    setSuccessMsg('Please check your email to activate your account or contact us');
 
-    if (Object.keys(newErrors).length === 0) {
-      alert("Reset Request Sent!");
-      console.log("Forgot Payload:", forgotData); 
-      recaptchaRef.current.reset();
-      setCaptchaToken(null);
-    }
+    setTimeout(() => {
+      alert(`Email Sent! Account Activated.\nGenerated User Member ID: MEM-${Math.floor(1000 + Math.random() * 9000)}`);
+      setSuccessMsg('');
+      setView('login');
+      setStep(1);
+    }, 3000);
   };
 
-  // Switch between Login/Signup/Forgot
-  const toggleMode = (mode) => {
-    setAuthMode(mode);
-    setErrors({});
-    setShowPassword(false);
-    setCaptchaToken(null);
-    if(recaptchaRef.current) recaptchaRef.current.reset();
-  };
+  // RENDER DASHBOARD IF LOGGED IN
+  if (isAuthenticated) {
+    if (activeTab === 'Client') return <ClientDashboard />;
+    if (activeTab === 'Attorney') return <AttorneyDashboard />;
+    if (activeTab === 'Admin') return <AdminDashboard />;
+  }
 
   return (
-    <div className="auth-container d-flex align-items-center justify-content-center p-3">
-      
-      <div className="auth-card bg-white shadow-lg overflow-hidden">
-        
-        {/* HEADER */}
-        <div className="p-4 pb-2">
-            <h3 className="fw-bold mb-1" style={{ color: theme.primaryBlue }}>
-            {authMode === 'login' && 'Sign In'}
-            {authMode === 'signup' && 'Create Account'}
-            {authMode === 'forgot' && 'Reset Password'}
-            </h3>
-            <p className="text-muted small">Please enter your details</p>
-        </div>
+    <>
+      <div className="main-wrapper">
+        <div className={`auth-card ${step === 2 && view === 'signup' ? 'wide' : ''}`}>
+          
+          {/* TABS */}
+          <div className="tabs-header">
+            {['Client', 'Attorney', 'Admin'].map((tab) => (
+              <button 
+                key={tab} 
+                className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
+                onClick={() => handleTabSwitch(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
 
-        <div className="p-4 pt-2">
-            
-            {/* ================= 1. SIGN IN FORM ================= */}
-            {authMode === 'login' && (
-            <form onSubmit={handleLoginSubmit}>
-                
-                {/* Field: Email / Phone / Username */}
-                <div className="mb-3">
-                    <label className="form-label fw-bold small text-muted">Email / Phone / Username</label>
-                    <input 
-                        type="text" 
-                        name="identifier"
-                        className={`form-control ${errors.identifier ? 'is-invalid' : ''}`} 
-                        placeholder="Enter email, phone or username"
-                        value={loginData.identifier}
-                        onChange={handleLoginChange}
-                    />
-                    {errors.identifier && <div className="text-danger small">{errors.identifier}</div>}
-                </div>
+          <div className="form-body">
 
-                {/* Field: Password */}
-                <div className="mb-3 position-relative">
-                    <label className="form-label fw-bold small text-muted">Password</label>
-                    <input 
-                        type={showPassword ? "text" : "password"} 
-                        name="password"
-                        className={`form-control ${errors.password ? 'is-invalid' : ''}`} 
-                        placeholder="Enter password"
-                        value={loginData.password}
-                        onChange={handleLoginChange}
-                    />
-                    <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'} password-icon`}
-                        onClick={() => setShowPassword(!showPassword)} />
-                    {errors.password && <div className="text-danger small">{errors.password}</div>}
-                </div>
+            {/* LOGIN FORM */}
+            {view === 'login' && (
+              <div className="fade-in">
+                <h2 className="portal-title">{activeTab} Portal</h2>
+                <p className="portal-subtitle">Sign In</p>
 
-                {/* GOOGLE RECAPTCHA */}
-                <div className="mb-3 d-flex justify-content-center">
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Testing Key
-                        onChange={onCaptchaChange}
-                    />
-                </div>
-                {errors.captcha && <div className="text-danger small text-center mb-2">{errors.captcha}</div>}
+                {error && <div className="alert-msg error">{error}</div>}
 
-                <div className="text-end mb-3">
-                    <span onClick={() => toggleMode('forgot')} className="link-text">Forgot Password?</span>
-                </div>
+                <form onSubmit={handleLogin}>
+                  <div className="form-group">
+                    <label className="lbl">Email ID <span className="req">*</span></label>
+                    <input type="email" name="email" className="inp" placeholder="email@lawfirm.com" onChange={handleInput} required />
+                  </div>
+                  <div className="form-group">
+                    <label className="lbl">Password <span className="req">*</span></label>
+                    <input type="password" name="password" className="inp" onChange={handleInput} required />
+                  </div>
+                  
+                  <div className="forgot-link">
+                    <a href="#" onClick={(e) => e.preventDefault()}>Forgot Password?</a>
+                  </div>
+                  
+                  <button type="submit" className="action-btn">Log In</button>
 
-                <button type="submit" className="btn-auth w-100">Sign In</button>
-            </form>
+                  {activeTab !== 'Admin' && (
+                    <div className="toggle-text">
+                      No Account Yet? <span onClick={() => setView('signup')}>Sign Up</span>
+                    </div>
+                  )}
+                </form>
+              </div>
             )}
 
-            {/* ================= 2. SIGNUP FORM ================= */}
-            {authMode === 'signup' && (
-            <form onSubmit={handleSignupSubmit}>
-                
-                {/* Fields: First Name, Last Name */}
-                <div className="row g-2">
-                    <div className="col-6 mb-2">
-                        <label className="form-label fw-bold small text-muted">First Name</label>
-                        <input type="text" name="firstName" className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} 
-                        value={signupData.firstName} onChange={handleSignupChange} />
+            {/* SIGN UP STEP 1 */}
+            {view === 'signup' && step === 1 && (
+              <div className="fade-in">
+                <h2 className="portal-title">Sign Up</h2>
+                <p className="portal-subtitle">Step 1: Account Details</p>
+
+                {error && <div className="alert-msg error">{error}</div>}
+
+                <form onSubmit={handleStep1}>
+                  <div className="row-split">
+                    <div className="col">
+                      <label className="lbl">First Name <span className="req">*</span></label>
+                      <input type="text" name="firstName" className="inp" onChange={handleInput} required />
                     </div>
-                    <div className="col-6 mb-2">
-                        <label className="form-label fw-bold small text-muted">Last Name</label>
-                        <input type="text" name="lastName" className={`form-control ${errors.lastName ? 'is-invalid' : ''}`} 
-                        value={signupData.lastName} onChange={handleSignupChange} />
+                    <div className="col">
+                      <label className="lbl">Last Name <span className="req">*</span></label>
+                      <input type="text" name="lastName" className="inp" onChange={handleInput} required />
                     </div>
-                </div>
+                  </div>
 
-                {/* Fields: Country Code, Phone Number */}
-                <div className="row g-2 mb-2">
-                    <div className="col-4">
-                        <label className="form-label fw-bold small text-muted">Code</label>
-                        <select className="form-select" name="countryCode" value={signupData.countryCode} onChange={handleSignupChange}>
-                        <option>+1</option>
-                        <option>+91</option>
-                        <option>+44</option>
-                        </select>
-                    </div>
-                    <div className="col-8">
-                        <label className="form-label fw-bold small text-muted">Phone Number</label>
-                        <input type="tel" name="phone" className={`form-control ${errors.phone ? 'is-invalid' : ''}`} 
-                        value={signupData.phone} onChange={handleSignupChange} placeholder="9876543210"/>
-                    </div>
-                </div>
+                  <div className="form-group">
+                    <label className="lbl">Email ID <span className="req">*</span></label>
+                    <input type="email" name="email" className="inp" onChange={handleInput} required />
+                  </div>
 
-                {/* Field: Email */}
-                <div className="mb-2">
-                    <label className="form-label fw-bold small text-muted">Email</label>
-                    <input type="email" name="email" className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                    value={signupData.email} onChange={handleSignupChange} />
-                </div>
+                  <div className="form-group">
+                    <label className="lbl">Password <span className="req">*</span></label>
+                    <input type="password" name="password" className="inp" onChange={handleInput} required />
+                  </div>
 
-                {/* Field: Password */}
-                <div className="mb-2 position-relative">
-                    <label className="form-label fw-bold small text-muted">Password</label>
-                    <input type={showPassword ? "text" : "password"} name="password" className={`form-control ${errors.password ? 'is-invalid' : ''}`} 
-                    value={signupData.password} onChange={handleSignupChange} />
-                    <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'} password-icon`} onClick={() => setShowPassword(!showPassword)} />
-                </div>
+                  <div className="form-group">
+                    <label className="lbl">Repeat Password <span className="req">*</span></label>
+                    <input type="password" name="repeatPassword" className="inp" onChange={handleInput} required />
+                  </div>
 
-                {/* Field: Verify Password */}
-                <div className="mb-3 position-relative">
-                    <label className="form-label fw-bold small text-muted">Verify New Password</label>
-                    <input type={showConfirmPassword ? "text" : "password"} name="verifyPassword" className={`form-control ${errors.verifyPassword ? 'is-invalid' : ''}`} 
-                    value={signupData.verifyPassword} onChange={handleSignupChange} />
-                     <i className={`bi ${showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'} password-icon`} onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
-                </div>
+                  <div className="form-group">
+                    <label className="lbl">Captcha <span className="req">*</span></label>
+                    <div className="captcha-box">X 7 K 9 B</div>
+                    <input type="text" name="captcha" className="inp" placeholder="Enter Code" onChange={handleInput} required />
+                  </div>
 
-                {/* GOOGLE RECAPTCHA */}
-                <div className="mb-3 d-flex justify-content-center">
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                        onChange={onCaptchaChange}
-                    />
-                </div>
-                {errors.captcha && <div className="text-danger small text-center mb-2">{errors.captcha}</div>}
-
-                <button type="submit" className="btn-auth w-100 mt-2">Sign Up</button>
-            </form>
+                  <button type="submit" className="action-btn">Sign Up</button>
+                  
+                  <div className="toggle-text">
+                    Already Have An Account? <span onClick={() => setView('login')}>Sign In</span>
+                  </div>
+                </form>
+              </div>
             )}
 
-            {/* ================= 3. FORGOT PASSWORD FORM ================= */}
-            {authMode === 'forgot' && (
-            <form onSubmit={handleForgotSubmit}>
-                
-                {/* Field: Email Address */}
-                <div className="mb-3">
-                    <label className="form-label fw-bold small text-muted">Email Address</label>
-                    <input type="email" name="email" className={`form-control ${errors.email ? 'is-invalid' : ''}`} 
-                    value={forgotData.email} onChange={handleForgotChange} placeholder="Enter registered email" />
-                    {errors.email && <div className="text-danger small">{errors.email}</div>}
-                </div>
+            {/* SIGN UP STEP 2 (KYC & PROFILE) */}
+            {view === 'signup' && step === 2 && (
+              <div className="fade-in">
+                <h2 className="portal-title">Update Your Profile</h2>
+                <p className="portal-subtitle">Step 2: Personal & KYC Details</p>
 
-                {/* Field: Phone/WhatsApp Enabled (Checkbox) */}
-                <div className="form-check mb-4 bg-light p-3 rounded border">
-                    <input 
-                        className="form-check-input" 
-                        type="checkbox" 
-                        name="whatsappEnabled"
-                        id="whatsappCheck" 
-                        checked={forgotData.whatsappEnabled}
-                        onChange={handleForgotChange}
-                    />
-                    <label className="form-check-label small text-dark fw-bold" htmlFor="whatsappCheck">
-                        Phone / WhatsApp Enabled
-                    </label>
-                    <div className="text-muted" style={{fontSize: '11px'}}>
-                        Check this if you want to receive recovery code on WhatsApp.
+                {successMsg && <div className="alert-msg success">{successMsg}</div>}
+
+                <form onSubmit={handleFinalSubmit}>
+                  {/* Address */}
+                  <h4 className="section-head">Address Details</h4>
+                  <div className="row-split">
+                    <div className="col" style={{flex: 2}}>
+                      <label className="lbl">Street Name <span className="req">*</span></label>
+                      <input type="text" name="street" className="inp" onChange={handleInput} required />
                     </div>
-                </div>
+                    <div className="col">
+                      <label className="lbl">Apt/Unit <span className="req">*</span></label>
+                      <input type="text" name="apt" className="inp" onChange={handleInput} required />
+                    </div>
+                  </div>
+                  <div className="row-split">
+                    <div className="col"><label className="lbl">City <span className="req">*</span></label><input type="text" name="city" className="inp" onChange={handleInput} required /></div>
+                    <div className="col"><label className="lbl">State <span className="req">*</span></label><input type="text" name="state" className="inp" onChange={handleInput} required /></div>
+                  </div>
+                  <div className="row-split">
+                    <div className="col"><label className="lbl">Country <span className="req">*</span></label><input type="text" name="country" className="inp" onChange={handleInput} required /></div>
+                    <div className="col"><label className="lbl">Zip Code <span className="req">*</span></label><input type="number" name="zip" className="inp" onChange={handleInput} required /></div>
+                  </div>
 
-                {/* GOOGLE RECAPTCHA */}
-                <div className="mb-3 d-flex justify-content-center">
-                    <ReCAPTCHA
-                        ref={recaptchaRef}
-                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                        onChange={onCaptchaChange}
-                    />
-                </div>
-                {errors.captcha && <div className="text-danger small text-center mb-2">{errors.captcha}</div>}
+                  {/* Personal */}
+                  <h4 className="section-head">Personal Details</h4>
+                  <div className="row-split">
+                    <div className="col" style={{flex: 0.6}}>
+                      <label className="lbl">Code <span className="req">*</span></label>
+                      <select name="countryCode" className="inp" onChange={handleInput} required>
+                        <option>+91</option><option>+1</option><option>+44</option>
+                      </select>
+                    </div>
+                    <div className="col" style={{flex: 1.4}}>
+                      <label className="lbl">Phone Number <span className="req">*</span></label>
+                      <input type="number" name="phone" className="inp" onChange={handleInput} required />
+                    </div>
+                    <div className="col" style={{flex: 1.5}}>
+                      <label className="lbl">Date Of Birth <span className="req">*</span></label>
+                      <input type="date" name="dob" className="inp" onChange={handleInput} required />
+                    </div>
+                  </div>
 
-                <button type="submit" className="btn-auth w-100">Reset Password</button>
-            </form>
+                  <div className="file-box mt-3">
+                    <label className="lbl">Profile Image (Selfie for Mobile)</label>
+                    <input type="file" className="inp-file" accept="image/*" />
+                  </div>
+
+                  {/* KYC SECTION */}
+                  <h4 className="section-head">KYC Documents Required</h4>
+                  <div className="form-group">
+                    <label className="lbl">Proof of Identity <span className="req">*</span></label>
+                    <small className="small-text">PAN Card, Passport, Driving Licence, Aadhaar Card</small>
+                    <input type="file" className="inp-file" required />
+                  </div>
+                  <div className="form-group">
+                    <label className="lbl">Proof of Address <span className="req">*</span></label>
+                    <small className="small-text">Utility bills, Rental agreement, or Govt address proof</small>
+                    <input type="file" className="inp-file" required />
+                  </div>
+
+                  <div className="terms-box">
+                    <input type="checkbox" name="terms" id="terms" required onChange={handleInput} />
+                    <label htmlFor="terms">I accept the Terms and Conditions.</label>
+                  </div>
+
+                  <button type="submit" className="action-btn">Save</button>
+                  
+                  <div className="toggle-text" style={{marginTop:'10px'}}>
+                    <span onClick={() => setStep(1)} style={{color:'#666', fontSize:'13px'}}>← Back to Step 1</span>
+                  </div>
+
+                </form>
+              </div>
             )}
 
-            {/* FOOTER SWITCHER */}
-            <div className="text-center mt-3 pt-3 border-top">
-                {authMode === 'login' ? (
-                    <p className="small m-0">Don't have an account? <span onClick={() => toggleMode('signup')} className="link-text fw-bold">Sign Up</span></p>
-                ) : (
-                    <p className="small m-0">Back to <span onClick={() => toggleMode('login')} className="link-text fw-bold">Sign In</span></p>
-                )}
-            </div>
-
+          </div>
         </div>
       </div>
 
-      {/* --- STYLES --- */}
-      <style jsx>{`
-        .auth-container {
-          background-color: ${theme.primaryBlue};
-          min-height: 100vh;
+      {/* STYLES */}
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; }
+
+        .main-wrapper {
+          display: flex; justify-content: center; align-items: center;
+          min-height: 100vh; padding: 20px;
         }
+
         .auth-card {
-          width: 100%;
-          max-width: 420px;
-          border-radius: 10px;
+          background: white; width: 100%; max-width: 450px;
+          border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+          overflow: hidden; transition: max-width 0.4s ease;
         }
-        .form-control, .form-select {
-          border: 1px solid #ced4da;
-          padding: 10px;
-          font-size: 14px;
+        .auth-card.wide { max-width: 750px; }
+
+        .tabs-header { display: flex; background: #fff; border-bottom: 1px solid #eee; }
+        .tab-btn {
+          flex: 1; padding: 18px; border: none; background: transparent;
+          font-weight: 600; font-size: 14px; color: #666; cursor: pointer;
+          border-bottom: 3px solid transparent; font-family: 'Open Sans', sans-serif;
         }
-        .form-control:focus, .form-select:focus {
-          border-color: ${theme.accentGold};
-          box-shadow: 0 0 0 0.2rem rgba(222, 159, 87, 0.25);
-        }
-        .btn-auth {
-          background-color: ${theme.accentGold};
-          color: white;
-          padding: 10px;
-          border: none;
-          border-radius: 5px;
-          font-weight: bold;
-          transition: 0.3s;
-        }
-        .btn-auth:hover {
-          background-color: #c58a47;
-        }
-        .password-icon {
-          position: absolute;
-          top: 32px;
-          right: 12px;
-          cursor: pointer;
-          color: #6c757d;
-        }
-        .link-text {
-          color: ${theme.accentGold};
-          cursor: pointer;
-          text-decoration: none;
-        }
-        .link-text:hover {
-          text-decoration: underline;
-        }
-        .is-invalid {
-            border-color: ${theme.errorRed} !important;
-        }
+        .tab-btn.active { color: #002b5c; border-bottom: 3px solid #cfa144; }
+
+        .form-body { padding: 30px; }
+        .portal-title { text-align: center; color: #002b5c; margin: 0 0 5px 0; font-size: 26px; font-family: 'Merriweather', serif; }
+        .portal-subtitle { text-align: center; color: #888; margin: 0 0 25px 0; font-size: 14px; }
+        .section-head { color: #002b5c; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: bold; }
+
+        .form-group { margin-bottom: 15px; }
+        .row-split { display: flex; gap: 15px; margin-bottom: 15px; }
+        .col { flex: 1; }
+
+        .lbl { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; }
+        .req { color: red; }
+        .small-text { display: block; font-size: 11px; color: #888; margin-bottom: 5px; }
+        
+        .inp, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; color: #333; outline: none; }
+        .inp:focus { border-color: #002b5c; }
+        
+        .file-box { background: #fafafa; border: 1px dashed #ccc; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+        .inp-file { font-size: 13px; width: 100%; }
+
+        .action-btn { width: 100%; padding: 12px; background: #002b5c; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .action-btn:hover { background: #001f42; }
+
+        .forgot-link { text-align: right; margin-bottom: 20px; }
+        .forgot-link a { color: #002b5c; font-size: 13px; text-decoration: none; }
+        
+        .toggle-text { text-align: center; margin-top: 20px; font-size: 14px; color: #666; }
+        .toggle-text span { color: #cfa144; font-weight: bold; cursor: pointer; }
+        
+        .captcha-box { background: #eee; padding: 8px; text-align: center; letter-spacing: 4px; font-weight: bold; border: 1px solid #ddd; margin-bottom: 5px; color: #333; }
+        
+        .terms-box { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 20px 0; }
+        
+        .alert-msg { padding: 10px; font-size: 13px; text-align: center; border-radius: 4px; margin-bottom: 15px; }
+        .alert-msg.error { background: #ffe6e6; color: #d63031; border: 1px solid #ff7675; }
+        .alert-msg.success { background: #e6fffa; color: #00b894; border: 1px solid #55efc4; }
+
+        .fade-in { animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
-    </div>
+    </>
   );
 }
 
-export default LoginSignup;
 
-// import React, { useState } from 'react';
-// import Link from 'next/link';
+// 'use client';
 
-// function LoginSignup() {
-  
-//   // --- UI STATE ---
-//   const [authMode, setAuthMode] = useState('login'); // 'login', 'signup', 'forgot'
-//   const [activeRole, setActiveRole] = useState('User'); // 'User', 'Attorney', 'Admin'
-//   const [showPassword, setShowPassword] = useState(false);
-//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+// import { useState } from 'react';
+
+// // --- DASHBOARD PLACEHOLDERS ---
+// const ClientDashboard = () => (
+//   <div className="p-5 text-center" style={{color: '#002b5c'}}>
+//     <h1>🏛️ Welcome to Client Dashboard</h1>
+//     <p>You have successfully logged in.</p>
+//   </div>
+// );
+// const AttorneyDashboard = () => <div className="p-5 text-center"><h1>⚖️ Attorney Dashboard</h1></div>;
+// const AdminDashboard = () => <div className="p-5 text-center"><h1>💼 Admin Dashboard</h1></div>;
+
+// export default function UnifiedAuthPage() {
+//   // --- STATES ---
+//   const [activeTab, setActiveTab] = useState('Client'); // Default Client
+//   const [view, setView] = useState('login'); // 'login' or 'signup'
+//   const [step, setStep] = useState(1); // 1 = Account Info, 2 = Profile/KYC
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+//   const [error, setError] = useState('');
+//   const [successMsg, setSuccessMsg] = useState('');
 
 //   // --- FORM DATA STATE ---
-//   const [loginData, setLoginData] = useState({ identifier: '', password: '' });
-//   const [signupData, setSignupData] = useState({ 
-//     firstName: '', lastName: '', code: '+1', phone: '', email: '', password: '', confirmPassword: '' 
+//   const [formData, setFormData] = useState({
+//     firstName: '', lastName: '', email: '', password: '', repeatPassword: '',
+//     street: '', unit: '', city: '', state: '', country: '', zip: '',
+//     countryCode: '+91', phone: '', dob: '',
+//     terms: false
 //   });
-//   const [forgotData, setForgotData] = useState({ email: '' });
 
-//   // --- ERROR STATE ---
-//   const [errors, setErrors] = useState({});
+//   // --- HANDLERS ---
 
-//   // --- THEME COLORS ---
-//   const theme = {
-//     primaryBlue: '#002855',
-//     accentGold: '#de9f57', 
-//     white: '#ffffff',
-//     errorRed: '#dc3545'
+//   const handleInput = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
 //   };
 
-//   // --- HELPERS ---
-//   const validateEmail = (email) => {
-//     return /\S+@\S+\.\S+/.test(email);
+//   const handleTabSwitch = (tab) => {
+//     setActiveTab(tab);
+//     setView('login');
+//     setStep(1);
+//     setError('');
+//     setSuccessMsg('');
 //   };
 
-//   // --- HANDLERS: INPUT CHANGE ---
-//   const handleLoginChange = (e) => setLoginData({ ...loginData, [e.target.name]: e.target.value });
-//   const handleSignupChange = (e) => setSignupData({ ...signupData, [e.target.name]: e.target.value });
-//   const handleForgotChange = (e) => setForgotData({ ...forgotData, [e.target.name]: e.target.value });
-
-//   // --- HANDLERS: SUBMIT & VALIDATION ---
-
-//   // 1. LOGIN VALIDATION
-//   const handleLoginSubmit = (e) => {
+//   // --- 1. LOGIN ACTION ---
+//   const handleLogin = (e) => {
 //     e.preventDefault();
-//     let newErrors = {};
-
-//     if (!loginData.identifier.trim()) newErrors.identifier = "Email or Username is required";
-//     if (!loginData.password) newErrors.password = "Password is required";
-
-//     setErrors(newErrors);
-
-//     if (Object.keys(newErrors).length === 0) {
-//       console.log("Login Success:", loginData, "Role:", activeRole);
-//       alert("Login Validated! (Check Console)");
-//       // API Call here...
+//     // Excel Validation: Invalid email/pass logic simulation
+//     if (formData.email === 'error@lawfirm.com') {
+//       setError('Invalid Email or Password');
+//       return;
 //     }
+//     // Success
+//     setIsAuthenticated(true);
 //   };
 
-//   // 2. SIGNUP VALIDATION
-//   const handleSignupSubmit = (e) => {
+//   // --- 2. SIGN UP STEP 1 ACTION ---
+//   const handleStep1 = (e) => {
 //     e.preventDefault();
-//     let newErrors = {};
+//     setError('');
 
-//     if (!signupData.firstName.trim()) newErrors.firstName = "First Name is required";
-//     if (!signupData.lastName.trim()) newErrors.lastName = "Last Name is required";
+//     // Excel Validation 1: Check existing email
+//     if (formData.email === 'exist@lawfirm.com') {
+//       setError('This Email ID is already registered. Please Sign In.');
+//       return;
+//     }
+
+//     // Excel Validation 2: Password Match
+//     if (formData.password !== formData.repeatPassword) {
+//       setError('Passwords do not match!');
+//       return;
+//     }
+
+//     // Navigate to Form 2 (Profile Update)
+//     setStep(2);
+//     window.scrollTo(0, 0);
+//   };
+
+//   // --- 3. FINAL SUBMIT (PROFILE SAVE) ---
+//   const handleFinalSubmit = (e) => {
+//     e.preventDefault();
     
-//     if (!signupData.phone.trim()) {
-//       newErrors.phone = "Phone number is required";
-//     } else if (!/^\d+$/.test(signupData.phone)) {
-//       newErrors.phone = "Phone must contain numbers only";
-//     }
+//     // Excel Action: Provide info message
+//     setSuccessMsg('Please check your email to activate your account or contact us.');
 
-//     if (!signupData.email.trim()) {
-//       newErrors.email = "Email is required";
-//     } else if (!validateEmail(signupData.email)) {
-//       newErrors.email = "Invalid email format";
-//     }
-
-//     if (!signupData.password) {
-//       newErrors.password = "Password is required";
-//     } else if (signupData.password.length < 6) {
-//       newErrors.password = "Password must be at least 6 chars";
-//     }
-
-//     if (!signupData.confirmPassword) {
-//       newErrors.confirmPassword = "Confirm your password";
-//     } else if (signupData.password !== signupData.confirmPassword) {
-//       newErrors.confirmPassword = "Passwords do not match";
-//     }
-
-//     setErrors(newErrors);
-
-//     if (Object.keys(newErrors).length === 0) {
-//       console.log("Signup Success:", signupData, "Role:", activeRole);
-//       alert("Signup Validated! (Check Console)");
-//       // API Call here...
-//     }
+//     // Excel Action: Auto send email & Generate ID
+//     setTimeout(() => {
+//       alert(`Profile Created! Check Email.\nGenerated ${activeTab} ID: MEM-2025-9988`);
+//       setSuccessMsg('');
+//       setView('login');
+//       setStep(1);
+//     }, 3000);
 //   };
 
-//   // 3. FORGOT PASSWORD VALIDATION
-//   const handleForgotSubmit = (e) => {
-//     e.preventDefault();
-//     let newErrors = {};
-
-//     if (!forgotData.email.trim()) {
-//       newErrors.email = "Email is required";
-//     } else if (!validateEmail(forgotData.email)) {
-//       newErrors.email = "Invalid email format";
-//     }
-
-//     setErrors(newErrors);
-
-//     if (Object.keys(newErrors).length === 0) {
-//       console.log("Forgot Password Request:", forgotData);
-//       alert("Reset Link Sent!");
-//     }
-//   };
-
-//   // --- TOGGLE HANDLERS ---
-//   const toggleMode = (mode) => {
-//     setAuthMode(mode);
-//     setErrors({}); // Clear errors when switching
-//     setShowPassword(false);
-//     setShowConfirmPassword(false);
-//   };
-//   const toggleRole = (role) => setActiveRole(role);
+//   // --- RENDER DASHBOARD ---
+//   if (isAuthenticated) {
+//     if (activeTab === 'Client') return <ClientDashboard />;
+//     if (activeTab === 'Attorney') return <AttorneyDashboard />;
+//     if (activeTab === 'Admin') return <AdminDashboard />;
+//   }
 
 //   return (
-//     <div className="auth-container d-flex align-items-center justify-content-center">
-      
-//       {/* --- MAIN CARD --- */}
-//       <div className="auth-card bg-white position-relative shadow-lg">
-        
-//         {/* TOP NAVIGATION */}
-//         <div className="d-flex justify-content-between align-items-center mb-3">
-//           <Link href="/">
-//             <a className="text-dark fs-5" title="Back to Home"><i className="bi bi-arrow-left"></i></a>
-//           </Link>
-//           <Link href="/">
-//             <a className="text-muted fs-5" title="Close"><i className="bi bi-x-circle"></i></a>
-//           </Link>
-//         </div>
-
-//         {/* --- HEADING --- */}
-//         <h3 className="fw-bold mb-3" style={{ color: theme.primaryBlue }}>
-//           {authMode === 'login' && 'Sign In'}
-//           {authMode === 'signup' && 'Create Account'}
-//           {authMode === 'forgot' && 'Reset Password'}
-//         </h3>
-
-//         {/* --- ROLE TABS --- */}
-//         {authMode !== 'forgot' && (
-//           <div className="d-flex justify-content-center gap-4 mb-3 border-bottom pb-2">
-//             {['User', 'Attorney', 'Admin'].map((role) => (
-//               <div 
-//                 key={role}
-//                 onClick={() => toggleRole(role)}
-//                 className="role-tab"
-//                 style={{ 
-//                   cursor: 'pointer', 
-//                   paddingBottom: '5px',
-//                   fontSize: '15px',
-//                   color: activeRole === role ? theme.accentGold : '#6c757d',
-//                   fontWeight: activeRole === role ? 'bold' : 'normal',
-//                   borderBottom: activeRole === role ? `3px solid ${theme.accentGold}` : '3px solid transparent',
-//                   transition: 'all 0.3s'
-//                 }}
+//     <>
+//       <div className="main-wrapper">
+//         {/* Dynamic Width: Step 2 becomes wider for better layout */}
+//         <div className={`auth-card ${step === 2 && view === 'signup' ? 'wide' : ''}`}>
+          
+//           {/* HEADER TABS */}
+//           <div className="tabs-header">
+//             {['Client', 'Attorney', 'Admin'].map((tab) => (
+//               <button 
+//                 key={tab} 
+//                 className={`tab-btn ${activeTab === tab ? 'active' : ''}`}
+//                 onClick={() => handleTabSwitch(tab)}
 //               >
-//                 {role}
-//               </div>
+//                 {tab}
+//               </button>
 //             ))}
 //           </div>
-//         )}
 
-//         {/* ================= LOGIN FORM ================= */}
-//         {authMode === 'login' && (
-//           <form onSubmit={handleLoginSubmit}>
-//             <div className="mb-2">
-//               <label className="form-label fw-bold small text-muted mb-1">Email, Phone or Username</label>
-//               <input 
-//                 type="text" 
-//                 name="identifier"
-//                 className={`form-control p-2 ${errors.identifier ? 'is-invalid' : ''}`} 
-//                 placeholder={`Enter ${activeRole} credentials`} 
-//                 value={loginData.identifier}
-//                 onChange={handleLoginChange}
-//               />
-//               {errors.identifier && <div className="text-danger small mt-1">{errors.identifier}</div>}
-//             </div>
+//           <div className="form-body">
+            
+//             {/* ================= LOGIN FORM ================= */}
+//             {view === 'login' && (
+//               <div className="fade-in">
+//                 <h2 className="portal-title">{activeTab} Portal</h2>
+//                 <p className="portal-subtitle">Sign In</p>
 
-//             <div className="mb-2 position-relative">
-//               <label className="form-label fw-bold small text-muted mb-1">Password</label>
-//               <input 
-//                 type={showPassword ? "text" : "password"} 
-//                 name="password"
-//                 className={`form-control p-2 ${errors.password ? 'is-invalid' : ''}`} 
-//                 placeholder="Enter password" 
-//                 value={loginData.password}
-//                 onChange={handleLoginChange}
-//               />
-//               <i 
-//                 className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'} password-icon`}
-//                 onClick={() => setShowPassword(!showPassword)}
-//               />
-//               {errors.password && <div className="text-danger small mt-1">{errors.password}</div>}
-//             </div>
+//                 {error && <div className="alert-msg error">{error}</div>}
 
-//             <div className="d-flex justify-content-end mb-3">
-//               <span 
-//                 onClick={() => toggleMode('forgot')} 
-//                 style={{ color: theme.accentGold, cursor: 'pointer', fontSize: '13px', fontWeight: '600' }}>
-//                 Forgot Password?
-//               </span>
-//             </div>
+//                 <form onSubmit={handleLogin}>
+//                   <div className="form-group">
+//                     <label className="lbl">Email ID <span className="req">*</span></label>
+//                     <input type="email" name="email" className="inp" placeholder="email@lawfirm.com" onChange={handleInput} required />
+//                   </div>
+//                   <div className="form-group">
+//                     <label className="lbl">Password <span className="req">*</span></label>
+//                     <input type="password" name="password" className="inp" onChange={handleInput} required />
+//                   </div>
+                  
+//                   <div className="forgot-link"><a href="#">Forgot Password?</a></div>
+                  
+//                   <button type="submit" className="action-btn">Log In</button>
 
-//             <button type="submit" className="btn-auth w-100 py-2 fw-bold mb-3">
-//               Log In as {activeRole}
-//             </button>
-
-//             <div className="text-center small">
-//               <span className="text-muted">Do Not Have An Account? </span>
-//               <span 
-//                 onClick={() => toggleMode('signup')} 
-//                 style={{ color: theme.accentGold, cursor: 'pointer', fontWeight: 'bold' }}>
-//                 Sign Up
-//               </span>
-//             </div>
-//           </form>
-//         )}
-
-//         {/* ================= SIGNUP FORM ================= */}
-//         {authMode === 'signup' && (
-//           <form onSubmit={handleSignupSubmit}>
-//             <div className="row">
-//               <div className="col-md-6 mb-2">
-//                 <label className="form-label fw-bold small text-muted mb-1">First Name</label>
-//                 <input 
-//                   type="text" 
-//                   name="firstName"
-//                   className={`form-control p-2 ${errors.firstName ? 'is-invalid' : ''}`} 
-//                   placeholder="John" 
-//                   value={signupData.firstName}
-//                   onChange={handleSignupChange}
-//                 />
-//                 {errors.firstName && <div className="text-danger small mt-1" style={{fontSize: '11px'}}>{errors.firstName}</div>}
+//                   {activeTab !== 'Admin' && (
+//                     <div className="toggle-text">
+//                       No Account Yet? <span onClick={() => setView('signup')}>Sign Up</span>
+//                     </div>
+//                   )}
+//                 </form>
 //               </div>
-//               <div className="col-md-6 mb-2">
-//                 <label className="form-label fw-bold small text-muted mb-1">Last Name</label>
-//                 <input 
-//                   type="text" 
-//                   name="lastName"
-//                   className={`form-control p-2 ${errors.lastName ? 'is-invalid' : ''}`} 
-//                   placeholder="Doe" 
-//                   value={signupData.lastName}
-//                   onChange={handleSignupChange}
-//                 />
-//                 {errors.lastName && <div className="text-danger small mt-1" style={{fontSize: '11px'}}>{errors.lastName}</div>}
+//             )}
+
+//             {/* ================= SIGN UP STEP 1 (Basic Info) ================= */}
+//             {view === 'signup' && step === 1 && (
+//               <div className="fade-in">
+//                 <h2 className="portal-title">Sign Up</h2>
+//                 <p className="portal-subtitle">Step 1: Account Details</p>
+
+//                 {error && <div className="alert-msg error">{error}</div>}
+
+//                 <form onSubmit={handleStep1}>
+//                   <div className="row-split">
+//                     <div className="col">
+//                       <label className="lbl">First Name <span className="req">*</span></label>
+//                       <input type="text" name="firstName" className="inp" onChange={handleInput} required />
+//                     </div>
+//                     <div className="col">
+//                       <label className="lbl">Last Name <span className="req">*</span></label>
+//                       <input type="text" name="lastName" className="inp" onChange={handleInput} required />
+//                     </div>
+//                   </div>
+
+//                   <div className="form-group">
+//                     <label className="lbl">Email ID <span className="req">*</span></label>
+//                     <input type="email" name="email" className="inp" onChange={handleInput} required />
+//                     <small style={{fontSize:'11px', color:'#888'}}>Use 'exist@lawfirm.com' to test error.</small>
+//                   </div>
+
+//                   <div className="form-group">
+//                     <label className="lbl">Password <span className="req">*</span></label>
+//                     <input type="password" name="password" className="inp" onChange={handleInput} required />
+//                   </div>
+//                   <div className="form-group">
+//                     <label className="lbl">Repeat Password <span className="req">*</span></label>
+//                     <input type="password" name="repeatPassword" className="inp" onChange={handleInput} required />
+//                   </div>
+
+//                   <div className="form-group">
+//                     <label className="lbl">Captcha <span className="req">*</span></label>
+//                     <div className="captcha-box">X 7 K 9 B</div>
+//                     <input type="text" className="inp" placeholder="Enter Code" required />
+//                   </div>
+
+//                   <button type="submit" className="action-btn">Sign Up</button>
+                  
+//                   <div className="toggle-text">
+//                     Already Have An Account? <span onClick={() => setView('login')}>Sign In</span>
+//                   </div>
+//                 </form>
 //               </div>
-//             </div>
+//             )}
 
-//             <div className="row">
-//               <div className="col-4 mb-2">
-//                 <label className="form-label fw-bold small text-muted mb-1">Code</label>
-//                 <select 
-//                   className="form-select p-2" 
-//                   name="code"
-//                   value={signupData.code}
-//                   onChange={handleSignupChange}
-//                 >
-//                   <option>+1</option>
-//                   <option>+91</option>
-//                   <option>+44</option>
-//                   <option>+880</option>
-//                 </select>
+//             {/* ================= SIGN UP STEP 2 (Client Profile Update) ================= */}
+//             {view === 'signup' && step === 2 && (
+//               <div className="fade-in">
+//                 <h2 className="portal-title">Update Your Profile</h2>
+//                 <p className="portal-subtitle">Step 2: Personal & KYC Details</p>
+
+//                 {successMsg && <div className="alert-msg success">{successMsg}</div>}
+
+//                 <form onSubmit={handleFinalSubmit}>
+//                   {/* 1. Address Fields */}
+//                   <h4 className="section-head">Address Details</h4>
+//                   <div className="row-split">
+//                     <div className="col" style={{flex:2}}>
+//                       <label className="lbl">Street Name <span className="req">*</span></label>
+//                       <input type="text" name="street" className="inp" onChange={handleInput} required />
+//                     </div>
+//                     <div className="col">
+//                       <label className="lbl">Apt/Unit <span className="req">*</span></label>
+//                       <input type="text" name="unit" className="inp" onChange={handleInput} required />
+//                     </div>
+//                   </div>
+
+//                   <div className="row-split">
+//                     <div className="col">
+//                       <label className="lbl">City <span className="req">*</span></label>
+//                       <input type="text" name="city" className="inp" onChange={handleInput} required />
+//                     </div>
+//                     <div className="col">
+//                       <label className="lbl">State <span className="req">*</span></label>
+//                       <input type="text" name="state" className="inp" onChange={handleInput} required />
+//                     </div>
+//                   </div>
+
+//                   <div className="row-split">
+//                     <div className="col">
+//                       <label className="lbl">Country <span className="req">*</span></label>
+//                       <input type="text" name="country" className="inp" onChange={handleInput} required />
+//                     </div>
+//                     <div className="col">
+//                       <label className="lbl">Zip/Pin Code <span className="req">*</span></label>
+//                       <input type="number" name="zip" className="inp" onChange={handleInput} required />
+//                     </div>
+//                   </div>
+
+//                   {/* 2. Contact & DOB */}
+//                   <h4 className="section-head">Personal Details</h4>
+//                   <div className="row-split">
+//                     <div className="col" style={{flex:0.5}}>
+//                       <label className="lbl">Code <span className="req">*</span></label>
+//                       <select name="countryCode" className="inp" onChange={handleInput}>
+//                         <option>+91</option><option>+1</option><option>+44</option>
+//                       </select>
+//                     </div>
+//                     <div className="col" style={{flex:1.5}}>
+//                       <label className="lbl">Phone Number <span className="req">*</span></label>
+//                       <input type="number" name="phone" className="inp" onChange={handleInput} required />
+//                     </div>
+//                     <div className="col" style={{flex:1.5}}>
+//                       <label className="lbl">Date Of Birth <span className="req">*</span></label>
+//                       <input type="date" name="dob" className="inp" onChange={handleInput} required />
+//                     </div>
+//                   </div>
+
+//                   {/* 3. Image & KYC */}
+//                   <h4 className="section-head">Documents & KYC</h4>
+                  
+//                   <div className="file-box">
+//                     <label className="lbl">Profile Image (Selfie for Mobile)</label>
+//                     <input type="file" className="inp-file" accept="image/*" />
+//                   </div>
+
+//                   <div className="row-split">
+//                     <div className="col">
+//                        <label className="lbl">Proof of Identity <span className="req">*</span></label>
+//                        <small className="small-text">PAN, Passport, DL, Aadhaar</small>
+//                        <input type="file" className="inp-file" required />
+//                     </div>
+//                     <div className="col">
+//                        <label className="lbl">Proof of Address <span className="req">*</span></label>
+//                        <small className="small-text">Utility Bill, Rent Agreement</small>
+//                        <input type="file" className="inp-file" required />
+//                     </div>
+//                   </div>
+                  
+//                   {/* Attorney Extra (Optional Logic - Hidden for Client) */}
+//                   {activeTab === 'Attorney' && (
+//                      <div className="file-box mt-2">
+//                         <label className="lbl">Upload Resume / CV <span className="req">*</span></label>
+//                         <input type="file" className="inp-file" required />
+//                      </div>
+//                   )}
+
+//                   {/* 4. Terms */}
+//                   <div className="terms-box">
+//                     <input type="checkbox" id="terms" required />
+//                     <label htmlFor="terms">I accept the Terms and Conditions.</label>
+//                   </div>
+
+//                   <button type="submit" className="action-btn">Save & Activate Account</button>
+                  
+//                   <div className="toggle-text" style={{marginTop:'15px'}}>
+//                      <span onClick={() => setStep(1)} style={{color:'#666', fontSize:'13px'}}>← Back to Step 1</span>
+//                   </div>
+
+//                 </form>
 //               </div>
-//               <div className="col-8 mb-2">
-//                 <label className="form-label fw-bold small text-muted mb-1">Phone</label>
-//                 <input 
-//                   type="tel" 
-//                   name="phone"
-//                   className={`form-control p-2 ${errors.phone ? 'is-invalid' : ''}`} 
-//                   placeholder="000 000 0000" 
-//                   value={signupData.phone}
-//                   onChange={handleSignupChange}
-//                 />
-//                 {errors.phone && <div className="text-danger small mt-1">{errors.phone}</div>}
-//               </div>
-//             </div>
+//             )}
 
-//             <div className="mb-2">
-//               <label className="form-label fw-bold small text-muted mb-1">Email</label>
-//               <input 
-//                 type="email" 
-//                 name="email"
-//                 className={`form-control p-2 ${errors.email ? 'is-invalid' : ''}`} 
-//                 placeholder="user@example.com" 
-//                 value={signupData.email}
-//                 onChange={handleSignupChange}
-//               />
-//               {errors.email && <div className="text-danger small mt-1">{errors.email}</div>}
-//             </div>
-
-//             <div className="mb-2 position-relative">
-//               <label className="form-label fw-bold small text-muted mb-1">Password</label>
-//               <input 
-//                 type={showPassword ? "text" : "password"} 
-//                 name="password"
-//                 className={`form-control p-2 ${errors.password ? 'is-invalid' : ''}`} 
-//                 placeholder="Create password" 
-//                 value={signupData.password}
-//                 onChange={handleSignupChange}
-//               />
-//               <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'} password-icon`}
-//                  onClick={() => setShowPassword(!showPassword)} />
-//               {errors.password && <div className="text-danger small mt-1">{errors.password}</div>}
-//             </div>
-
-//             <div className="mb-3 position-relative">
-//               <label className="form-label fw-bold small text-muted mb-1">Verify Password</label>
-//               <input 
-//                 type={showConfirmPassword ? "text" : "password"} 
-//                 name="confirmPassword"
-//                 className={`form-control p-2 ${errors.confirmPassword ? 'is-invalid' : ''}`} 
-//                 placeholder="Confirm password" 
-//                 value={signupData.confirmPassword}
-//                 onChange={handleSignupChange}
-//               />
-//               <i className={`bi ${showConfirmPassword ? 'bi-eye-slash' : 'bi-eye'} password-icon`}
-//                  onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
-//               {errors.confirmPassword && <div className="text-danger small mt-1">{errors.confirmPassword}</div>}
-//             </div>
-
-//             <button type="submit" className="btn-auth w-100 py-2 fw-bold mb-3">
-//               Sign Up as {activeRole}
-//             </button>
-
-//             <div className="text-center small">
-//               <span className="text-muted">Already have an account? </span>
-//               <span 
-//                 onClick={() => toggleMode('login')} 
-//                 style={{ color: theme.accentGold, cursor: 'pointer', fontWeight: 'bold' }}>
-//                 Sign In
-//               </span>
-//             </div>
-//           </form>
-//         )}
-
-//         {/* ================= FORGOT FORM ================= */}
-//         {authMode === 'forgot' && (
-//           <form onSubmit={handleForgotSubmit}>
-//             <p className="text-muted mb-3 small">
-//               Enter your registered email address to reset password.
-//             </p>
-
-//             <div className="mb-3">
-//               <label className="form-label fw-bold small text-muted mb-1">Email Address</label>
-//               <input 
-//                 type="email" 
-//                 name="email"
-//                 className={`form-control p-2 ${errors.email ? 'is-invalid' : ''}`} 
-//                 placeholder="user@example.com" 
-//                 value={forgotData.email}
-//                 onChange={handleForgotChange}
-//               />
-//               {errors.email && <div className="text-danger small mt-1">{errors.email}</div>}
-//             </div>
-
-//             <div className="form-check mb-3">
-//               <input className="form-check-input" type="checkbox" id="whatsappCheck" />
-//               <label className="form-check-label text-muted small" htmlFor="whatsappCheck">
-//                 Send recovery code via WhatsApp / Phone
-//               </label>
-//             </div>
-
-//             <button type="submit" className="btn-auth w-100 py-2 fw-bold mb-3">
-//               Reset Password
-//             </button>
-
-//             <div className="text-center small">
-//               <span 
-//                 onClick={() => toggleMode('login')} 
-//                 style={{ color: theme.accentGold, cursor: 'pointer', fontWeight: 'bold' }}>
-//                 <i className="bi bi-arrow-left me-1"></i> Back to Login
-//               </span>
-//             </div>
-//           </form>
-//         )}
-
+//           </div>
+//         </div>
 //       </div>
 
-//       {/* --- STYLES --- */}
-//       <style jsx>{`
-//         .auth-container {
-//           background-color: ${theme.primaryBlue};
-//           min-height: 100vh;
-//           padding: 20px 15px; 
+//       {/* ================= STYLES (Navy Blue & Gold) ================= */}
+//       <style jsx global>{`
+//         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+        
+//         * { box-sizing: border-box; }
+//         body { margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; }
+
+//         .main-wrapper {
+//           display: flex; justify-content: center; align-items: center;
+//           min-height: 100vh; padding: 20px;
 //         }
 
+//         /* Card Container */
 //         .auth-card {
-//           max-width: 450px; 
-//           width: 100%;
-//           border-radius: 12px;
-//           padding: 30px; 
+//           background: white; width: 100%; max-width: 450px;
+//           border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+//           overflow: hidden; transition: max-width 0.4s ease;
 //         }
+//         .auth-card.wide { max-width: 700px; } /* Wider for Profile Form */
 
-//         .form-control, .form-select {
-//           font-size: 14px; 
+//         /* Tabs */
+//         .tabs-header { display: flex; background: #fff; border-bottom: 1px solid #eee; }
+//         .tab-btn {
+//           flex: 1; padding: 18px; border: none; background: transparent;
+//           font-weight: 600; font-size: 14px; color: #666; cursor: pointer;
+//           border-bottom: 3px solid transparent; font-family: 'Open Sans', sans-serif;
 //         }
+//         .tab-btn.active { color: #002b5c; border-bottom: 3px solid #cfa144; }
 
-//         /* Error Border */
-//         .is-invalid {
-//           border-color: ${theme.errorRed} !important;
-//         }
+//         /* Form Layout */
+//         .form-body { padding: 30px; }
+//         .portal-title { text-align: center; color: #002b5c; margin: 0 0 5px 0; font-size: 26px; font-family: 'Merriweather', serif; }
+//         .portal-subtitle { text-align: center; color: #888; margin: 0 0 25px 0; font-size: 14px; }
+//         .section-head { color: #002b5c; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: bold; }
 
-//         /* Focus State */
-//         .form-control:focus, .form-select:focus {
-//           border-color: ${theme.accentGold};
-//           box-shadow: 0 0 0 0.2rem rgba(222, 159, 87, 0.25);
-//         }
+//         /* Inputs */
+//         .form-group { margin-bottom: 15px; }
+//         .row-split { display: flex; gap: 15px; margin-bottom: 15px; }
+//         .col { flex: 1; }
 
-//         .password-icon {
-//           position: absolute;
-//           top: 38px; /* Adjusted based on label height */
-//           right: 10px;
-//           cursor: pointer;
-//           color: #999;
-//           font-size: 1.1rem;
-//         }
+//         .lbl { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; }
+//         .req { color: red; }
+//         .small-text { display: block; font-size: 11px; color: #888; margin-bottom: 5px; }
 
-//         .btn-auth {
-//           background-color: ${theme.accentGold};
-//           color: ${theme.white};
-//           border: 2px solid ${theme.accentGold};
-//           border-radius: 6px;
-//           transition: all 0.3s ease-in-out;
-//         }
+//         .inp, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; color: #333; outline: none; }
+//         .inp:focus { border-color: #002b5c; }
+        
+//         .file-box { background: #fafafa; border: 1px dashed #ccc; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+//         .inp-file { font-size: 12px; width: 100%; }
 
-//         .btn-auth:hover {
-//           background-color: ${theme.white} !important;
-//           color: ${theme.primaryBlue} !important;
-//           border-color: ${theme.white};
-//         }
+//         /* Buttons */
+//         .action-btn { width: 100%; padding: 12px; background: #002b5c; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+//         .action-btn:hover { background: #001f42; }
+
+//         /* Links & Utility */
+//         .forgot-link { text-align: right; margin-bottom: 20px; }
+//         .forgot-link a { color: #002b5c; font-size: 13px; text-decoration: none; }
+        
+//         .toggle-text { text-align: center; margin-top: 20px; font-size: 14px; color: #666; }
+//         .toggle-text span { color: #cfa144; font-weight: bold; cursor: pointer; }
+        
+//         .captcha-box { background: #eee; padding: 8px; text-align: center; letter-spacing: 4px; font-weight: bold; border: 1px solid #ddd; margin-bottom: 5px; color: #333; }
+        
+//         .terms-box { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 15px 0; }
+        
+//         .alert-msg { padding: 10px; font-size: 13px; text-align: center; border-radius: 4px; margin-bottom: 15px; }
+//         .alert-msg.error { background: #ffe6e6; color: #d63031; border: 1px solid #ff7675; }
+//         .alert-msg.success { background: #e6fffa; color: #00b894; border: 1px solid #55efc4; }
+
+//         .fade-in { animation: fadeIn 0.5s; }
+//         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 //       `}</style>
-//     </div>
+//     </>
 //   );
 // }
-
-// export default LoginSignup;
