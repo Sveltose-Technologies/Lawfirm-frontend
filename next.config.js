@@ -1,28 +1,24 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  
+  // --- YAHAN SE '//' HATA DEIN (Ye line active honi chahiye) ---
+  output: "export", 
 
-  // --- CHANGE 1: Enable Static Export ---
-  output: "export",
-
-  // 1. Minification (Aapka setting)
   swcMinify: false,
-
-  // 2. Images Config
+  
   images: {
-    // --- CHANGE 2: Static Export ke liye ye zaroori hai ---
-    unoptimized: true,
+    unoptimized: true, // Ye bhi zaroori hai
     domains: ["images.unsplash.com", "images.pexels.com"],
   },
 
-  // 3. Build Optimizations
-  eslint: {
-    ignoreDuringBuilds: true,
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+  
+  webpack: (config) => {
+    config.cache = false;
+    return config;
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  productionBrowserSourceMaps: false,
 };
 
 module.exports = nextConfig;

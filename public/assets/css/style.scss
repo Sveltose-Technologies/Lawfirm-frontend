@@ -4881,7 +4881,7 @@ header.style-5 {
     display: flex;
     flex-flow: row wrap;
     gap: 80px;
-    justify-content: start;
+    
     @include md-device(){
         gap: 50px;
     }
@@ -5429,7 +5429,7 @@ header.style-5 {
             }
             .list-title{
                 display: flex;
-                justify-content: start;
+                
                 align-items: center;
                 gap: 20px;
                 @include md-down-device(){
@@ -7251,7 +7251,7 @@ h3.comment-title{
     .single-comment{
         @include flex(start);
         gap: 20px;
-        align-items: start;
+       align-items: flex-start;
         border: 1px solid #EEEEEE;
         border-radius: 5px;
         padding: 35px 20px 25px 20px;

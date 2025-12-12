@@ -177,7 +177,7 @@ function Footer() {
             {/* Keeping original logo src as placeholder, or replace with GT logo if you have it */}
             <img src="assets/images/VTU9T9WZ-logo.png" alt="Greenberg Traurig" />
             <p>
-              Greenberg Traurig, LLP.<br/>
+          NRIS LAW FIRM LLP<br/>
               Attorney Advertising.<br/>
               All rights reserved.
             </p>
@@ -272,7 +272,7 @@ function Footer() {
                   </svg>
                 </div>
                 <div className="text">
-                  One Vanderbilt Avenue, New York, NY 10017
+                  Tadepalle, Guntur District, Andhra Pradesh, 522501
                 </div>
               </li>
             </ul>
@@ -322,7 +322,7 @@ function Footer() {
     <div className="footer-bottom">
       <div className="row d-flex align-items-center g-3">
         <div className="col-lg-6 d-flex justify-content-lg-start justify-content-center text-lg-start text-center px-1">
-          <p>© 2025 Greenberg Traurig, LLP. All rights reserved.</p>
+          <p>©2025 NRIS LAW FIRM LLP All rights reserved.</p>
         </div>
         <div className="col-lg-6 d-flex justify-content-lg-end justify-content-center align-items-center">
           <ul className="f-bottom-list d-flex jusify-content-start align-items-center">
