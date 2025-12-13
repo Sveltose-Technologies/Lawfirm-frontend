@@ -3536,9 +3536,14 @@ header.style-5 .main-nav ul li.menu-item-has-children > i {
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(32, 32, 32, 0.5)), to(rgba(32, 32, 32, 0.5))), url("../images/bg/banner1-bg.png");
-  background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)), url("../images/bg/banner1-bg.png");
-  background-size: cover;
+/* Note: Path ab '/assets' se shuru ho raha hai */
+
+background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(32, 32, 32, 0.5)), to(rgba(32, 32, 32, 0.5))), url("/assets/images/bg/banner1-bg.png");
+
+background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)), url("/assets/images/bg/banner1-bg.png");
+
+background-size: cover;
+
   background-repeat: no-repeat;
   z-index: -1;
   -webkit-animation: zoom 12s linear infinite alternate;
@@ -4294,18 +4299,7 @@ header.style-5 .main-nav ul li.menu-item-has-children > i {
   }
 }
 
-.banner-section3 .banner3-bg {
-  width: 100%;
-  max-width: 1545px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-image: url("../images/bg/banner31.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: -1;
-}
+
 
 @media (min-width: 1400px) and (max-width: 1830px) {
   .banner-section3 .banner3-bg {

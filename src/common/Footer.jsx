@@ -175,7 +175,7 @@ function Footer() {
         <div className="col-lg-3 col-md-6">
           <div className="footer-about">
             {/* Keeping original logo src as placeholder, or replace with GT logo if you have it */}
-            <img src="assets/images/VTU9T9WZ-logo.png" alt="Greenberg Traurig" />
+            <img src="/assets/images/logo.png" alt="Greenberg Traurig" />
             <p>
           NRIS LAW FIRM LLP<br/>
               Attorney Advertising.<br/>
@@ -286,7 +286,7 @@ function Footer() {
             <ul className="recent-caselist">
               <li>
                 <div className="image">
-                  <img src="assets/images/blog/recent-case1.png" alt="image" />
+                  <img src="assets/images/blog/recent-case2.png" alt="image" />
                 </div>
                 <div className="text">
                   <span>Europe</span>

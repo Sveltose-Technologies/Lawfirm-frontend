@@ -295,8 +295,8 @@ import React, { useEffect, useState } from 'react'
 
 function Header() {
   const [isSticky, setIsSticky] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
-  const [dropdownOpen, setDropdownOpen] = useState(false); // NEW: Specific state for About Dropdown
+  const [isOpen, setIsOpen] = useState(false); 
+  const [dropdownOpen, setDropdownOpen] = useState(false); 
   const router = useRouter();
 
   // --- SETTINGS ---
@@ -322,18 +322,18 @@ function Header() {
     };
   }, []);
 
-  // Modified: Close both menu and dropdown on link click
+
   const handleLinkClick = (e, path) => {
     setIsOpen(false); 
-    setDropdownOpen(false); // Close dropdown when link is clicked
+    setDropdownOpen(false); 
     if (router.pathname === path) {
       e.preventDefault(); 
     }
   };
 
-  // NEW: Handle Mobile Dropdown Toggle
+  
   const toggleDropdown = (e) => {
-    if (window.innerWidth < 1200) { // Only affect mobile/tablet
+    if (window.innerWidth < 1200) { 
         e.preventDefault();
         setDropdownOpen(!dropdownOpen);
     }
@@ -364,7 +364,7 @@ function Header() {
   const navLinkStyle = {
     color: '#ffffff',
     fontWeight: '600',
-    fontSize: '20px', // UPDATED: Font size badha diya hai (pehle 15px tha)
+    fontSize: '20px', 
     padding: '10px 15px',
     whiteSpace: 'nowrap',
     transition: 'color 0.3s'
@@ -384,7 +384,7 @@ function Header() {
     justifyContent: 'center',
     borderRadius: '5px',
     fontWeight: '600',
-    fontSize: '15px', // Button font also slightly increased
+    fontSize: '15px', 
     textDecoration: 'none',
     cursor: 'pointer',
     border: 'none',
@@ -394,20 +394,20 @@ function Header() {
   return (
     <>
       <style jsx>{`
-        /* Mobile Menu Background Fix */
+     
         @media (max-width: 1199px) {
             .navbar-collapse {
                 background-color: #000000;
                 padding: 20px;
                 border-top: 1px solid rgba(255,255,255,0.1);
-                max-height: 80vh; /* Scrollable if too long */
+                max-height: 80vh; 
                 overflow-y: auto;
             }
             /* Show dropdown when React state is true on mobile */
             .dropdown-menu.show {
                 display: block;
-                background: #111; /* Slightly lighter black for contrast */
-                margin-left: 10px; /* Indentation for hierarchy */
+                background: #111; 
+                margin-left: 10px; 
                 border: none;
             }
         }
@@ -424,7 +424,7 @@ function Header() {
         .dropdown-menu {
             background-color: #000000;
             border: 1px solid rgba(255,255,255,0.2);
-            display: none; /* Hidden by default */
+            display: none; 
         }
         
         /* Ensures React state 'show' class works */
@@ -434,7 +434,7 @@ function Header() {
 
         .dropdown-item {
             color: #ffffff;
-            font-size: 16px; /* Dropdown items font size */
+            font-size: 16px; 
             padding: 10px 20px;
             transition: all 0.2s ease;
         }
@@ -461,10 +461,12 @@ function Header() {
                 <Link href="/">
                     <a className="navbar-brand" onClick={(e) => handleLinkClick(e, '/')}>
                         <img
-                            alt="image"
-                            src="/assets/images/VTU9T9WZ-logo.png"
-                            style={{ maxWidth: '160px', maxHeight: '45px', objectFit: 'contain' }}
-                        />
+    alt="law firm logo"
+    src="/assets/images/logo.png"  
+    width="180"
+    height="55"
+    style={{ objectFit: 'contain' }}
+/>
                     </a>
                 </Link>
 
@@ -499,7 +501,6 @@ function Header() {
                                 href="#" 
                                 id="aboutDropdown" 
                                 role="button" 
-                                // UPDATED: Using onClick for mobile toggle
                                 onClick={toggleDropdown}
                                 aria-expanded={dropdownOpen}
                                 style={{...navLinkStyle, ...(isParentActive(['/our-firm', '/awards-ccolades', '/promoters']) ? activeLinkStyle : {})}}
@@ -604,4 +605,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Header;
