@@ -311,7 +311,7 @@ function OurFirm() {
             <div className="col-lg-6 mb-4 mb-lg-0">
                <div style={{ height: '400px', overflow: 'hidden' }}>
                  <img 
-                   src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?q=80&w=800&auto=format&fit=crop" 
+                   src="/assets/images/our-firm1.png" 
                    alt="Awards" 
                    className="img-fluid w-100 h-100 rounded shadow"
                    style={{ objectFit: 'cover' }} 
@@ -365,7 +365,7 @@ function OurFirm() {
             <div className="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
                <div style={{ height: '400px', overflow: 'hidden' }}>
                  <img 
-                   src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=800&auto=format&fit=crop" 
+                   src="/assets/images/our-firm2.png" 
                    alt="Innovation" 
                    className="img-fluid w-100 h-100 rounded shadow"
                    style={{ objectFit: 'cover' }} 
@@ -387,7 +387,7 @@ function OurFirm() {
             <div className="col-lg-6 mb-4 mb-lg-0">
                <div style={{ height: '400px', overflow: 'hidden' }}>
                  <img 
-                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop" 
+                   src="/assets/images/our-firm3.png" 
                    alt="Culture" 
                    className="img-fluid w-100 h-100 rounded shadow"
                    style={{ objectFit: 'cover' }} 
@@ -478,7 +478,7 @@ function OurFirm() {
             <div className="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
                <div style={{ height: '400px', overflow: 'hidden' }}>
                  <img 
-                   src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop" 
+                   src="/assets/images/our-firm4.png" 
                    alt="History" 
                    className="img-fluid w-100 h-100 rounded shadow"
                    style={{ objectFit: 'cover' }} 

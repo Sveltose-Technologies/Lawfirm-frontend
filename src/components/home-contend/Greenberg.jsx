@@ -11,7 +11,7 @@ export default function Greenberg() {
           <div className="col-lg-6 order-1 order-lg-1">
             <div style={{ height: "100%", minHeight: "500px" }}>
               <img
-                src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1000&auto=format&fit=crop"
+                src="assets/images/banner-img5.png"
                 alt="Greenberg Traurig Alumni Network"
                 className="img-fluid w-100 h-100"
                 style={{ objectFit: "cover" }}

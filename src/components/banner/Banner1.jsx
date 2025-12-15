@@ -595,7 +595,7 @@ function Banner1() {
 
             <div className="col-lg-5 mb-5 mb-lg-0 text-center text-lg-start">
               <img
-                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=800&auto=format&fit=crop"
+                src="/assets/images/banner-img2.png"
                 alt="Larry J. Hoffman"
                 className="img-fluid rounded shadow"
                 style={{ borderLeft: '5px solid #D4AF37' }}
@@ -653,7 +653,7 @@ function Banner1() {
             <div className="col-lg-6">
               <div style={{ height: "100%", minHeight: '400px' }}>
                 <img
-                  src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=800&auto=format&fit=crop"
+                  src="assets/images/banner-img3.png"
                   alt="White House"
                   className="img-fluid w-100 h-100"
                   style={{ objectFit: "cover" }}
@@ -707,7 +707,7 @@ function Banner1() {
             <div className="col-lg-6 order-lg-2 order-1">
               <div style={{ height: '100%', minHeight: '400px' }}>
                 <img 
-                  src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1000&auto=format&fit=crop" 
+                  src="/assets/images/banner-img4.png" 
                   alt="Abstract Architecture" 
                   className="img-fluid w-100 h-100"
                   style={{ objectFit: 'cover' }}

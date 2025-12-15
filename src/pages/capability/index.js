@@ -232,7 +232,7 @@ function Capabilities() {
       <div
         className="position-relative d-flex align-items-center justify-content-center"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop")',
+          backgroundImage: 'url(/assets/images/our-firm4.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           height: '400px'

@@ -15,7 +15,7 @@ export const attorneysData = [
     category: 'Corporate', 
     rating: 5,
     hourlyRate: 350,
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=800&auto=format&fit=crop',
+    image: '/assets/images/attorney1.png',
     bio: ["Caroline K. Abbott focuses her practice on corporate matters, including mergers and acquisitions.", "She has experience representing public and private companies."],
     education: ["J.D., Harvard Law School", "B.A., Yale University"],
     admissions: ["New York", "Washington, D.C."]
@@ -30,7 +30,7 @@ export const attorneysData = [
     category: 'Intellectual Property',
     rating: 4,
     hourlyRate: 280,
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop',
+    image: '/assets/images/attorney2.png',
     bio: ["Jacob M. Abdo advises clients on intellectual property matters.", "He assists clients in protecting their intellectual property assets."],
     education: ["J.D., Yale University", "B.S., University of Minnesota"],
     admissions: ["Minnesota"]
@@ -45,7 +45,7 @@ export const attorneysData = [
     category: 'Data Privacy',
     rating: 5,
     hourlyRate: 700,
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
+    image: '/assets/images/attorney3.png',
     bio: ["Darren J. Abernethy focuses on data privacy and cybersecurity.", "He advises on GDPR, CCPA, and other data protection laws."],
     education: ["J.D., Stanford Law", "B.A., UCLA"],
     admissions: ["California"]
@@ -60,7 +60,7 @@ export const attorneysData = [
     category: 'Real Estate',
     rating: 3,
     hourlyRate: 450,
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop',
+    image: '/assets/images/attorney4.png',
     bio: ["Charles J. Abrams has extensive experience in commercial real estate transactions.", "He represents developers, investors, and lenders."],
     education: ["J.D., University of Florida", "B.A., University of Miami"],
     admissions: ["Florida"]
@@ -75,7 +75,7 @@ export const attorneysData = [
     category: 'Corporate',
     rating: 5,
     hourlyRate: 900,
-    image: 'https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=800&auto=format&fit=crop',
+     image: '/assets/images/attorney5.png',
     bio: ["Ejim Peter Achi represents private equity sponsors and their portfolio companies.", "His practice focuses on leveraged buyouts and growth equity."],
     education: ["J.D., Columbia Law School", "B.A., University of Pennsylvania"],
     admissions: ["New York"]
@@ -90,7 +90,7 @@ export const attorneysData = [
     category: 'Real Estate',
     rating: 4,
     hourlyRate: 550,
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
+    image: '/assets/images/attorney6.png',
     bio: ["Ashia D. Adams is a member of the Real Estate Practice in London.", "She handles complex cross-border transactions."],
     education: ["LLB, Oxford University", "LPC, BPP Law School"],
     admissions: ["England & Wales"]
@@ -105,7 +105,7 @@ export const attorneysData = [
     category: 'Litigation',
     rating: 5,
     hourlyRate: 400,
-    image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=800&auto=format&fit=crop',
+    image: '/assets/images/attorney7.png',
     bio: ["Bianca specializes in commercial litigation and dispute resolution.", "She has a strong track record in mediation."],
     education: ["J.D., UCLA Law", "B.A., USC"],
     admissions: ["California", "Nevada"]

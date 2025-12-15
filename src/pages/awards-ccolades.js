@@ -1,141 +1,228 @@
-/* eslint-disable react/no-unescaped-entities */
-import React from 'react'
 
-function FirmOverview() {
 
-  // --- Handle Dead Click (No Action, No Error) ---
-  const handleDeadClick = (e) => {
-    e.preventDefault(); // पेज को रिफ्रेश होने या कहीं जाने से रोकता है
+import React, { useState } from 'react';
+
+// --- 1. MOCK DATA (Ye Data Excel Sheet jaisa hai) ---
+const excelData = [
+  { 
+    id: 1, 
+    presenter: "The Legal 500", 
+    recipient: "Amit Sharma", 
+    year: "2023", 
+    award: "Leading Individual", 
+    details: "Recognized for excellence in Corporate M&A." 
+  },
+  { 
+    id: 2, 
+    presenter: "Chambers and Partners", 
+    recipient: "Priya Verma", 
+    year: "2022", 
+    award: "Band 1 Lawyer", 
+    details: "Top ranked in Dispute Resolution." 
+  },
+  { 
+    id: 3, 
+    presenter: "Asian Legal Business", 
+    recipient: "Rahul Mehta", 
+    year: "2023", 
+    award: "Rising Star", 
+    details: "Awarded for significant contribution in IP Law." 
+  },
+  { 
+    id: 4, 
+    presenter: "Forbes Legal Powerlist", 
+    recipient: "Amit Sharma", 
+    year: "2021", 
+    award: "Top 100 Lawyers", 
+    details: "Featured in the prestigious powerlist." 
+  },
+  { 
+    id: 5, 
+    presenter: "The Legal 500", 
+    recipient: "Firm Wide", 
+    year: "2023", 
+    award: "Tier 1 Firm", 
+    details: "Banking and Finance Sector." 
+  },
+  { 
+    id: 6, 
+    presenter: "IBLJ Awards", 
+    recipient: "Vikram Singh", 
+    year: "2020", 
+    award: "Deal Maker of the Year", 
+    details: "For handling cross-border transactions." 
+  },
+];
+
+function AwardsAccolades() {
+  
+  // --- States for Search Filters ---
+  const [filters, setFilters] = useState({
+    presenter: '',
+    recipient: '', // Search Person Name
+    year: ''
+  });
+
+  // --- State for Displayed Data ---
+  const [data, setData] = useState(excelData);
+
+  // --- Handle Input Change ---
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+  };
+
+  // --- Handle Search Logic ---
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const filteredData = excelData.filter((item) => {
+      return (
+        item.presenter.toLowerCase().includes(filters.presenter.toLowerCase()) &&
+        item.recipient.toLowerCase().includes(filters.recipient.toLowerCase()) &&
+        item.year.includes(filters.year)
+      );
+    });
+    setData(filteredData);
+  };
+
+  // --- Handle Reset ---
+  const handleReset = () => {
+    setFilters({ presenter: '', recipient: '', year: '' });
+    setData(excelData);
   };
 
   return (
     <>
-     
       {/* ==========================================================================
           1. BANNER SECTION
       ========================================================================== */}
       <div className="inner-banner-section" style={{
-          backgroundImage: 'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1920&auto=format&fit=crop)', 
-          padding: '160px 0', 
+          backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/assets/images/award-banner.png)', 
+          padding: '140px 0', 
           backgroundSize: 'cover', 
           backgroundPosition: 'center', 
           textAlign: 'center'
         }}>
         <div className="container">
-          <div className="row justify-content-center">
-             <div className="col-lg-10">
-                <h1 className="text-white display-3 fw-bold">Firm Overview</h1>
-                <p className="text-white lead fs-4">Global Reach. Local Experience. Unmatched Dedication.</p>
-             </div>
-          </div>
+           <h1 className="text-white display-4 fw-bold">Awards & Accolades</h1>
+           <p className="text-white lead">Recognizing Excellence in Legal Practice</p>
         </div>
       </div>
 
       {/* ==========================================================================
-          2. WHO WE ARE
+          2. SEARCH & FILTER SECTION
       ========================================================================== */}
-      <div className="about-section py-5 my-5">
-        <div className="container">
-          <div className="row align-items-center gx-5">
-            <div className="col-lg-6 mb-5 mb-lg-0">
-               <div className="position-relative">
-                   <img 
-                     src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800&auto=format&fit=crop" 
-                     alt="Firm Overview" 
-                     className="img-fluid shadow-lg" 
-                     style={{ borderBottom: '10px solid #0a1c38' }}
-                   />
-                   <div style={{
-                       position: 'absolute', 
-                       bottom: '-20px', 
-                       right: '-20px', 
-                       background: '#CFA167', 
-                       padding: '30px',
-                       color: '#000',
-                       fontWeight: 'bold'
-                   }} className="d-none d-md-block shadow">
-                       <h3 className="m-0 display-4">20+</h3>
-                       <span>Years Experience</span>
-                   </div>
-               </div>
-            </div>
+      <div className="container py-5">
+        
+        {/* Search Card */}
+        <div className="card shadow-sm border-0 mb-5" style={{ backgroundColor: '#f8f9fa' }}>
+            <div className="card-body p-4">
+                <h5 className="mb-4 fw-bold" style={{ color: '#0a1c38' }}>
+                    <i className="bi bi-search me-2" style={{ color: '#CFA167' }}></i>
+                    Search Awards
+                </h5>
+                <form onSubmit={handleSearch}>
+                    <div className="row g-3">
+                        
+                        {/* Search by Presenter */}
+                        <div className="col-md-3">
+                            <label className="form-label fw-bold small text-muted">Presenter / Organization</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="e.g. Legal 500" 
+                                name="presenter"
+                                value={filters.presenter}
+                                onChange={handleInputChange}
+                            />
+                        </div>
 
-            <div className="col-lg-6">
-              <div className="about-content ps-lg-4">
-                <h6 style={{color: '#CFA167', letterSpacing: '2px', fontWeight: 'bold', textTransform: 'uppercase'}}>Who We Are</h6>
-                <h2 className="mb-4 display-6 fw-bold text-dark">We Specialise In All Criminal Law & Business Matters</h2>
-                <p className="text-muted lead" style={{ fontSize: '1.1rem', lineHeight: '1.7' }}>
-                  We are a leading global law firm with a history of delivering quality legal services to our clients. 
-                  Our team of experienced attorneys is dedicated to providing strategic, practical, and innovative legal solutions tailored to your unique needs.
-                </p>
-                <p className="text-muted mb-4">
-                  Whether you are a startup, a growing business, or a multinational corporation, we have the expertise to help you navigate the complex legal landscape with confidence.
-                </p>
-                
-                <div className="mt-5">
-                   {/* Changed Link to dead anchor tag */}
-                   <a href="#" onClick={handleDeadClick} className="btn btn-dark px-5 py-3 rounded-0 text-uppercase fw-bold" style={{backgroundColor: '#0a1c38'}}>
-                     Contact Us Today
-                   </a>
-                </div>
-              </div>
+                        {/* Search by Person Name */}
+                        <div className="col-md-3">
+                            <label className="form-label fw-bold small text-muted">Person Name / Recipient</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                placeholder="e.g. Amit Sharma" 
+                                name="recipient"
+                                value={filters.recipient}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+
+                        {/* Search by Year */}
+                        <div className="col-md-3">
+                            <label className="form-label fw-bold small text-muted">Year</label>
+                            <select 
+                                className="form-select" 
+                                name="year"
+                                value={filters.year}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">All Years</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                            </select>
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="col-md-3 d-flex align-items-end">
+                            <button type="submit" className="btn text-white w-50 me-2" style={{ backgroundColor: '#0a1c38' }}>Search</button>
+                            <button type="button" onClick={handleReset} className="btn btn-outline-secondary w-50">Reset</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
         </div>
+
+        {/* ==========================================================================
+            3. DATA TABLE SECTION
+        ========================================================================== */}
+        <div className="table-responsive shadow-sm">
+            <table className="table table-hover table-bordered align-middle mb-0">
+                <thead className="text-white" style={{ backgroundColor: '#0a1c38' }}>
+                    <tr>
+                        <th className="py-3 ps-3">Year</th>
+                        <th className="py-3">Presenter / Organization</th>
+                        <th className="py-3">Awards / Rankings</th>
+                        <th className="py-3">Recipient (Person/Firm)</th>
+                        <th className="py-3">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.length > 0 ? (
+                        data.map((row) => (
+                            <tr key={row.id}>
+                                <td className="ps-3 fw-bold" style={{ color: '#CFA167' }}>{row.year}</td>
+                                <td className="fw-semibold">{row.presenter}</td>
+                                <td>
+                                    <span className="badge bg-light text-dark border">
+                                        {row.award}
+                                    </span>
+                                </td>
+                                <td>{row.recipient}</td>
+                                <td className="text-muted small">{row.details}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5" className="text-center py-5">
+                                <h5 className="text-muted">No records found matching your criteria.</h5>
+                                <button className="btn btn-link text-decoration-none" onClick={handleReset}>Clear Filters</button>
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+        
+       
       </div>
-
-      {/* ==========================================================================
-          3. OUR VALUES / WHY CHOOSE US
-      ========================================================================== */}
-      <div className="why-choose-us py-5" style={{ backgroundColor: '#0a1c38', color: '#fff' }}>
-         <div className="container py-5">
-            <div className="row mb-5 text-center">
-                <div className="col-lg-8 mx-auto">
-                    <span className="fw-bold text-uppercase" style={{color: '#CFA167', letterSpacing: '1px'}}>Our Core Values</span>
-                    <h2 className="display-4 fw-bold mt-2">Why Choose Us?</h2>
-                    <p className="lead text-white-50">We combine deep legal expertise with a thorough understanding of your business goals to deliver exceptional results.</p>
-                </div>
-            </div>
-            
-            <div className="row g-4">
-               {/* Card 1 */}
-               <div className="col-lg-4 col-md-6">
-                  <div className="card h-100 text-center p-4" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                     <div className="mb-4">
-                        <i className="bi bi-globe2" style={{fontSize: '3.5rem', color: '#CFA167'}}></i>
-                     </div>
-                     <h4 className="text-white fw-bold">Global Reach</h4>
-                     <p className="text-white-50 mt-3">With offices in major cities worldwide, we serve clients around the globe, providing seamless cross-border legal support.</p>
-                  </div>
-               </div>
-
-               {/* Card 2 */}
-               <div className="col-lg-4 col-md-6">
-                  <div className="card h-100 text-center p-4" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                     <div className="mb-4">
-                        <i className="bi bi-people-fill" style={{fontSize: '3.5rem', color: '#CFA167'}}></i>
-                     </div>
-                     <h4 className="text-white fw-bold">Experienced Team</h4>
-                     <p className="text-white-50 mt-3">Our attorneys are recognized leaders in their fields, bringing decades of experience and industry knowledge to every case.</p>
-                  </div>
-               </div>
-
-               {/* Card 3 */}
-               <div className="col-lg-4 col-md-6">
-                  <div className="card h-100 text-center p-4" style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
-                     <div className="mb-4">
-                        <i className="bi bi-shield-check" style={{fontSize: '3.5rem', color: '#CFA167'}}></i>
-                     </div>
-                     <h4 className="text-white fw-bold">Client Focused</h4>
-                     <p className="text-white-50 mt-3">We prioritize our clients' goals above all else, working tirelessly with integrity and transparency to achieve the best outcomes.</p>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-
     </>
   )
 }
 
-export default FirmOverview;
+export default AwardsAccolades;
