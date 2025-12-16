@@ -774,359 +774,11 @@
 //   );
 // }
 
-
-// 'use client';
-
-// import { useState } from 'react';
-
-// // --- PLACEHOLDER DASHBOARDS ---
-// const ClientDashboard = () => (
-//   <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-//     <div className="text-center p-5 shadow bg-white rounded">
-//       <h1 className="text-primary">🏛️ Client Dashboard</h1>
-//       <p className="lead">Welcome! You are logged in as a Client.</p>
-//     </div>
-//   </div>
-// );
-
-// const AttorneyDashboard = () => (
-//   <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-//     <div className="text-center p-5 shadow bg-white rounded">
-//       <h1 className="text-warning text-dark">⚖️ Attorney Dashboard</h1>
-//       <p className="lead">Welcome! You are logged in as an Attorney.</p>
-//     </div>
-//   </div>
-// );
-
-// // --- MAIN COMPONENT START ---
-// export default function UnifiedAuthPage() {
-
-//   // --- COUNTRY CODES LIST ---
-//   const countryCodes = [
-//     { name: "India", code: "+91" },
-//     { name: "USA/Canada", code: "+1" },
-//     { name: "UK", code: "+44" },
-//     { name: "Australia", code: "+61" },
-//     { name: "UAE", code: "+971" },
-//   ];
-
-//   // --- STATES ---
-//   const [userRole, setUserRole] = useState('Client'); 
-//   const [view, setView] = useState('login'); // 'login' or 'signup'
-//   // Step state hata diya gaya hai
-//   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-//   // Messages
-//   const [error, setError] = useState('');
-//   const [successMsg, setSuccessMsg] = useState('');
-
-//   // --- FORM DATA STATE ---
-//   const [formData, setFormData] = useState({
-//     firstName: '', lastName: '', email: '', password: '', repeatPassword: '', captcha: '',
-//     street: '', apt: '', city: '', state: '', country: '', zip: '',
-//     countryCode: '+91', phone: '', dob: '',
-//     terms: false
-//   });
-
-//   // Handle Inputs
-//   const handleInput = (e) => {
-//     const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-//     setFormData({ ...formData, [e.target.name]: value });
-//   };
-
-//   // --- ACTIONS ---
-
-//   // 1. LOGIN
-//   const handleLogin = (e) => {
-//     e.preventDefault();
-//     if (formData.email === 'error@lawfirm.com') {
-//       setError('Invalid Email ID or Password');
-//       return;
-//     }
-//     if(formData.email.includes('attorney')) {
-//         setUserRole('Attorney');
-//     } else {
-//         setUserRole('Client');
-//     }
-//     setIsAuthenticated(true);
-//   };
-
-//   // 2. SIGN UP (SINGLE STEP NOW)
-//   const handleSignup = (e) => {
-//     e.preventDefault();
-//     setError('');
-//     setSuccessMsg('');
-
-//     // --- VALIDATIONS ---
-    
-//     // Basic Empty Check
-//     if(!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
-//         setError("Basic details are mandatory.");
-//         return;
-//     }
-
-//     // Email Validation
-//     if (formData.email === 'exist@lawfirm.com') {
-//       setError('Error: This Email ID is already registered.');
-//       return;
-//     }
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!emailRegex.test(formData.email)) {
-//         setError('Invalid Email Format');
-//         return;
-//     }
-
-//     // Password Match & Strength
-//     if (formData.password !== formData.repeatPassword) {
-//       setError('Passwords do not match!');
-//       return;
-//     }
-//     if (formData.password.length < 6) {
-//         setError('Password must be at least 6 characters long.');
-//         return;
-//     }
-
-//     // Captcha Validation
-//     if (formData.captcha.toUpperCase() !== 'X7K9B') {
-//       setError('Invalid Captcha!');
-//       return;
-//     }
-    
-//     // Terms Validation
-//     if (!formData.terms) {
-//         setError('You must accept the Terms and Conditions.');
-//         return;
-//     }
-
-//     // If All Valid -> Create Account
-//     setSuccessMsg('Processing registration...');
-
-//     setTimeout(() => {
-//       alert(`Account Created for ${userRole}!\nGenerated ID: MEM-${Math.floor(1000 + Math.random() * 9000)}`);
-//       setSuccessMsg('');
-//       setView('login');
-//       // Reset Form Logic could go here
-//     }, 1500);
-//   };
-
-//   // RENDER DASHBOARD
-//   if (isAuthenticated) {
-//     if (userRole === 'Client') return <ClientDashboard />;
-//     if (userRole === 'Attorney') return <AttorneyDashboard />;
-//   }
-
-//   return (
-//     <>
-//       <div className="main-wrapper">
-//         {/* 'wide-mobile' class added for signup since it's a single form now */}
-//         <div className={`auth-card ${view === 'signup' ? 'wide-mobile' : ''}`}>
-
-//           <div className="form-body">
-
-//             {/* LOGIN FORM */}
-//             {view === 'login' && (
-//               <div className="fade-in">
-//                 <h2 className="portal-title">Welcome Back</h2>
-//                 <p className="portal-subtitle">Please Sign In to continue</p>
-
-//                 {error && <div className="alert-msg error">{error}</div>}
-
-//                 <form onSubmit={handleLogin}>
-//                   <div className="form-group">
-//                     <label className="lbl">Email ID <span className="req">*</span></label>
-//                     <input type="email" name="email" className="inp" placeholder="email@lawfirm.com" onChange={handleInput} required />
-//                   </div>
-//                   <div className="form-group">
-//                     <label className="lbl">Password <span className="req">*</span></label>
-//                     <input type="password" name="password" className="inp" onChange={handleInput} required />
-//                   </div>
-                  
-//                   <div className="forgot-link">
-//                     <a href="#" onClick={(e) => e.preventDefault()}>Forgot Password?</a>
-//                   </div>
-                  
-//                   <button type="submit" className="action-btn">Log In</button>
-
-//                   <div className="toggle-text">
-//                     New User? <span onClick={() => { setView('signup'); setError(''); }}>Create Account</span>
-//                   </div>
-//                 </form>
-//               </div>
-//             )}
-
-//             {/* SIGN UP FORM (MERGED INTO ONE) */}
-//             {view === 'signup' && (
-//               <div className="fade-in">
-//                 <h2 className="portal-title">Create Account</h2>
-//                 <p className="portal-subtitle">Join us as a {userRole}</p>
-                
-//                 {/* Role Selector */}
-//                 <div className="role-selector">
-//                     <div className="role-btns">
-//                         <button 
-//                             type="button"
-//                             className={`role-btn ${userRole === 'Client' ? 'active' : ''}`}
-//                             onClick={() => setUserRole('Client')}
-//                         >
-//                             Client
-//                         </button>
-//                         <button 
-//                             type="button"
-//                             className={`role-btn ${userRole === 'Attorney' ? 'active' : ''}`}
-//                             onClick={() => setUserRole('Attorney')}
-//                         >
-//                             Attorney
-//                         </button>
-//                     </div>
-//                 </div>
-
-//                 {error && <div className="alert-msg error">{error}</div>}
-//                 {successMsg && <div className="alert-msg success">{successMsg}</div>}
-
-//                 <form onSubmit={handleSignup}>
-                  
-//                   {/* --- PART 1: ACCOUNT DETAILS --- */}
-//                   <h4 className="section-head mt-0">Account Details</h4>
-                  
-//                   <div className="row-split">
-//                     <div className="col">
-//                       <label className="lbl">First Name <span className="req">*</span></label>
-//                       <input type="text" name="firstName" className="inp" onChange={handleInput} required />
-//                     </div>
-//                     <div className="col">
-//                       <label className="lbl">Last Name <span className="req">*</span></label>
-//                       <input type="text" name="lastName" className="inp" onChange={handleInput} required />
-//                     </div>
-//                   </div>
-
-//                   <div className="form-group">
-//                     <label className="lbl">Email ID <span className="req">*</span></label>
-//                     <input type="email" name="email" className="inp" onChange={handleInput} required />
-//                   </div>
-
-//                   <div className="row-split">
-//                     <div className="col">
-//                         <label className="lbl">Password <span className="req">*</span></label>
-//                         <input type="password" name="password" className="inp" onChange={handleInput} required />
-//                     </div>
-//                     <div className="col">
-//                         <label className="lbl">Repeat Password <span className="req">*</span></label>
-//                         <input type="password" name="repeatPassword" className="inp" onChange={handleInput} required />
-//                     </div>
-//                   </div>
-
-                
-//                   <div className="form-group">
-//                     <label className="lbl">Captcha <span className="req">*</span></label>
-//                     <div className="captcha-box">X 7 K 9 B</div>
-//                     <input type="text" name="captcha" className="inp" placeholder="Enter Code" onChange={handleInput} required />
-//                   </div>
-
-//                   <div className="terms-box">
-//                     <input type="checkbox" name="terms" id="terms" required onChange={handleInput} />
-//                     <label htmlFor="terms">I accept the Terms and Conditions.</label>
-//                   </div>
-
-//                   <button type="submit" className="action-btn">Register Now</button>
-                  
-//                   <div className="toggle-text">
-//                     Already Have An Account? <span onClick={() => setView('login')}>Sign In</span>
-//                   </div>
-//                 </form>
-//               </div>
-//             )}
-
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* STYLES */}
-//       <style jsx global>{`
-//         @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
-        
-//         * { box-sizing: border-box; }
-//         body { margin: 0; padding: 0; font-family: 'Open Sans', sans-serif; background-color: #f4f7f6; }
-
-//         .main-wrapper {
-//           display: flex; justify-content: center; align-items: center;
-//           min-height: 100vh; padding: 20px;
-//         }
-
-//         .auth-card {
-//           background: white; width: 100%; max-width: 450px;
-//           border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-//           overflow: hidden; transition: max-width 0.4s ease;
-//           border-top: 5px solid #002b5c; 
-//         }
-        
-//         /* Signup view ko thoda chouda (wide) kar sakte hain kyunki form lamba hai */
-//         .auth-card.wide-mobile { max-width: 500px; }
-
-//         .form-body { padding: 40px 30px; }
-//         .portal-title { text-align: center; color: #002b5c; margin: 0 0 5px 0; font-size: 28px; font-family: 'Merriweather', serif; }
-//         .portal-subtitle { text-align: center; color: #888; margin: 0 0 25px 0; font-size: 14px; }
-        
-//         .section-head { 
-//             color: #002b5c; border-bottom: 1px solid #eee; 
-//             padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; 
-//             font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; 
-//         }
-//         .mt-0 { margin-top: 0; }
-
-//         .role-selector { text-align: center; margin-bottom: 20px; }
-//         .role-btns { display: flex; justify-content: center; gap: 10px; }
-//         .role-btn {
-//             padding: 8px 20px; border: 1px solid #ddd; background: #fff;
-//             border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 600; color: #555;
-//             transition: all 0.3s;
-//         }
-//         .role-btn.active {
-//             background: #002b5c; color: #fff; border-color: #002b5c; box-shadow: 0 2px 5px rgba(0,43,92,0.3);
-//         }
-
-//         .form-group { margin-bottom: 15px; }
-//         .row-split { display: flex; gap: 15px; margin-bottom: 15px; }
-//         .col { flex: 1; }
-
-//         .lbl { display: block; font-size: 13px; font-weight: 600; color: #444; margin-bottom: 5px; }
-//         .req { color: red; }
-        
-//         .inp, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; color: #333; outline: none; }
-//         .inp:focus { border-color: #002b5c; }
-        
-//         .file-box { background: #fafafa; border: 1px dashed #ccc; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
-//         .inp-file { font-size: 13px; width: 100%; }
-
-//         .action-btn { width: 100%; padding: 12px; background: #002b5c; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-//         .action-btn:hover { background: #001f42; }
-
-//         .forgot-link { text-align: right; margin-bottom: 20px; }
-//         .forgot-link a { color: #002b5c; font-size: 13px; text-decoration: none; }
-        
-//         .toggle-text { text-align: center; margin-top: 25px; font-size: 14px; color: #666; }
-//         .toggle-text span { color: #cfa144; font-weight: bold; cursor: pointer; }
-        
-//         .captcha-box { background: #eee; padding: 8px; text-align: center; letter-spacing: 4px; font-weight: bold; border: 1px solid #ddd; margin-bottom: 5px; color: #333; }
-        
-//         .terms-box { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 20px 0; }
-        
-//         .alert-msg { padding: 10px; font-size: 13px; text-align: center; border-radius: 4px; margin-bottom: 15px; }
-//         .alert-msg.error { background: #ffe6e6; color: #d63031; border: 1px solid #ff7675; }
-//         .alert-msg.success { background: #e6fffa; color: #00b894; border: 1px solid #55efc4; }
-
-//         .fade-in { animation: slideUp 0.6s ease-out; }
-//         @keyframes slideUp { 
-//           from { opacity: 0; transform: translateY(100px); } 
-//           to { opacity: 1; transform: translateY(0); }
-//         }
-//       `}</style>
-//     </>
-//   );
-// }
-
 'use client';
 
 import { useState } from 'react';
+// Apne services folder se import karein
+import { signupUser, loginUser } from '../services/authService'; 
 
 // --- PLACEHOLDER DASHBOARDS ---
 const ClientDashboard = () => (
@@ -1134,6 +786,7 @@ const ClientDashboard = () => (
     <div className="text-center p-5 shadow bg-white rounded">
       <h1 className="text-primary">🏛️ Client Dashboard</h1>
       <p className="lead">Welcome! You are logged in as a Client.</p>
+      <button className="btn btn-outline-primary mt-3" onClick={() => window.location.reload()}>Logout</button>
     </div>
   </div>
 );
@@ -1143,6 +796,7 @@ const AttorneyDashboard = () => (
     <div className="text-center p-5 shadow bg-white rounded">
       <h1 className="text-warning text-dark">⚖️ Attorney Dashboard</h1>
       <p className="lead">Welcome! You are logged in as an Attorney.</p>
+      <button className="btn btn-outline-dark mt-3" onClick={() => window.location.reload()}>Logout</button>
     </div>
   </div>
 );
@@ -1151,10 +805,10 @@ const AttorneyDashboard = () => (
 export default function UnifiedAuthPage() {
 
   // --- STATES ---
-  const [userRole, setUserRole] = useState('Client'); 
+  const [userRole, setUserRole] = useState('Client'); // Default 'Client'
   const [view, setView] = useState('login'); 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // API loading state add kiya
+  const [isLoading, setIsLoading] = useState(false);
 
   // Messages
   const [error, setError] = useState('');
@@ -1162,9 +816,12 @@ export default function UnifiedAuthPage() {
 
   // --- FORM DATA STATE ---
   const [formData, setFormData] = useState({
-    firstName: '', lastName: '', email: '', password: '', repeatPassword: '', captcha: '',
-    street: '', apt: '', city: '', state: '', country: '', zip: '',
-    countryCode: '+91', phone: '', dob: '',
+    firstName: '', 
+    lastName: '', 
+    email: '', 
+    password: '', 
+    repeatPassword: '', 
+    captcha: '',
     terms: false
   });
 
@@ -1176,120 +833,112 @@ export default function UnifiedAuthPage() {
 
   // --- ACTIONS ---
 
-  // 1. LOGIN (Existing Logic)
-  const handleLogin = (e) => {
+  // 1. LOGIN HANDLER
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (formData.email === 'error@lawfirm.com') {
-      setError('Invalid Email ID or Password');
-      return;
+    setError('');
+    setIsLoading(true);
+
+    try {
+        // --- API Login Logic ---
+        // Agar login API ready hai to ye use karein:
+        // const response = await loginUser({ email: formData.email, password: formData.password });
+        
+        // --- TEMPORARY MOCK LOGIN (Testing ke liye) ---
+        if (formData.email === 'error@lawfirm.com') {
+            throw { message: 'Invalid Credentials' };
+        }
+        
+        // Email se Role detect kar rahe hain (Demo logic)
+        if(formData.email.includes('attorney')) {
+            setUserRole('Attorney');
+        } else {
+            setUserRole('Client');
+        }
+        setIsAuthenticated(true);
+
+    } catch (err) {
+        setError(err.message || 'Login failed. Please check your credentials.');
+    } finally {
+        setIsLoading(false);
     }
-    if(formData.email.includes('attorney')) {
-        setUserRole('Attorney');
-    } else {
-        setUserRole('Client');
-    }
-    setIsAuthenticated(true);
   };
 
-  // 2. SIGN UP (MODIFIED FOR API)
-  const handleSignup = async (e) => { // Step 1: async keyword lagaya
+  // 2. SIGN UP HANDLER (UPDATED PAYLOAD)
+  const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
     setSuccessMsg('');
 
-    // --- VALIDATIONS ---
+    // --- FRONTEND VALIDATIONS ---
     if(!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
         setError("Basic details are mandatory.");
         return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-        setError('Invalid Email Format');
-        return;
-    }
-
+    // Password Match Check
     if (formData.password !== formData.repeatPassword) {
       setError('Passwords do not match!');
       return;
     }
-    
-    if (formData.password.length < 6) {
-        setError('Password must be at least 6 characters long.');
-        return;
-    }
 
+    // Captcha Check
     if (formData.captcha.toUpperCase() !== 'X7K9B') {
-      setError('Invalid Captcha!');
+      setError('Invalid Captcha! Please enter X7K9B');
       return;
     }
     
+    // Terms Check
     if (!formData.terms) {
         setError('You must accept the Terms and Conditions.');
         return;
     }
 
-    // --- API CALL LOGIC STARTS HERE ---
-    
-    // Sirf Client role ke liye API call karenge
-    if (userRole === 'Client') {
-      setIsLoading(true); // Loading start
+    // --- API CALL ---
+    setIsLoading(true);
 
-      try {
-        // Step 2: Payload (Data) create kiya
+    try {
+        // ✅ CORRECT PAYLOAD FOR YOUR API
         const payload = {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          password: formData.password,
-          // Agar API ko aur fields chahiye to yahan add karein (e.g. phone, address)
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password,
+            repeatPassword: formData.repeatPassword, // Ab bhej rahe hain
+            captcha: formData.captcha,               // Ab bhej rahe hain
+            role: userRole.toLowerCase()             // "client" or "attorney"
         };
 
-        // Step 3: API Request bheji
-        // Note: URL me double slash (//) ko single (/) kar diya hai for safety
-        const response = await fetch('https://lawnode.rxchartsquare.com/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
+        console.log("Sending Data to API:", payload);
 
-        const data = await response.json();
+        // Service call
+        const response = await signupUser(payload);
 
-        // Step 4: Response Handle kiya
-        if (response.ok) {
-          // SUCCESS
-          setSuccessMsg('Registration Successful! Redirecting to login...');
-          setTimeout(() => {
+        // Success handling
+        setSuccessMsg(`Account created successfully! Redirecting to Login...`);
+        console.log("API Response:", response);
+
+        // Redirect after 2 seconds
+        setTimeout(() => {
             setView('login');
             setSuccessMsg('');
-          }, 2000);
-        } else {
-          // API ERROR (e.g., Email already exists)
-          setError(data.message || 'Registration failed. Please try again.');
-        }
+            // Reset form data optionally
+            setFormData({
+                firstName: '', lastName: '', email: '', password: '', 
+                repeatPassword: '', captcha: '', terms: false
+            });
+        }, 2000);
 
-      } catch (err) {
-        // NETWORK ERROR
+    } catch (err) {
         console.error("Signup Error:", err);
-        setError('Something went wrong. Please check your internet connection.');
-      } finally {
-        setIsLoading(false); // Loading stop
-      }
-    } 
-    else {
-      // Attorney ke liye purana fake logic (agar API sirf client ke liye hai)
-      setSuccessMsg('Processing registration...');
-      setTimeout(() => {
-        alert(`Account Created for Attorney!\nGenerated ID: ATT-${Math.floor(1000 + Math.random() * 9000)}`);
-        setSuccessMsg('');
-        setView('login');
-      }, 1500);
+        // Backend ka message show karein
+        setError(err.message || 'Registration failed. Please try again.');
+    } finally {
+        setIsLoading(false);
     }
   };
 
-  // RENDER DASHBOARD
+  // RENDER DASHBOARD IF LOGGED IN
   if (isAuthenticated) {
     if (userRole === 'Client') return <ClientDashboard />;
     if (userRole === 'Attorney') return <AttorneyDashboard />;
@@ -1309,6 +958,7 @@ export default function UnifiedAuthPage() {
                 <p className="portal-subtitle">Please Sign In to continue</p>
 
                 {error && <div className="alert-msg error">{error}</div>}
+                {successMsg && <div className="alert-msg success">{successMsg}</div>}
 
                 <form onSubmit={handleLogin}>
                   <div className="form-group">
@@ -1324,7 +974,9 @@ export default function UnifiedAuthPage() {
                     <a href="#" onClick={(e) => e.preventDefault()}>Forgot Password?</a>
                   </div>
                   
-                  <button type="submit" className="action-btn">Log In</button>
+                  <button type="submit" className="action-btn" disabled={isLoading}>
+                    {isLoading ? 'Logging in...' : 'Log In'}
+                  </button>
 
                   <div className="toggle-text">
                     New User? <span onClick={() => { setView('signup'); setError(''); }}>Create Account</span>
@@ -1364,45 +1016,43 @@ export default function UnifiedAuthPage() {
 
                 <form onSubmit={handleSignup}>
                   
-                  {/* --- PART 1: ACCOUNT DETAILS --- */}
                   <h4 className="section-head mt-0">Account Details</h4>
                   
                   <div className="row-split">
                     <div className="col">
                       <label className="lbl">First Name <span className="req">*</span></label>
-                      <input type="text" name="firstName" className="inp" onChange={handleInput} required />
+                      <input type="text" name="firstName" value={formData.firstName} className="inp" onChange={handleInput} required />
                     </div>
                     <div className="col">
                       <label className="lbl">Last Name <span className="req">*</span></label>
-                      <input type="text" name="lastName" className="inp" onChange={handleInput} required />
+                      <input type="text" name="lastName" value={formData.lastName} className="inp" onChange={handleInput} required />
                     </div>
                   </div>
 
                   <div className="form-group">
                     <label className="lbl">Email ID <span className="req">*</span></label>
-                    <input type="email" name="email" className="inp" onChange={handleInput} required />
+                    <input type="email" name="email" value={formData.email} className="inp" onChange={handleInput} required />
                   </div>
 
                   <div className="row-split">
                     <div className="col">
                         <label className="lbl">Password <span className="req">*</span></label>
-                        <input type="password" name="password" className="inp" onChange={handleInput} required />
+                        <input type="password" name="password" value={formData.password} className="inp" onChange={handleInput} required />
                     </div>
                     <div className="col">
                         <label className="lbl">Repeat Password <span className="req">*</span></label>
-                        <input type="password" name="repeatPassword" className="inp" onChange={handleInput} required />
+                        <input type="password" name="repeatPassword" value={formData.repeatPassword} className="inp" onChange={handleInput} required />
                     </div>
                   </div>
 
-                
                   <div className="form-group">
                     <label className="lbl">Captcha <span className="req">*</span></label>
                     <div className="captcha-box">X 7 K 9 B</div>
-                    <input type="text" name="captcha" className="inp" placeholder="Enter Code" onChange={handleInput} required />
+                    <input type="text" name="captcha" value={formData.captcha} className="inp" placeholder="Enter Code" onChange={handleInput} required />
                   </div>
 
                   <div className="terms-box">
-                    <input type="checkbox" name="terms" id="terms" required onChange={handleInput} />
+                    <input type="checkbox" name="terms" id="terms" checked={formData.terms} required onChange={handleInput} />
                     <label htmlFor="terms">I accept the Terms and Conditions.</label>
                   </div>
 
