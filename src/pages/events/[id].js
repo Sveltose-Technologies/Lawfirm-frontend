@@ -160,11 +160,151 @@
 // export default EventDetails;
 
 
+// import React, { useState, useEffect } from 'react';
+// import { useRouter } from 'next/router';
+// import Head from 'next/head';
+// import Link from 'next/link';
+// import { eventsData } from './index'; // Importing data from main file
+
+// const EventDetails = () => {
+//   const router = useRouter();
+//   const { id } = router.query;
+//   const [event, setEvent] = useState(null);
+
+//   useEffect(() => {
+//     if (router.isReady && id) {
+//        // Find event by ID
+//        const found = eventsData.find(e => e.id.toString() === id.toString());
+//        setEvent(found);
+//     }
+//   }, [router.isReady, id]);
+
+//   const handlePrint = () => { if (typeof window !== 'undefined') window.print(); };
+
+//   if (!event) return <div className="text-center py-5">Loading Details...</div>;
+
+//   return (
+//     <>
+//       <Head>
+//         <title>{event.title} | Event Details</title>
+//       </Head>
+
+//       {/* --- HEADER --- */}
+//       <div className="py-5 text-white text-center" style={{ backgroundColor: '#002855' }}>
+//         <div className="container">
+//           <span className="badge bg-warning text-dark mb-3 text-uppercase">{event.type}</span>
+//           <h1 className="display-5 fw-bold font-serif px-lg-5">{event.title}</h1>
+//         </div>
+//       </div>
+
+//       {/* --- CONTENT --- */}
+//       <div className="py-5 bg-light">
+//         <div className="container">
+//           <div className="row g-4">
+            
+//             {/* Left Column: Details */}
+//             <div className="col-lg-8">
+//                <div className="bg-white p-4 shadow-sm rounded mb-4">
+//                    <h3 className="mb-3 border-bottom pb-2">About the Event</h3>
+//                    <p className="text-muted lead">
+//                      Join us for this exclusive session on <strong>{event.title}</strong>. 
+//                      Our experts will dive deep into the legal nuances and provide actionable insights.
+//                    </p>
+//                    <p className="text-muted">
+//                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+//                    </p>
+//                </div>
+               
+//                {/* Related Professionals */}
+//                <div className="bg-white p-4 shadow-sm rounded">
+//                    <h4 className="mb-3">Featured Speakers</h4>
+//                    <div className="d-flex gap-3">
+//                        {event.professionals.map((prof, i) => (
+//                            <div key={i} className="d-flex align-items-center bg-light p-2 rounded border pe-3">
+//                                <div className="bg-secondary rounded-circle d-flex align-items-center justify-content-center text-white me-2" style={{width:'40px', height:'40px'}}>
+//                                    {prof.charAt(0)}
+//                                </div>
+//                                <span className="fw-bold">{prof}</span>
+//                            </div>
+//                        ))}
+//                    </div>
+//                </div>
+//             </div>
+
+//             {/* Right Column: Sidebar (Excel Data Card) */}
+//             <div className="col-lg-4">
+//                <div className="card border-0 shadow-sm">
+//                   <div className="card-header bg-dark text-white fw-bold py-3">
+//                       Event Summary
+//                   </div>
+//                   <div className="card-body p-4">
+                      
+//                       <div className="mb-3">
+//                           <label className="text-muted small fw-bold text-uppercase">Date</label>
+//                           <div className="fs-5 fw-bold"><i className="bi bi-calendar-event me-2 text-warning"></i>{event.date}</div>
+//                       </div>
+
+//                       <div className="mb-3">
+//                           <label className="text-muted small fw-bold text-uppercase">Time</label>
+//                           <div className="fs-5"><i className="bi bi-clock me-2 text-warning"></i>{event.time}</div>
+//                       </div>
+
+//                       <div className="mb-3">
+//                           <label className="text-muted small fw-bold text-uppercase">Location</label>
+//                           <div className="fs-5"><i className="bi bi-geo-alt-fill me-2 text-warning"></i>{event.location}</div>
+//                       </div>
+                      
+//                       <hr />
+
+//                       {/* ACTIONS */}
+//                       <Link href="/contact">
+//                         <a className="btn btn-primary w-100 mb-2" style={{backgroundColor: '#cfa144', border: 'none'}}>Register Now</a>
+//                       </Link>
+
+//                       <div className="row g-2 mt-2">
+//                           <div className="col-6">
+//                               <button onClick={handlePrint} className="btn btn-outline-dark w-100 btn-sm">
+//                                   <i className="bi bi-printer me-1"></i> Print
+//                               </button>
+//                           </div>
+//                           <div className="col-6">
+//                               <Link href="/events">
+//                                   <a className="btn btn-outline-secondary w-100 btn-sm">Back</a>
+//                               </Link>
+//                           </div>
+//                       </div>
+
+//                       {/* Social Share */}
+//                       <div className="mt-4 text-center">
+//                           <small className="text-muted">Share this event</small>
+//                           <div className="d-flex justify-content-center gap-3 mt-2 fs-5">
+//                              <a href="#" className="text-secondary"><i className="bi bi-facebook"></i></a>
+//                              <a href="#" className="text-secondary"><i className="bi bi-twitter"></i></a>
+//                              <a href="#" className="text-secondary"><i className="bi bi-linkedin"></i></a>
+//                           </div>
+//                       </div>
+
+//                   </div>
+//                </div>
+//             </div>
+
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default EventDetails;
+
+
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { eventsData } from './index'; // Importing data from main file
+
+// Import data from the main index file
+import { eventsData } from './index'; 
 
 const EventDetails = () => {
   const router = useRouter();

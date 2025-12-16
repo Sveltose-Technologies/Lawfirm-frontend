@@ -1,14 +1,39 @@
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactStrictMode: true,
+  
+
+//   output: "export", 
+
+//   swcMinify: false,
+  
+//   images: {
+//     unoptimized: true, 
+//     domains: ["images.unsplash.com", "images.pexels.com"],
+//   },
+
+//   eslint: { ignoreDuringBuilds: true },
+//   typescript: { ignoreBuildErrors: true },
+  
+//   webpack: (config) => {
+//     config.cache = false;
+//     return config;
+//   },
+// };
+
+// module.exports = nextConfig;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  
-  // --- YAHAN SE '//' HATA DEIN (Ye line active honi chahiye) ---
-  output: "export", 
+  swcMinify: false, // Minification issue rokne ke liye
+  trailingSlash: true, // Linux/Static server par paths ko sahi rakhne ke liye JARURI hai
 
-  swcMinify: false,
-  
+  // Image optimization band karein taaki export me error na aaye
   images: {
-    unoptimized: true, // Ye bhi zaroori hai
+    unoptimized: true,
+    loader: 'akamai', // Next.js 12 export fix
+    path: '',
     domains: ["images.unsplash.com", "images.pexels.com"],
   },
 
@@ -22,4 +47,3 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-

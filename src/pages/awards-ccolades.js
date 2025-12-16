@@ -97,7 +97,7 @@ function AwardsAccolades() {
           1. BANNER SECTION
       ========================================================================== */}
       <div className="inner-banner-section" style={{
-          backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/assets/images/award-banner.png)', 
+          backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/images/award-banner.png)', 
           padding: '140px 0', 
           backgroundSize: 'cover', 
           backgroundPosition: 'center', 

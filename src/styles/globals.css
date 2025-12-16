@@ -1,64 +1,290 @@
-html,
-body {
-  padding: 0;
+/* ==============================================
+   1. GLOBAL VARIABLES (Single Source of Truth)
+   ============================================== */
+:root {
+  /* Brand Colors */
+  --primary-gold: #de9f57;       /* Buttons, Active Links, Accents */
+  --primary-blue: #003366;       /* Main Headings, Section BG */
+  --dark-navy: #0a1c38;          /* Footer or Darker Sections */
+  
+  /* Text & Backgrounds */
+  --text-dark: #212529;
+  --text-light: #ffffff;
+  --bg-dark: #000000;
+  --bg-light: #f4f7f6;
+  --overlay-black: rgba(0, 0, 0, 0.6);
+
+  /* Fonts */
+  --font-base: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-serif: "Times New Roman", Times, serif;
+}
+
+/* ==============================================
+   2. RESET & LAYOUT FIXES
+   ============================================== */
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden !important; /* Screen hilne se rokega */
+  font-family: var(--font-base);
+  color: var(--text-dark);
+  line-height: 1.6;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
-* {
-  box-sizing: border-box;
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-
-/* banner1 css */
+/* Container Padding Fix for Mobile */
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
 
 /* ==============================================
-   GLOBAL THEME COLORS & UTILITIES
+   3. RESPONSIVE TYPOGRAPHY (Auto Adjust)
    ============================================== */
-:root {
-  --primary-blue: #0a1c38;       /* Dark Navy */
-  --accent-gold: #D4AF37;        /* Metallic Gold */
-  --light-gray: rgb(244, 247, 246); /* Box Background */
+h1, .display-3 {
+  font-size: clamp(2rem, 5vw, 4rem) !important;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-/* Helper Classes (Taaki inline style kam use krna pade) */
-.bg-primary-blue { background-color: var(--primary-blue) !important; }
-.bg-light-gray   { background-color: var(--light-gray) !important; }
-.text-primary-blue { color: var(--primary-blue) !important; }
-.text-gold       { color: var(--accent-gold) !important; }
+h2, .display-4 {
+  font-size: clamp(1.75rem, 4vw, 3rem) !important;
+  font-weight: 700;
+  line-height: 1.3;
+}
 
+h3, .display-5 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem) !important;
+  font-weight: 700;
+}
+
+h4, .display-6 {
+  font-size: clamp(1.25rem, 2.5vw, 2rem) !important;
+  font-weight: 700;
+}
+
+p, .lead, li, span, a, .nav-link {
+  font-size: clamp(0.95rem, 1vw, 1.15rem);
+}
+
+/* Utility Font Classes */
 .font-serif {
-  font-family: 'Times New Roman', Times, serif; /* Ya aapka koi Google Font */
+  font-family: var(--font-serif);
+}
+
+.text-gold { color: var(--primary-gold) !important; }
+.text-blue { color: var(--primary-blue) !important; }
+.text-white { color: var(--text-light) !important; }
+
+.bg-blue { background-color: var(--primary-blue) !important; }
+.bg-light-gray { background-color: var(--bg-light) !important; }
+
+/* ==============================================
+   4. HEADER & NAVIGATION STYLES
+   ============================================== */
+.header-main {
+  background-color: var(--bg-dark);
+  transition: all 0.3s ease;
+  z-index: 1050;
+}
+
+.header-sticky {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.nav-link {
+  font-weight: 600;
+  color: var(--text-light) !important;
+  padding: 10px 15px !important;
+  white-space: nowrap;
+}
+
+.nav-link:hover, .active-link {
+  color: var(--primary-gold) !important;
+}
+
+.dropdown-menu {
+  background-color: var(--bg-dark);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid var(--primary-gold);
+  padding: 0;
+}
+
+.dropdown-item {
+  color: var(--text-light);
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-item:hover {
+  background-color: #222;
+  color: var(--primary-gold);
+}
+
+/* Header Button */
+.btn-custom {
+  background-color: rgba(222, 159, 87, 0.5); /* Semi-transparent Gold */
+  color: var(--text-light);
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 0.5rem 1.25rem;
+  white-space: nowrap;
+}
+
+.btn-custom:hover {
+  background-color: var(--primary-gold);
+  color: var(--text-light);
 }
 
 /* ==============================================
-   PREMIUM BUTTON STYLE (Global)
+   5. BANNER & SECTIONS STYLES
+   ============================================== */
+.banner-section {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Agar Image CSS se deni ho to yahan background-image add kar sakte hain */
+  background-size: cover;
+  background-position: center;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-black);
+  z-index: 1;
+}
+
+.banner-content {
+  z-index: 2;
+  position: relative;
+  padding: 3rem 0;
+}
+
+/* Section specific styling */
+.memoriam-section {
+  background-color: var(--primary-blue);
+  border-top: 1px solid rgba(255, 255, 255, 0.125);
+  color: var(--text-light);
+}
+
+.stats-section {
+  background-color: var(--primary-blue);
+  color: var(--text-light);
+}
+
+/* Cards & Images */
+.card-shadow {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+}
+
+/* ==============================================
+   6. PREMIUM BUTTONS (Global)
    ============================================== */
 .btn-premium {
-  background-color: var(--primary-blue);
-  color: #ffffff;
+  background-color: transparent;
+  border: 2px solid var(--primary-blue);
+  color: var(--primary-blue);
   padding: 12px 30px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border: 2px solid var(--primary-blue);
-  text-decoration: none;
   display: inline-block;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .btn-premium:hover {
-  background-color: #ffffff;  /* Hover par White */
-  color: #000000;             /* Text Black */
-  border-color: var(--primary-blue); /* Border Blue taaki dikhe */
+  background-color: var(--primary-blue);
+  color: var(--text-light);
   transform: translateY(-3px);
   box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+/* ==============================================
+   7. MEDIA QUERIES (Mobile/Tablet specific)
+   ============================================== */
+@media (max-width: 1199px) {
+  /* Header Mobile View */
+  .navbar-collapse {
+    max-height: 80vh;
+    overflow-y: auto;
+    background-color: var(--bg-dark);
+    padding-bottom: 20px;
+    border-top: 1px solid #222;
+  }
+  
+  .nav-link {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 15px !important;
+  }
+  
+  .btn-custom {
+    width: 95%;
+    margin: 15px auto 0 auto;
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-section {
+    min-height: auto !important;
+    padding-top: 100px !important;
+    padding-bottom: 50px !important;
+  }
+  
+  .border-right-custom {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .img-cover {
+    min-height: 250px; /* Mobile par image ki height kam */
+  }
+}
+
+@media (min-width: 769px) {
+  .border-right-custom {
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+  }
 }

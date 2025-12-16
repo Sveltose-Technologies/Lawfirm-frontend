@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-
-// --- 1. MOCK DATA (Excel Row Format) ---
 const promotersData = [
   {
     id: 1,
@@ -130,7 +128,7 @@ function Promoters() {
                                             <img 
                                                 src={promoter.image} 
                                                 alt={promoter.name} 
-                                                className="rounded-circle shadow-sm"
+                                                className="rounded shadow-sm"
                                                 width="50"
                                                 height="50"
                                                 style={{ objectFit: 'cover', border: '2px solid #de9f57' }}
