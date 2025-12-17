@@ -96,19 +96,19 @@ function AwardsAccolades() {
       {/* ==========================================================================
           1. BANNER SECTION
       ========================================================================== */}
-      <div className="inner-banner-section" style={{
-          backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/images/award-banner.png)', 
-          padding: '140px 0', 
-          backgroundSize: 'cover', 
-          backgroundPosition: 'center', 
-          textAlign: 'center'
-        }}>
-        <div className="container">
-           <h1 className="text-white display-4 fw-bold">Awards & Accolades</h1>
-           <p className="text-white lead">Recognizing Excellence in Legal Practice</p>
-        </div>
-      </div>
-
+    <div className="inner-banner-section" style={{
+    // Yahan '/assets' lagana zaroori hai
+    backgroundImage: "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/assets/images/our-firm4.png')", 
+    padding: '140px 0', 
+    backgroundSize: 'cover', 
+    backgroundPosition: 'center', 
+    textAlign: 'center'
+}}>
+    <div className="container">
+        <h1 className="text-white display-4 fw-bold">Awards & Accolades</h1>
+        <p className="text-white lead">Recognizing Excellence in Legal Practice</p>
+    </div>
+</div>
       {/* ==========================================================================
           2. SEARCH & FILTER SECTION
       ========================================================================== */}

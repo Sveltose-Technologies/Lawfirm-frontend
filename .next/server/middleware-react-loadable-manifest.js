@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={}
+self.__REACT_LOADABLE_MANIFEST={"..\\..\\node_modules\\@gradio\\client\\dist\\browser.js -> ./__vite-browser-external-DYxpcVy9.js":{"id":"..\\..\\node_modules\\@gradio\\client\\dist\\browser.js -> ./__vite-browser-external-DYxpcVy9.js","files":["static/chunks/node_modules_gradio_client_dist___vite-browser-external-DYxpcVy9_js.js"]}}

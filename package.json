@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@gradio/client": "^2.0.0",
     "axios": "^1.13.2",
     "bootstrap": "^5.3.8",
     "next": "12.2.2",

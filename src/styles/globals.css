@@ -160,15 +160,15 @@ p, .lead, li, span, a, .nav-link {
    ============================================== */
 .banner-section {
   width: 100%;
-  min-height: 100vh;
+  min-height: 60vh; /* Banner height reduced */
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Agar Image CSS se deni ho to yahan background-image add kar sakte hain */
   background-size: cover;
   background-position: center;
+  background-color: var(--dark-navy);
 }
 
 .banner-overlay {
@@ -184,22 +184,49 @@ p, .lead, li, span, a, .nav-link {
 .banner-content {
   z-index: 2;
   position: relative;
-  padding: 3rem 0;
+  padding: 1rem 0; 
 }
 
-/* Section specific styling */
-.memoriam-section {
-  background-color: var(--primary-blue);
-  border-top: 1px solid rgba(255, 255, 255, 0.125);
+/* --- NEW: Hero Stats Bar Styling (Premium Blue) --- */
+.hero-stats-bar {
+  background-color: var(--primary-blue); /* Deep Blue Background */
+  border-bottom: 4px solid var(--primary-gold); /* Gold Line Bottom */
   color: var(--text-light);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Slight shadow for depth */
+  position: relative;
+  z-index: 10;
 }
 
+/* Text spacing for stats */
+.tracking-wide {
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* Vertical Divider Lines (Desktop Only) */
+@media (min-width: 768px) {
+  .hero-stats-bar .border-end-custom {
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* --- Global Scale Section (Reduced Spacing) --- */
 .stats-section {
   background-color: var(--primary-blue);
   color: var(--text-light);
+  /* Ensure padding overrides Bootstrap if needed */
+  padding-top: 1.5rem !important; 
+  padding-bottom: 1.5rem !important;
 }
 
-/* Cards & Images */
+.stats-section h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+/* Card Shadow */
 .card-shadow {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
   border-radius: 4px;
@@ -210,10 +237,9 @@ p, .lead, li, span, a, .nav-link {
 .img-cover {
   width: 100%;
   height: 100%;
-  min-height: 400px;
+  min-height: 300px;
   object-fit: cover;
 }
-
 /* ==============================================
    6. PREMIUM BUTTONS (Global)
    ============================================== */
@@ -237,54 +263,49 @@ p, .lead, li, span, a, .nav-link {
   box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
 
-/* ==============================================
-   7. MEDIA QUERIES (Mobile/Tablet specific)
-   ============================================== */
-@media (max-width: 1199px) {
-  /* Header Mobile View */
-  .navbar-collapse {
-    max-height: 80vh;
-    overflow-y: auto;
-    background-color: var(--bg-dark);
-    padding-bottom: 20px;
-    border-top: 1px solid #222;
-  }
-  
-  .nav-link {
-    width: 100%;
-    display: block;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 12px 15px !important;
-  }
-  
-  .btn-custom {
-    width: 95%;
-    margin: 15px auto 0 auto;
-    display: block;
-  }
+/* =======================================================
+   HIDE GOOGLE TRANSLATE BANNER & TOOLBAR (Magic Code)
+   ======================================================= */
+
+/* 1. Google के Top Bar (Frame) को छिपाएं */
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
 }
 
-@media (max-width: 768px) {
-  .banner-section {
-    min-height: auto !important;
-    padding-top: 100px !important;
-    padding-bottom: 50px !important;
-  }
-  
-  .border-right-custom {
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .img-cover {
-    min-height: 250px; /* Mobile par image ki height kam */
-  }
+iframe.goog-te-banner-frame {
+    display: none !important;
 }
 
-@media (min-width: 769px) {
-  .border-right-custom {
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
-  }
+/* 2. Body को ऊपर खिसकाएं (Google इसे 40px नीचे धकेल देता है) */
+body {
+    top: 0px !important;
+    position: static !important;
+}
+
+/* 3. Google का Logo और "Powered by Google" छिपाएं */
+.goog-te-gadget-icon {
+    display: none !important;
+}
+
+.goog-te-gadget-simple {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* 4. Mouse ले जाने पर जो Tooltip आता है उसे छिपाएं */
+#goog-gt-tt, .goog-tooltip, .goog-tooltip:hover {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* 5. टेक्स्ट पर जो Blue/Hover Highlight आता है उसे हटाएं */
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* 6. Mobile पर भी टॉप फ्रेम को हटाएं */
+font iframe {
+    display: none !important;
 }
