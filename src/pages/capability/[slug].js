@@ -1,463 +1,340 @@
-// // pages/capability/[slug].js
-// import React from 'react';
-// import { useRouter } from 'next/router';
-// import Head from 'next/head';
-
-// function CapabilityDetail() {
-//   const router = useRouter();
-//   const { slug } = router.query; 
-
-//   // --- GENERIC DATA GENERATOR ---
-//   const getPageData = () => {
-//     if (!slug) return null;
-
-//     // Convert slug (e.g., "real-estate") to Title ("Real Estate")
-//     const formattedTitle = slug
-//       .split('-')
-//       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-//       .join(' ');
-
-//     return {
-//       title: formattedTitle,
-//       heroImage: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop", 
-//       overview: `Our ${formattedTitle} practice is recognized for its depth of knowledge and commitment to client success. We provide strategic legal counsel to businesses navigating the complex landscape of ${formattedTitle}.`,
-//       areasOfFocus: [
-//         `${formattedTitle} Litigation`,
-//         "Regulatory Compliance",
-//         "Strategic Advisory",
-//         "Cross-Border Transactions",
-//         "Risk Management"
-//       ],
-//       experienceList: [
-//         `Represented Fortune 500 clients in ${formattedTitle} matters`,
-//         "Advising on complex regulatory frameworks",
-//         "Structuring high-value transactions",
-//         "Dispute resolution and arbitration"
-//       ]
-//     };
-//   };
-
-//   const data = getPageData();
-
-//   if (!data) return <div className="p-5 text-center">Loading...</div>;
-
-//   return (
-//     <>
-//       <Head>
-//         <title>{data.title} | Our Firm</title>
-//       </Head>
-
-//       {/* --- HERO SECTION --- */}
-//       <div className="capability-hero position-relative d-flex align-items-center justify-content-center text-center">
-//         <div className="overlay"></div>
-//         <div className="container position-relative z-index-2">
-//           <h1 className="display-4 fw-bold text-white font-serif mb-4">{data.title}</h1>
-//         </div>
-//       </div>
-
-//       {/* --- MAIN CONTENT SECTION --- */}
-//       <div className="container py-5">
-//         <div className="row">
-//           <div className="col-lg-12">
-            
-//             {/* Section: Areas of Focus */}
-//             <div id="areas" className="mb-5">
-//               <h2 className="font-serif fw-bold mb-4">Areas of Focus</h2>
-//               <div className="row">
-//                  {data.areasOfFocus.map((item, index) => (
-//                     <div className="col-md-6 mb-2" key={index}>
-//                       <span className="text-decoration-none text-primary-gold">
-//                         • {item}
-//                       </span>
-//                     </div>
-//                   ))}
-//               </div>
-//             </div>
-
-//             <hr className="my-5" />
-
-//             {/* Section: Overview */}
-//             <div id="overview" className="mb-5">
-//               <p className="lead text-dark mb-4">{data.overview}</p>
-              
-//               <h5 className="font-serif fw-bold mt-4 mb-3">Key Experience:</h5>
-//               <div className="row">
-//                 {data.experienceList.map((item, index) => (
-//                     <div className="col-md-6 mb-2" key={index}>
-//                       <span className="text-secondary">• {item}</span>
-//                     </div>
-//                 ))}
-//               </div>
-//             </div>
-
-//           </div>
-//         </div>
-//       </div>
-
-//       <style jsx>{`
-//         .font-serif { font-family: "Georgia", serif; }
-//         .text-primary-gold { color: #b88b4a; }
-//         .capability-hero {
-//           background-image: url("${data.heroImage}");
-//           background-size: cover;
-//           background-position: center;
-//           height: 50vh;
-//           width: 100%;
-//         }
-//         .overlay {
-//           position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-//           background: rgba(0,0,0,0.5);
-//         }
-//       `}</style>
-//     </>
-//   );
-// }
-
-// export default CapabilityDetail;
-
-// import React from 'react';
-// import { useRouter } from 'next/router';
-// import Head from 'next/head';
-
-// function CapabilityDetail() {
-//   const router = useRouter();
-//   const { slug } = router.query; 
-
-//   // --- GENERIC DATA GENERATOR ---
-//   // In a real app, you would fetch specific data from a CMS or API using the slug.
-//   const getPageData = () => {
-//     if (!slug) return null;
-
-//     // Convert slug (e.g., "real-estate") to Title ("Real Estate")
-//     const formattedTitle = slug
-//       .split('-')
-//       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-//       .join(' ');
-
-//     return {
-//       title: formattedTitle,
-//       // Using a high-quality placeholder image
-//       heroImage: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop", 
-//       overview: `Our ${formattedTitle} practice is recognized for its depth of knowledge and commitment to client success. We provide strategic legal counsel to businesses navigating the complex landscape of ${formattedTitle}.`,
-//       areasOfFocus: [
-//         `${formattedTitle} Litigation`,
-//         "Regulatory Compliance",
-//         "Strategic Advisory",
-//         "Cross-Border Transactions",
-//         "Risk Management"
-//       ],
-//       experienceList: [
-//         `Represented Fortune 500 clients in ${formattedTitle} matters`,
-//         "Advising on complex regulatory frameworks",
-//         "Structuring high-value transactions",
-//         "Dispute resolution and arbitration"
-//       ]
-//     };
-//   };
-
-//   const data = getPageData();
-
-//   if (!data) return <div className="p-5 text-center">Loading...</div>;
-
-//   return (
-//     <>
-//       <Head>
-//         <title>{data.title} | Our Firm</title>
-//       </Head>
-
-//       {/* --- HERO SECTION --- */}
-//       <div className="capability-hero position-relative d-flex align-items-center justify-content-center text-center">
-//         <div className="overlay"></div>
-//         <div className="container position-relative z-index-2">
-//           <h1 className="display-4 fw-bold text-white font-serif mb-4">{data.title}</h1>
-//         </div>
-//       </div>
-
-//       {/* --- MAIN CONTENT SECTION --- */}
-//       <div className="container py-5">
-//         <div className="row">
-//           <div className="col-lg-12">
-            
-//             {/* Section: Areas of Focus */}
-//             <div id="areas" className="mb-5">
-//               <h2 className="font-serif fw-bold mb-4">Areas of Focus</h2>
-//               <div className="row">
-//                  {data.areasOfFocus.map((item, index) => (
-//                     <div className="col-md-6 mb-2" key={index}>
-//                       <span className="text-decoration-none text-primary-gold">
-//                         • {item}
-//                       </span>
-//                     </div>
-//                   ))}
-//               </div>
-//             </div>
-
-//             <hr className="my-5" />
-
-//             {/* Section: Overview */}
-//             <div id="overview" className="mb-5">
-//               <p className="lead text-dark mb-4">{data.overview}</p>
-              
-//               <h5 className="font-serif fw-bold mt-4 mb-3">Key Experience:</h5>
-//               <div className="row">
-//                 {data.experienceList.map((item, index) => (
-//                     <div className="col-md-6 mb-2" key={index}>
-//                       <span className="text-secondary">• {item}</span>
-//                     </div>
-//                 ))}
-//               </div>
-//             </div>
-
-//           </div>
-//         </div>
-//       </div>
-
-//       <style jsx>{`
-//         .font-serif { font-family: "Georgia", serif; }
-//         .text-primary-gold { color: #b88b4a; }
-//         .capability-hero {
-//           background-image: url("${data.heroImage}");
-//           background-size: cover;
-//           background-position: center;
-//           height: 50vh;
-//           width: 100%;
-//         }
-//         .overlay {
-//           position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-//           background: rgba(0,0,0,0.5);
-//         }
-//       `}</style>
-//     </>
-//   );
-// }
-
-// export default CapabilityDetail;
-
-
 import React from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-// --- RICH DATA SOURCE ---
-// यहाँ आप हर सर्विस के लिए अलग कंटेंट लिख सकते हैं
-const capabilitiesData = {
-  "corporate": {
-    title: "Corporate & Commercial",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop",
-    overview: "Our Corporate & Commercial practice is the cornerstone of our firm. We provide comprehensive legal advice to public and private companies, private equity firms, and financial institutions on their most complex transactions. From mergers and acquisitions to corporate governance, our team acts as a strategic partner, helping clients navigate the legal landscape to achieve their business objectives.",
-    approach: "We believe in a business-first approach. We don't just identify legal risks; we provide commercial solutions. Our team works across borders and disciplines to deliver seamless execution on high-stakes deals.",
-    services: [
-        "Mergers & Acquisitions (M&A)",
-        "Private Equity & Venture Capital",
-        "Corporate Governance & Compliance",
-        "Joint Ventures & Strategic Alliances",
-        "Capital Markets & Securities"
-    ]
+// --- DATA SOURCE ---
+const blockchainData = {
+  title: "Blockchain & Digital Assets",
+  heroImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2070&auto=format&fit=crop", 
+  
+  areasOfFocus: [
+    "Cryptocurrency Enforcement",
+    "Fintech"
+  ],
+
+  introText: `Greenberg Traurig's global Blockchain & Digital Assets Group comprises more than 100 attorneys across multiple legal disciplines in key financial hubs around the world, providing a centralized approach to blockchain and digital asset matters. We leverage our diverse experience to advise clients on a wide array of matters ranging from token structuring, fund formation, investment strategies, financial regulation and registration, international tax planning and structuring, stable coins and asset-backed digital assets, infrastructure applications, technology licensing and development, mining, securities compliance, cryptocurrency exchanges and trading, and blockchain-as-a-service.`,
+  
+  secondaryText: `Our multidisciplinary approach enables the team to readily anticipate, recognize, and address the legal challenges that our clients may face with respect to blockchain and digital asset development or utilization. Our dedicated response team consists of experienced attorneys with diverse backgrounds in securities, commodities and broker-dealer regulations, entity and fund formation, financing, exchange formation, federal and state financial services regulation, technology and intellectual property licensing, privacy concerns, cybersecurity issues, and taxation.`,
+
+  subSections: [
+    {
+      title: "Advising on Blockchain and Smart Contract Technology Implementations",
+      content: "As blockchain applications and smart contracts introduce automation to entirely new functions, our attorneys advise clients on appropriate standards and protocols for the deployment of blockchain applications and smart contract coding to ensure that clients can meet the demands of regulators, law enforcement, and any trier of fact or law."
+    },
+    {
+      title: "Cryptocurrency and Digital Assets (including NFTs)",
+      content: "As cryptocurrencies and other digital assets, including NFTs, have gained market acceptance in recent years as a fundraising vehicle for our clients, a critical part of a blockchain platform, or for consumptive use, our team carefully evaluates each opportunity in terms of the business and financing requirements of the client."
+    }
+  ],
+
+  capabilitiesList: [
+    "Contractual Structure and Implementation",
+    "Corporate, Fund Formation, Venture Capital & Capital Raises",
+    "Cybersecurity & Privacy",
+    "Intellectual Property",
+    "Litigation",
+    "Marketplace Lending",
+    "M&A",
+    "Regulatory Matters",
+    "Tax",
+    "Technology & Digital Transactions",
+    "Virtual Currency, Digital Assets & NFTs"
+  ],
+
+  cryptoEnforcement: {
+    title: "Cryptocurrency Enforcement",
+    content: "Greenberg Traurig’s Cryptocurrency Enforcement Team comprises dedicated former government officials and experienced white collar defense attorneys with the industry-specific knowledge and skills to help clients navigate today’s complex and evolving cryptocurrency enforcement landscape."
   },
-  "real-estate": {
-    title: "Real Estate",
-    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2000&auto=format&fit=crop",
-    overview: "Our Real Estate practice group represents developers, investors, lenders, and REITs in the acquisition, development, financing, and disposition of commercial properties. We have extensive experience in handling complex transactions involving office buildings, retail centers, industrial facilities, and multi-family residential projects.",
-    approach: "Real estate is local, but capital is global. We combine deep local market knowledge with international financing expertise to help our clients maximize the value of their real estate assets.",
-    services: [
-        "Acquisitions & Dispositions",
-        "Commercial Leasing & Landlord Representation",
-        "Real Estate Finance & Lending",
-        "Zoning, Land Use & Development",
-        "Construction Law"
-    ]
+
+  blog: {
+    title: "Overheard on the Block(chain) Blog",
+    content: "GT's Overheard on the Block(chain) blog provides timely updates on the regulatory and legal developments in the blockchain and cryptocurrency sector."
   },
-  "litigation": {
-    title: "Litigation & Dispute Resolution",
-    image: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=2000&auto=format&fit=crop",
-    overview: "When disputes arise, our Litigation team stands ready to protect our clients' interests in state and federal courts, as well as in arbitration and mediation proceedings. We handle high-stakes commercial litigation, class action defense, and white-collar regulatory investigations.",
-    approach: "We are trial lawyers who understand that the best victory is often the one achieved before trial. We aggressively pursue early resolutions when favorable, but we are always prepared to go the distance.",
-    services: [
-        "Commercial & Contract Disputes",
-        "Class Action Defense",
-        "Intellectual Property Litigation",
-        "White Collar Defense & Investigations",
-        "International Arbitration"
-    ]
-  }
+
+  contactText: "To learn more about our capabilities, please feel free to reach out to our Blockchain & Digital Assets Group contacts.",
+
+  newsList: [
+    {
+      id: "news-1",
+      date: "July 23, 2025",
+      type: "Media Coverage",
+      title: "Rising Star: Greenberg Traurig's Michael Burshteyn",
+      source: "Law360"
+    },
+    {
+      id: "news-2",
+      date: "January 03, 2025",
+      type: "GT Advisory",
+      title: "5 Trends to Watch: 2025 Blockchain & Digital Assets",
+      readTime: "2 min read"
+    },
+    {
+      id: "news-3",
+      date: "August 22, 2024",
+      type: "Press Release",
+      title: "Barbara Jones Wins ‘Women Leaders in Tech Law’ Award",
+      readTime: "1 min read"
+    },
+    {
+      id: "news-4",
+      date: "Thursday, April 27, 2023",
+      type: "Event",
+      title: "Elevating Black Excellence: A Showcase for Black Partners",
+      readTime: ""
+    }
+  ],
+
+  relatedCapabilities: [
+    "Venture Capital & Emerging Technology",
+    "Innovation & Artificial Intelligence",
+    "Government Law & Policy",
+    "Technology, Media & Telecommunications",
+    "Intellectual Property & Technology",
+    "Litigation",
+    "Mergers & Acquisitions",
+    "Corporate",
+    "Data Privacy & Cybersecurity",
+    "Regulatory & Compliance",
+    "Tax"
+  ]
 };
 
-function CapabilityDetail() {
-  const router = useRouter();
-  const { slug } = router.query; 
+export default function CapabilityDetail() {
+  const data = blockchainData; 
 
-  // --- DATA LOADER LOGIC ---
-  const getPageData = () => {
-    if (!slug) return null;
-
-    // 1. Check if we have specific data for this slug
-    if (capabilitiesData[slug]) {
-        return capabilitiesData[slug];
-    }
-
-    // 2. Fallback: Generate Generic Data (if slug doesn't match specific data)
-    const formattedTitle = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-    
-    return {
-      title: formattedTitle,
-      image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=2000&auto=format&fit=crop", 
-      overview: `Our ${formattedTitle} practice is recognized for its depth of knowledge and commitment to client success. We provide strategic legal counsel to businesses navigating the complex landscape of ${formattedTitle}. Whether you are a multinational corporation or a growing startup, we tailor our advice to your specific needs.`,
-      approach: `We take a proactive and pragmatic approach to ${formattedTitle}. Our goal is to mitigate risk while seizing opportunities for growth.`,
-      services: [
-        `Strategic ${formattedTitle} Advisory`,
-        "Regulatory Compliance & Risk Management",
-        "Cross-Border Transactions",
-        "Dispute Resolution & Litigation",
-        "Operational Structuring"
-      ]
-    };
-  };
-
-  const data = getPageData();
-
-  if (!data) return <div className="p-5 text-center display-6">Loading...</div>;
+  if (!data) return <div className="p-5 text-center">Loading...</div>;
 
   return (
     <>
       <Head>
-        <title>{data.title} | Practice Areas</title>
+        <title>{data.title} | GT Law</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
       </Head>
 
-      {/* --- HERO SECTION --- */}
-      <div className="capability-hero position-relative d-flex align-items-center justify-content-center text-center">
+      {/* ==================== 1. HERO SECTION ==================== */}
+      <div className="hero-section">
         <div className="overlay"></div>
-        <div className="container position-relative z-index-2">
-          {/* Main Title - Font Size Increased */}
-          <h1 className="hero-title fw-bold text-white font-serif mb-3">{data.title}</h1>
-          <p className="lead text-white-50 fs-4">Excellence in Legal Practice</p>
+        <div className="container hero-content">
+          <h1 className="hero-title font-serif">{data.title}</h1>
+          <Link href="/attorneys">
+            <a className="btn-gold-outline">
+              MEET THE TEAM <i className="bi bi-chevron-right ms-2 small-icon"></i>
+            </a>
+          </Link>
         </div>
       </div>
 
-      {/* --- MAIN CONTENT SECTION --- */}
-      <div className="container py-5 mt-4 mb-5">
+      {/* ==================== 2. MAIN CONTENT ==================== */}
+      <div className="container content-wrapper">
         <div className="row">
           
-          {/* LEFT COLUMN: Main Content */}
+          {/* LEFT COLUMN */}
           <div className="col-lg-8 pe-lg-5">
-            
-            {/* Overview */}
-            <div className="mb-5">
-              <h4 className="text-gold text-uppercase ls-2 mb-3 fw-bold">Overview</h4>
-              <p className="big-text text-dark">{data.overview}</p>
-            </div>
+            <p className="lead-text mb-4">{data.introText}</p>
+            <p className="body-text mb-5">{data.secondaryText}</p>
 
-            {/* Our Approach */}
-            <div className="mb-5 p-4 bg-light rounded border-start border-4 border-gold">
-              <h3 className="font-serif fw-bold text-navy mb-3">Our Approach</h3>
-              <p className="fs-5 text-secondary fst-italic mb-0">"{data.approach}"</p>
-            </div>
-
-            {/* Capabilities List */}
-            <div className="mb-5">
-              <h3 className="font-serif fw-bold text-navy mb-4">Key Capabilities</h3>
-              <div className="row">
-                 {data.services.map((item, index) => (
-                    <div className="col-md-12 mb-3" key={index}>
-                      <div className="d-flex align-items-center p-3 border rounded hover-shadow">
-                        <i className="bi bi-check-circle-fill text-gold fs-4 me-3"></i>
-                        <span className="fs-5 fw-bold text-navy">{item}</span>
-                      </div>
-                    </div>
-                  ))}
+            {data.subSections.map((sec, idx) => (
+              <div key={idx} className="mb-5">
+                <h3 className="section-sub-title font-serif">{sec.title}</h3>
+                <p className="body-text">{sec.content}</p>
               </div>
+            ))}
+
+            <div className="highlight-box mb-5">
+              <h3 className="section-sub-title font-serif text-navy">{data.cryptoEnforcement.title}</h3>
+              <p className="body-text">{data.cryptoEnforcement.content}</p>
+              <Link href="/capability/enforcement">
+                <a className="link-gold fw-bold mt-2 d-inline-block">
+                  Learn more about our Cryptocurrency Enforcement capabilities.
+                </a>
+              </Link>
             </div>
 
+            <div className="blog-box mb-5">
+              <div className="d-flex align-items-center mb-3">
+                 <i className="bi bi-chat-quote-fill text-gold fs-2 me-3"></i>
+                 <h3 className="section-sub-title font-serif mb-0">{data.blog.title}</h3>
+              </div>
+              <p className="body-text fst-italic">{data.blog.content}</p>
+            </div>
+
+            <div className="mb-5 border-top pt-4">
+               <h3 className="section-sub-title font-serif">Contact Us</h3>
+               <p className="body-text">{data.contactText}</p>
+            </div>
           </div>
 
-          {/* RIGHT COLUMN: Sidebar */}
-          <div className="col-lg-4">
-            <div className="sticky-top" style={{ top: '100px', zIndex: 1 }}>
-                
-                {/* Contact Box */}
-                <div className="bg-navy text-white p-4 rounded shadow-sm mb-4">
-                    <h4 className="font-serif mb-3">Need Legal Advice?</h4>
-                    <p className="fs-6 opacity-75 mb-4">Contact our {data.title} team to discuss your specific requirements.</p>
-                    
-                    <div className="d-flex align-items-center mb-3">
-                        <i className="bi bi-telephone-fill text-gold me-3 fs-5"></i>
-                        <span className="fs-5">+1 202 555 0199</span>
-                    </div>
-                    <div className="d-flex align-items-center mb-4">
-                        <i className="bi bi-envelope-fill text-gold me-3 fs-5"></i>
-                        <span className="fs-5">contact@corelaw.com</span>
-                    </div>
+          {/* RIGHT COLUMN */}
+          <div className="col-lg-4 mt-5 mt-lg-0">
+            <div className="sidebar-box mb-5">
+              <h4 className="sidebar-title font-serif">Areas of Focus</h4>
+              <ul className="sidebar-list">
+                {data.areasOfFocus.map((item, idx) => (
+                   <li key={idx}><i className="bi bi-caret-right-fill text-gold me-2"></i>{item}</li>
+                ))}
+              </ul>
+            </div>
 
-                    <Link href="/contact">
-                        <a className="btn btn-gold w-100 fw-bold text-navy py-3">Get in Touch</a>
-                    </Link>
-                </div>
-
-                {/* Related Practice Areas (Static for now) */}
-                <div className="p-4 border rounded bg-white">
-                    <h5 className="fw-bold text-navy mb-3 text-uppercase fs-6 ls-2">Related Areas</h5>
-                    <ul className="list-unstyled">
-                        <li className="mb-3 border-bottom pb-2">
-                            <Link href="/capability/corporate"><a className="text-decoration-none text-secondary fs-6 hover-gold">Corporate Law</a></Link>
-                        </li>
-                        <li className="mb-3 border-bottom pb-2">
-                            <Link href="/capability/real-estate"><a className="text-decoration-none text-secondary fs-6 hover-gold">Real Estate</a></Link>
-                        </li>
-                        <li className="mb-0">
-                            <Link href="/capability/litigation"><a className="text-decoration-none text-secondary fs-6 hover-gold">Litigation</a></Link>
-                        </li>
-                    </ul>
-                </div>
-
+            <div className="sidebar-box gray-bg">
+              <h4 className="sidebar-title font-serif text-navy">Our Capabilities</h4>
+              <ul className="capabilities-list">
+                {data.capabilitiesList.map((item, idx) => (
+                   <li key={idx}>
+                      <Link href={`/capability/${item.toLowerCase().replace(/ /g, '-')}`}>
+                        <a className="cap-link">{item}</a>
+                      </Link>
+                   </li>
+                ))}
+              </ul>
             </div>
           </div>
 
         </div>
       </div>
 
+      {/* ==================== 3. NEWS SECTION ==================== */}
+      <div className="news-section">
+        <div className="container">
+          <div className="d-flex justify-content-between align-items-end mb-4 border-bottom border-secondary pb-3">
+             <h2 className="text-white font-serif fw-bold m-0">News, Insights & Events</h2>
+             <div className="d-none d-md-block">
+                <span className="text-gold mx-2 fw-bold" style={{borderBottom:'2px solid #cfa144'}}>News</span>
+                <span className="text-muted mx-2 pointer">Insights</span>
+                <span className="text-muted mx-2 pointer">Past Events</span>
+             </div>
+          </div>
+
+          <div className="row">
+            {data.newsList.map((news) => (
+              <div key={news.id} className="col-12 mb-4 news-item">
+                <div className="d-flex flex-column">
+                   <div className="mb-2">
+                      <span className="text-white fw-bold text-uppercase small">{news.date}</span>
+                      <span className="text-gold ms-2 small border border-secondary px-2 py-1">{news.type}</span>
+                   </div>
+                   <Link href={`/news/${news.id}`}>
+                      <a className="news-title font-serif">{news.title}</a>
+                   </Link>
+                   <div className="text-muted small mt-1 fst-italic">
+                      {news.readTime || news.source || "Read More"}
+                   </div>
+                </div>
+                <hr className="border-secondary opacity-25 mt-3" />
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-end">
+             <Link href="/news"><a className="text-white fw-bold small text-uppercase" style={{letterSpacing:'1px'}}>View More +</a></Link>
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== 4. RELATED CAPABILITIES ==================== */}
+      <div className="container py-5 mb-5">
+        <h3 className="font-serif fw-bold mb-4">Related Capabilities</h3>
+        <div className="related-grid">
+           {data.relatedCapabilities.map((cap, idx) => (
+              <Link key={idx} href={`/capability/${cap.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-')}`}>
+                 <a className="related-pill">{cap}</a>
+              </Link>
+           ))}
+        </div>
+      </div>
+
+      {/* ==================== STYLES ==================== */}
       <style jsx>{`
-        /* COLORS */
-        .text-navy { color: #002855; }
-        .bg-navy { background-color: #002855; }
-        .text-gold { color: #de9f57; }
-        .border-gold { border-color: #de9f57 !important; }
-        .btn-gold { background-color: #de9f57; border: none; transition: 0.3s; }
-        .btn-gold:hover { background-color: #c5893d; }
-        .hover-gold:hover { color: #de9f57 !important; }
-
-        /* TYPOGRAPHY */
-        .font-serif { font-family: "Georgia", serif; }
-        .ls-2 { letter-spacing: 2px; }
-        
-        /* BIG FONT SIZES */
-        .hero-title { font-size: 3.5rem; }
-        .big-text { font-size: 1.25rem; line-height: 1.8; color: #333; }
-        
-        /* HERO */
-        .capability-hero {
-          background-image: url("${data.image}");
-          background-size: cover;
-          background-position: center;
-          height: 60vh; /* Increased Height */
-          width: 100%;
-          margin-top: -80px; /* Adjust based on your header height */
+        /* VARIABLES */
+        :global(:root) {
+            --gold: #de9f57;
+            --navy: #002855;
         }
-        .overlay {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-          background: linear-gradient(rgba(0,40,85,0.8), rgba(0,40,85,0.6));
-        }
+        .text-gold { color: var(--gold) !important; }
+        .text-navy { color: var(--navy) !important; }
+        .font-serif { font-family: "Georgia", "Times New Roman", serif; }
 
-        /* CARD EFFECT */
-        .hover-shadow { transition: transform 0.2s, box-shadow 0.2s; background: white; }
-        .hover-shadow:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        /* HERO SECTION (UPDATED FOR SIZE & POSITION) */
+        .hero-section {
+            background-image: url("${data.heroImage}");
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            margin-top: -80px; 
+        }
+        .hero-content { 
+            position: relative; 
+            z-index: 2; 
+            color: white; 
+            /* Added padding-top to visually push content down */
+            padding-top: 100px;
+        }
+        .hero-title { 
+            /* Reduced font size */
+            font-size: clamp(2rem, 3.5vw, 3rem); 
+            font-weight: 700; 
+            margin-bottom: 30px; 
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+        
+        .overlay { background: rgba(0, 40, 85, 0.7); position: absolute; inset: 0; }
+        
+        .btn-gold-outline {
+            border: 2px solid white; color: white; padding: 12px 30px;
+            font-weight: bold; letter-spacing: 2px; transition: 0.3s;
+            text-decoration: none; display: inline-block;
+        }
+        .btn-gold-outline:hover { background: white; color: var(--navy); }
+
+        /* CONTENT */
+        .content-wrapper { padding: 60px 15px; }
+        .lead-text { font-size: 1.25rem; line-height: 1.7; color: #333; font-weight: 500; }
+        .body-text { font-size: 1.1rem; line-height: 1.8; color: #444; margin-bottom: 20px; }
+        .section-sub-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 15px; color: #222; }
+
+        /* HIGHLIGHT BOXES */
+        .highlight-box { background: #f0f4f8; padding: 30px; border-left: 5px solid var(--navy); }
+        .blog-box { background: #fffcf5; padding: 30px; border: 1px solid #eee; border-left: 5px solid var(--gold); }
+        .link-gold { color: var(--gold); text-decoration: none; }
+        .link-gold:hover { text-decoration: underline; }
+
+        /* SIDEBAR */
+        .sidebar-box { margin-bottom: 40px; }
+        .sidebar-title { font-size: 1.2rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .sidebar-list { list-style: none; padding: 0; }
+        .sidebar-list li { padding: 8px 0; font-size: 1.1rem; color: #333; border-bottom: 1px solid #eee; }
+        
+        .gray-bg { background: #f9f9f9; padding: 25px; }
+        .capabilities-list { list-style: none; padding: 0; }
+        .cap-link { display: block; padding: 6px 0; color: #444; text-decoration: none; transition: 0.2s; }
+        .cap-link:hover { color: var(--gold); transform: translateX(5px); }
+
+        /* NEWS SECTION */
+        .news-section { background-color: #222; padding: 80px 0; color: white; }
+        .news-title { font-size: 1.6rem; color: var(--gold); text-decoration: none; display: block; transition: 0.2s; }
+        .news-title:hover { text-decoration: underline; color: #eac07a; }
+        .pointer { cursor: pointer; }
+
+        /* RELATED PILLS */
+        .related-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+        .related-pill {
+            background: white; border: 1px solid #ddd; padding: 10px 20px;
+            color: #333; text-decoration: none; font-weight: 500; transition: 0.2s;
+        }
+        .related-pill:hover { background: var(--navy); color: white; border-color: var(--navy); }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem; }
-            .capability-hero { height: 50vh; }
+            .hero-section { height: 50vh; }
+            .hero-title { font-size: 1.8rem; }
         }
       `}</style>
     </>
   );
 }
-
-export default CapabilityDetail;

@@ -1,27 +1,16 @@
-/* ==============================================
-   1. GLOBAL VARIABLES (Single Source of Truth)
-   ============================================== */
 :root {
-  /* Brand Colors */
-  --primary-gold: #de9f57;       /* Buttons, Active Links, Accents */
-  --primary-blue: #003366;       /* Main Headings, Section BG */
-  --dark-navy: #0a1c38;          /* Footer or Darker Sections */
-  
-  /* Text & Backgrounds */
+  --primary-gold: #de9f57;
+  --primary-blue: #003366;
+  --dark-navy: #0a1c38;
   --text-dark: #212529;
   --text-light: #ffffff;
   --bg-dark: #000000;
   --bg-light: #f4f7f6;
   --overlay-black: rgba(0, 0, 0, 0.6);
-
-  /* Fonts */
   --font-base: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-serif: "Times New Roman", Times, serif;
 }
 
-/* ==============================================
-   2. RESET & LAYOUT FIXES
-   ============================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -31,7 +20,7 @@
 html, body {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden !important; /* Screen hilne se rokega */
+  overflow-x: hidden !important;
   font-family: var(--font-base);
   color: var(--text-dark);
   line-height: 1.6;
@@ -49,15 +38,11 @@ img, video {
   display: block;
 }
 
-/* Container Padding Fix for Mobile */
 .container {
   padding-right: 15px;
   padding-left: 15px;
 }
 
-/* ==============================================
-   3. RESPONSIVE TYPOGRAPHY (Auto Adjust)
-   ============================================== */
 h1, .display-3 {
   font-size: clamp(2rem, 5vw, 4rem) !important;
   font-weight: 700;
@@ -84,7 +69,6 @@ p, .lead, li, span, a, .nav-link {
   font-size: clamp(0.95rem, 1vw, 1.15rem);
 }
 
-/* Utility Font Classes */
 .font-serif {
   font-family: var(--font-serif);
 }
@@ -96,9 +80,6 @@ p, .lead, li, span, a, .nav-link {
 .bg-blue { background-color: var(--primary-blue) !important; }
 .bg-light-gray { background-color: var(--bg-light) !important; }
 
-/* ==============================================
-   4. HEADER & NAVIGATION STYLES
-   ============================================== */
 .header-main {
   background-color: var(--bg-dark);
   transition: all 0.3s ease;
@@ -140,9 +121,8 @@ p, .lead, li, span, a, .nav-link {
   color: var(--primary-gold);
 }
 
-/* Header Button */
 .btn-custom {
-  background-color: rgba(222, 159, 87, 0.5); /* Semi-transparent Gold */
+  background-color: rgba(222, 159, 87, 0.5);
   color: var(--text-light);
   font-weight: 600;
   border-radius: 5px;
@@ -155,12 +135,9 @@ p, .lead, li, span, a, .nav-link {
   color: var(--text-light);
 }
 
-/* ==============================================
-   5. BANNER & SECTIONS STYLES
-   ============================================== */
 .banner-section {
   width: 100%;
-  min-height: 60vh; /* Banner height reduced */
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -187,35 +164,30 @@ p, .lead, li, span, a, .nav-link {
   padding: 1rem 0; 
 }
 
-/* --- NEW: Hero Stats Bar Styling (Premium Blue) --- */
 .hero-stats-bar {
-  background-color: var(--primary-blue); /* Deep Blue Background */
-  border-bottom: 4px solid var(--primary-gold); /* Gold Line Bottom */
+  background-color: var(--primary-blue);
+  border-bottom: 4px solid var(--primary-gold);
   color: var(--text-light);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Slight shadow for depth */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   position: relative;
   z-index: 10;
 }
 
-/* Text spacing for stats */
 .tracking-wide {
   letter-spacing: 1.5px;
   font-weight: 600;
   opacity: 0.8;
 }
 
-/* Vertical Divider Lines (Desktop Only) */
 @media (min-width: 768px) {
   .hero-stats-bar .border-end-custom {
     border-right: 1px solid rgba(255, 255, 255, 0.15);
   }
 }
 
-/* --- Global Scale Section (Reduced Spacing) --- */
 .stats-section {
   background-color: var(--primary-blue);
   color: var(--text-light);
-  /* Ensure padding overrides Bootstrap if needed */
   padding-top: 1.5rem !important; 
   padding-bottom: 1.5rem !important;
 }
@@ -226,7 +198,6 @@ p, .lead, li, span, a, .nav-link {
     margin-bottom: 0.2rem;
 }
 
-/* Card Shadow */
 .card-shadow {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
   border-radius: 4px;
@@ -240,9 +211,7 @@ p, .lead, li, span, a, .nav-link {
   min-height: 300px;
   object-fit: cover;
 }
-/* ==============================================
-   6. PREMIUM BUTTONS (Global)
-   ============================================== */
+
 .btn-premium {
   background-color: transparent;
   border: 2px solid var(--primary-blue);
@@ -263,11 +232,6 @@ p, .lead, li, span, a, .nav-link {
   box-shadow: 0 8px 15px rgba(0,0,0,0.15);
 }
 
-/* =======================================================
-   HIDE GOOGLE TRANSLATE BANNER & TOOLBAR (Magic Code)
-   ======================================================= */
-
-/* 1. Google के Top Bar (Frame) को छिपाएं */
 .goog-te-banner-frame.skiptranslate {
     display: none !important;
 }
@@ -276,13 +240,11 @@ iframe.goog-te-banner-frame {
     display: none !important;
 }
 
-/* 2. Body को ऊपर खिसकाएं (Google इसे 40px नीचे धकेल देता है) */
 body {
     top: 0px !important;
     position: static !important;
 }
 
-/* 3. Google का Logo और "Powered by Google" छिपाएं */
 .goog-te-gadget-icon {
     display: none !important;
 }
@@ -292,20 +254,17 @@ body {
     border: none !important;
 }
 
-/* 4. Mouse ले जाने पर जो Tooltip आता है उसे छिपाएं */
 #goog-gt-tt, .goog-tooltip, .goog-tooltip:hover {
     display: none !important;
     visibility: hidden !important;
 }
 
-/* 5. टेक्स्ट पर जो Blue/Hover Highlight आता है उसे हटाएं */
 .goog-text-highlight {
     background: none !important;
     box-shadow: none !important;
     border: none !important;
 }
 
-/* 6. Mobile पर भी टॉप फ्रेम को हटाएं */
 font iframe {
     display: none !important;
 }

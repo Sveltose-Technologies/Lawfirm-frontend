@@ -224,14 +224,14 @@
 //             </div>
 //           </div>
 
-//           <div className="row mt-5 pt-4 m-0">
-//             <div className="col-12 text-center">
-//                  {/* Dead Link */}
-//                  <a href="#" onClick={handleDeadClick} className="btn btn-light btn-lg rounded-0 px-5 fw-bold">
-//                    Explore Locations
-//                 </a>
-//             </div>
-//           </div>
+          // <div className="row mt-5 pt-4 m-0">
+          //   <div className="col-12 text-center">
+          //        {/* Dead Link */}
+          //        <a href="#" onClick={handleDeadClick} className="btn btn-light btn-lg rounded-0 px-5 fw-bold">
+          //          Explore Locations
+          //       </a>
+          //   </div>
+          // </div>
 
 //         </div>
 //       </div>
@@ -280,7 +280,7 @@ function Banner1() {
           NEW SECTION: HERO STATS BAR (Premium Blue Design)
       ========================================= */}
       {/* Blue Background added via CSS class 'hero-stats-bar' */}
-      <div className="hero-stats-bar">
+ <div className="hero-stats-bar" style={{ marginTop: '30px' }}>
         <div className="container">
           <div className="row text-center m-0">
             
@@ -479,17 +479,17 @@ function Banner1() {
             </div>
           </div>
 
-       <div className="row mt-3 m-0">
+     
+          <div className="row mt-4 pt-3 m-0">
   <div className="col-12 text-center">
-    <Link 
-      href="/location" 
-      className="btn btn-light rounded-0 px-5 fw-bold btn-sm"
-    >
-      Explore Locations
+    <Link href="/location" passHref>
+      <a className="btn btn-light btn-lg rounded-0 px-5 fw-bold">
+        Explore Locations
+      </a>
     </Link>
   </div>
 </div>
-
+ 
         </div>
       </div>
     </>
