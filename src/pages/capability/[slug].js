@@ -169,11 +169,24 @@ export default function CapabilityDetail() {
           <div className="col-lg-4 mt-5 mt-lg-0">
             <div className="sidebar-box mb-5">
               <h4 className="sidebar-title font-serif">Areas of Focus</h4>
-              <ul className="sidebar-list">
-                {data.areasOfFocus.map((item, idx) => (
-                   <li key={idx}><i className="bi bi-caret-right-fill text-gold me-2"></i>{item}</li>
-                ))}
-              </ul>
+      
+<ul className="sidebar-list">
+  {data.areasOfFocus.map((item, idx) => {
+    // Text ko URL friendly banana (slug)
+    // "Cryptocurrency Enforcement" -> "cryptocurrency-enforcement"
+    const typeSlug = item.toLowerCase().trim().replace(/\s+/g, '-');
+    
+    return (
+      <li key={idx} style={{cursor: 'pointer'}}>
+        <Link href={`/capability/area-detail-page?type=${typeSlug}`}>
+          <a className="text-decoration-none text-dark d-block py-1">
+             <i className="bi bi-caret-right-fill text-gold me-2"></i>{item}
+          </a>
+        </Link>
+      </li>
+    );
+  })}
+</ul>
             </div>
 
             <div className="sidebar-box gray-bg">

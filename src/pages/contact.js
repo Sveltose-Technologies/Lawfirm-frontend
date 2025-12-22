@@ -360,9 +360,10 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from "next/router";
 
 function Contact() {
-  
+  const router = useRouter();
   // --- STATES ---
   const [formData, setFormData] = useState({
     firstName: '',
@@ -479,11 +480,11 @@ function Contact() {
                     Click on the button below to see our complete list of media contacts.
                 </p>
                 <button 
-                    className="btn-outline-custom"
-                    onClick={() => alert("Redirecting to Media Contacts...")}
-                >
-                    MEDIA CONTACTS
-                </button>
+    className="btn-outline-custom"
+    onClick={() => router.push("/media-contacts")}
+>
+    MEDIA CONTACTS
+</button>
                 </div>
 
                 {/* Careers Section */}
@@ -494,12 +495,12 @@ function Contact() {
                 <p className="mb-3" style={{ fontSize: '1rem', lineHeight: '1.6' }}>
                     All legitimate job opportunities xxx are posted <a href="#" onClick={handleDeadClick} className="text-gold-link">here on our official website</a>. If you suspect a fraudulent job posting, please report it to us at <a href="mailto:hr@nrlslaw.com" className="text-gold-link">hr@nrlslaw.com</a>.
                 </p>
-                <button 
-                    className="btn-outline-custom mt-3"
-                    onClick={() => alert("Redirecting to Careers...")}
-                >
-                    JOB OPPORTUNITIES
-                </button>
+                <button
+        className="btn-outline-custom mt-3"
+        onClick={() => router.push("/careers")}
+      >
+        JOB OPPORTUNITIES
+      </button>
                 </div>
             </div>
           </div>

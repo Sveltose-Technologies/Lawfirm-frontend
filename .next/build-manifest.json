@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/attorney-panel.js"
     ],
-    "/attorney-panel/cases": [
+    "/attorney-panel/appointments": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/attorney-panel/cases.js"
+      "static/chunks/pages/attorney-panel/appointments.js"
     ]
   },
   "ampFirstPages": []

@@ -381,7 +381,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="footer-section pt-5">
+      <footer className="footer-section pt-1">
         <div className="footer-top">
           <div className="container-xl container-lg-fluid container">
             <div className="row gy-5">
