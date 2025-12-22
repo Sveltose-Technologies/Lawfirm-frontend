@@ -643,7 +643,7 @@ function Contact() {
                         style={{ width: '24px', height: '24px' }}
                       />
                       <label className="form-check-label ms-2 mt-1" htmlFor="recaptcha">
-                        I'm not a robot
+                       I&apos;m not a robot
                       </label>
                    </div>
                    <div className="ms-auto text-center" style={{ fontSize: '10px', color: '#555' }}>
@@ -655,11 +655,14 @@ function Contact() {
               </div>
 
               <div className="d-flex">
-                <button type="submit" className="btn-submit">
-                  SUBMIT
+                <button 
+                    className="btn-outline-custom"
+                    onClick={() => alert("Redirecting to Careers...")}
+                >
+                    SUBMIT
                 </button>
               </div>
-
+ 
             </form>
           </div>
 

@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 // --- DATA SOURCE ---
 const blockchainData = {
   title: "Blockchain & Digital Assets",
-  heroImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2070&auto=format&fit=crop", 
+  heroImage: "/assets/images/our-firm4.png", 
   
   areasOfFocus: [
     "Cryptocurrency Enforcement",

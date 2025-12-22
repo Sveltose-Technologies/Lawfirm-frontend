@@ -662,7 +662,7 @@ function Capabilities() {
             {/* NO RESULTS FOUND MESSAGE */}
             {filteredData.length === 0 && (
               <div className="col-12 text-center py-5">
-                <h4 className="text-muted">No capabilities found matching "{searchTerm}"</h4>
+              <h4 className="text-muted">No capabilities found matching &quot;{searchTerm}&quot;</h4>
                 <button className="btn btn-link text-gold" onClick={() => setSearchTerm('')}>Clear Search</button>
               </div>
             )}
