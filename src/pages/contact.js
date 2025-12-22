@@ -479,12 +479,9 @@ function Contact() {
                 <p className="mb-4" style={{ fontSize: '1rem', lineHeight: '1.6' }}>
                     Click on the button below to see our complete list of media contacts.
                 </p>
-                <button 
-    className="btn-outline-custom"
-    onClick={() => router.push("/media-contacts")}
->
-    MEDIA CONTACTS
-</button>
+             <Link href="/media-contacts">
+  <a className="btn-outline-custom">MEDIA CONTACTS</a>
+</Link>
                 </div>
 
                 {/* Careers Section */}
@@ -495,12 +492,10 @@ function Contact() {
                 <p className="mb-3" style={{ fontSize: '1rem', lineHeight: '1.6' }}>
                     All legitimate job opportunities xxx are posted <a href="#" onClick={handleDeadClick} className="text-gold-link">here on our official website</a>. If you suspect a fraudulent job posting, please report it to us at <a href="mailto:hr@nrlslaw.com" className="text-gold-link">hr@nrlslaw.com</a>.
                 </p>
-                <button
-        className="btn-outline-custom mt-3"
-        onClick={() => router.push("/careers")}
-      >
-        JOB OPPORTUNITIES
-      </button>
+               
+      <Link href="/careers">
+  <a className="btn-outline-custom">JOB OPPORTUNITIES</a>
+</Link>
                 </div>
             </div>
           </div>

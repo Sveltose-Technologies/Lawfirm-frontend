@@ -3183,8 +3183,7 @@ header.style-5 {
         top: 0;
         right: 0;
         bottom: 0;
-background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)), url("/assets/images/bg/banner1-bg.png");
-        @include img-adjust();
+
         z-index: -1;
         animation: zoom 12s linear infinite alternate;
     }
@@ -3305,7 +3304,7 @@ background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)),
         height: 100%;
         background-color: var(--primary-color1);
         z-index: -1;
-        opacity: 0.3;
+       
         @include xl-device(){
             left: 30px;
         }
@@ -3481,7 +3480,7 @@ background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)),
         height: 100%;
         background-color: var(--primary-color1);
         z-index: -1;
-        opacity: 0.3;
+       
         @include xl-device(){
             left: 30px;
         }
