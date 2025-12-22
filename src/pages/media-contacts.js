@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import { useRouter } from "next/router";
 
+import Link from 'next/link';
 function MediaContacts() {
-  const router = useRouter();
+
 
   const theme = {
     textDark: '#000000',
@@ -106,12 +106,11 @@ function MediaContacts() {
               </div>
             ))}
 
-            <button 
-                className="btn-outline-custom mt-4"
-                onClick={() => router.push("/contact")} // Back to contact
-            >
-                BACK TO CONTACT
-            </button>
+           <Link href="/contact">
+    <a className="btn-outline-custom mt-4 text-decoration-none d-inline-block">
+        BACK TO CONTACT
+    </a>
+</Link>
           </div>
         </div>
       </div>

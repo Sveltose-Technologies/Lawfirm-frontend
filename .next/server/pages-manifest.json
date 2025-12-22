@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/attorney-panel": "pages/attorney-panel.js",
-  "/capability": "pages/capability.js"
+  "/media-contacts": "pages/media-contacts.js",
+  "/contact": "pages/contact.js"
 }
