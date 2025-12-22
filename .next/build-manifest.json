@@ -25,20 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/careers": [
+    "/attorney-panel": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/careers.js"
+      "static/chunks/pages/attorney-panel.js"
     ],
     "/contact": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/contact.js"
-    ],
-    "/media-contacts": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/media-contacts.js"
     ]
   },
   "ampFirstPages": []
