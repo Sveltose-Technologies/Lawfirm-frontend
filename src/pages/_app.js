@@ -1,46 +1,104 @@
+
+// import Script from "next/script";
+// import { useEffect } from "react";
+
+// // CSS Imports
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import "../../public/assets/css/animate.css";
+// import "../../public/assets/css/all.css";
+// import "../../public/assets/css/boxicons.min.css";
+// import "../../public/assets/css/bootstrap-icons.css";
+// import "../../public/assets/css/swiper-bundle.css";
+// import "../../public/assets/css/style.css";
+// import '../styles/globals.css'; 
+
+// import Layout from "../components/layout/Layout";
+// import DisclaimerPopup from "../components/DisclaimerPopup";
+
+// function MyApp({ Component, pageProps }) {
+//   return (
+   
+//       <Layout>
+//         <DisclaimerPopup />
+//         <Component {...pageProps} />
+//       </Layout>
+   
+//   );
+// }
+
+// export default MyApp;
+
+
 import Script from "next/script";
+import { useEffect } from "react";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../public/assets/css/animate.css";
 import "../../public/assets/css/all.css";
-import "../../public/assets/css/bootstrap.min.css";
 import "../../public/assets/css/boxicons.min.css";
 import "../../public/assets/css/bootstrap-icons.css";
 import "../../public/assets/css/swiper-bundle.css";
 import "../../public/assets/css/style.css";
 import '../styles/globals.css'; 
-import { useEffect } from "react";
 
-// --- IMPORT LAYOUT HERE ---
 import Layout from "../components/layout/Layout";
-
-//Default Warning Error Hide
-console.log = console.warn = console.error = () => {};
+import DisclaimerPopup from "../components/DisclaimerPopup";
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    // Bootstrap JS Import
-    import("bootstrap/dist/js/bootstrap");
+  
 
-    // WOW INIT (SAFE for Next.js)
-    const loadWow = async () => {
-      if (typeof window !== "undefined") {
-        const WOW = (await import("wowjs")).WOW;
-        new WOW().init();
-      }
-    };
-
-    loadWow();
-  }, []);
-
-  return (
-    // --- WRAP EVERYTHING IN LAYOUT ---
+  const getLayout = Component.getLayout || ((page) => (
     <Layout>
-      <Component {...pageProps} />
-
-      {/* WOW Library Load */}
-      <Script src="/js/wow.min.js" strategy="lazyOnload" />
+      <DisclaimerPopup />
+      {page}
     </Layout>
-  );
+  ));
+  
+
+  return getLayout(<Component {...pageProps} />);
 }
 
 export default MyApp;
+
+// import { useRouter } from 'next/router';
+// import Script from "next/script";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap-icons/font/bootstrap-icons.css'; 
+
+// // Saari CSS files
+// import "../../public/assets/css/animate.css";
+// import "../../public/assets/css/all.css"; 
+// import "../../public/assets/css/boxicons.min.css";
+// import "../../public/assets/css/swiper-bundle.css";
+// import "../../public/assets/css/style.css";
+// import '../styles/globals.css'; 
+
+// import Layout from "../components/layout/Layout"; 
+// import AttorneyLayout from "../components/attorney-panel/Layout";
+// import DisclaimerPopup from "../components/DisclaimerPopup";
+
+// function MyApp({ Component, pageProps }) {
+//   const router = useRouter();
+//   const isAttorneyPanel = router.pathname.startsWith('/attorney-panel');
+
+//   // Case 1: Attorney Panel Pages
+//   if (isAttorneyPanel) {
+//     return (
+//       <AttorneyLayout>
+//         <Component {...pageProps} />
+//         <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" />
+//       </AttorneyLayout>
+//     );
+//   }
+
+//   // Case 2: Normal Website Pages
+//   return (
+//     <Layout>
+//       <DisclaimerPopup />
+//       <Component {...pageProps} />
+//       <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" />
+//     </Layout>
+//   );
+// }
+
+// export default MyApp;

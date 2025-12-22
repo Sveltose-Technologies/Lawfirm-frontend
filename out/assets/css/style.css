@@ -3536,9 +3536,14 @@ header.style-5 .main-nav ul li.menu-item-has-children > i {
   top: 0;
   right: 0;
   bottom: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(32, 32, 32, 0.5)), to(rgba(32, 32, 32, 0.5))), url("../images/bg/banner1-bg.png");
-  background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)), url("../images/bg/banner1-bg.png");
-  background-size: cover;
+/* Note: Path ab '/assets' se shuru ho raha hai */
+
+background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(32, 32, 32, 0.5)), to(rgba(32, 32, 32, 0.5))), url("/assets/images/bg/banner1-bg.png");
+
+background-image: linear-gradient(rgba(32, 32, 32, 0.5), rgba(32, 32, 32, 0.5)), url("/assets/images/bg/banner1-bg.png");
+
+background-size: cover;
+
   background-repeat: no-repeat;
   z-index: -1;
   -webkit-animation: zoom 12s linear infinite alternate;
@@ -4294,18 +4299,7 @@ header.style-5 .main-nav ul li.menu-item-has-children > i {
   }
 }
 
-.banner-section3 .banner3-bg {
-  width: 100%;
-  max-width: 1545px;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-image: url("../images/bg/banner31.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: -1;
-}
+
 
 @media (min-width: 1400px) and (max-width: 1830px) {
   .banner-section3 .banner3-bg {
@@ -5836,15 +5830,14 @@ header.style-5 .main-nav ul li.menu-item-has-children > i {
   gap: 80px;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
-          justify-content: start;
-}
+        justify-content: flex-start;
 
 @media (min-width: 768px) and (max-width: 991px) {
   .info-section .info-list {
     gap: 50px;
   }
 }
-
+}
 @media (max-width: 767px) {
   .info-section .info-list {
     gap: 30px;
@@ -6530,7 +6523,7 @@ header.style-5 .main-nav ul li.menu-item-has-children > i {
   display: flex;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
-          justify-content: start;
+         justify-content: flex-start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -8821,14 +8814,14 @@ h3.comment-title {
   display: flex;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
-          justify-content: start;
+             justify-content: flex-start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   gap: 20px;
   -webkit-box-align: start;
       -ms-flex-align: start;
-          align-items: start;
+               justify-content: flex-start;
   border: 1px solid #EEEEEE;
   border-radius: 5px;
   padding: 35px 20px 25px 20px;
@@ -9389,7 +9382,7 @@ h3.comment-title {
 }
 
 .footer-section .footer-top {
-  padding: 90px 0px;
+  padding: 20px 0px;
 }
 
 .footer-section .footer-item h4 {
@@ -9773,7 +9766,6 @@ h3.comment-title {
     margin-top: 30px;
   }
 }
-
 .progress-area2 {
   display: -webkit-box;
   display: -ms-flexbox;

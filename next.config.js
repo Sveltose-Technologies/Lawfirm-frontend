@@ -1,28 +1,71 @@
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactStrictMode: true,
+  
+
+//   output: "export", 
+
+//   swcMinify: false,
+  
+//   images: {
+//     unoptimized: true, 
+//     domains: ["images.unsplash.com", "images.pexels.com"],
+//   },
+
+//   eslint: { ignoreDuringBuilds: true },
+//   typescript: { ignoreBuildErrors: true },
+  
+//   webpack: (config) => {
+//     config.cache = false;
+//     return config;
+//   },
+// };
+
+// module.exports = nextConfig;
+
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactStrictMode: true,
+//   swcMinify: false, // Minification issue rokne ke liye
+//   trailingSlash: true, // Linux/Static server par paths ko sahi rakhne ke liye JARURI hai
+
+//   // Image optimization band karein taaki export me error na aaye
+//   images: {
+//     unoptimized: true,
+//     loader: 'akamai', // Next.js 12 export fix
+//     path: '',
+//     domains: ["images.unsplash.com", "images.pexels.com"],
+//   },
+
+//   eslint: { ignoreDuringBuilds: true },
+//   typescript: { ignoreBuildErrors: true },
+  
+//   webpack: (config) => {
+//     config.cache = false;
+//     return config;
+//   },
+// };
+
+// module.exports = nextConfig;
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
 
-  // --- CHANGE 1: Enable Static Export ---
-  output: "export",
-
-  // 1. Minification (Aapka setting)
+  trailingSlash: false, 
   swcMinify: false,
 
-  // 2. Images Config
   images: {
-    // --- CHANGE 2: Static Export ke liye ye zaroori hai ---
     unoptimized: true,
-    domains: ["images.unsplash.com", "images.pexels.com"],
   },
 
-  // 3. Build Optimizations
-  eslint: {
-    ignoreDuringBuilds: true,
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+
+  webpack: (config) => {
+    config.cache = false;
+    return config;
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  productionBrowserSourceMaps: false,
 };
 
 module.exports = nextConfig;
