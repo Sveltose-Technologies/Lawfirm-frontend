@@ -52,7 +52,7 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  trailingSlash: false, 
+  trailingSlash: true, 
   swcMinify: false,
 
   images: {

@@ -114,7 +114,7 @@ function MediaContacts() {
             ))}
 
             <Link href="/contact">
-              <a className="btn-outline-custom mt-4 text-decoration-none d-inline-block">
+              <a className="btn-outline-custom  text-decoration-none d-inline-block">
                 BACK TO CONTACT
               </a>
             </Link>

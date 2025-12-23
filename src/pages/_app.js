@@ -61,6 +61,7 @@
 // export default MyApp;
 import Script from "next/script";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import "../../public/assets/css/animate.css";
 import "../../public/assets/css/all.css";
 import "../../public/assets/css/boxicons.min.css";

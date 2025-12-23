@@ -144,25 +144,25 @@ import React, { useState } from 'react';
 const promotersData = [
   {
     id: 1,
-    image: '/assets/images/attorney2.png', // Replace with Dilip Kr. Niranjan's image
+    image: 'assets/images/attorney2.png', // Replace with Dilip Kr. Niranjan's image
     name: "Anil varma",
     designation: "Senior Partner–Commercial, Insolvency, Banking & Finance Law",
   },
   {
     id: 2,
-    image: '/assets/images/attorney1.png', // Replace with Prema Priyadarshini's image
+    image: 'assets/images/attorney1.png', // Replace with Prema Priyadarshini's image
     name: "Prema Sharma",
     designation: "Dispute Resolution Expert & Trainer Mediator",
   },
   {
     id: 3,
-    image: '/assets/images/attorney3.png', // Replace with Ramesh Kumar's image
+    image: 'assets/images/attorney3.png', // Replace with Ramesh Kumar's image
     name: "Ravi Kumar",
     designation: "Head Business Development & Senior Associate",
   },
   {
     id: 4,
-    image: '/assets/images/attorney6.png', // Replace with Ramesh Kumar's image
+    image: 'assets/images/attorney6.png', 
     name: "Meera Sharma",
     designation: "Head Business Development & Senior Associate",
   }
