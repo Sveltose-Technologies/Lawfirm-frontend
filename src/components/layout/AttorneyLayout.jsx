@@ -127,7 +127,7 @@ export default function AttorneyLayout({ children }) {
                 <div className="mx-auto mb-3" style={{ width: '120px', height: '120px' }}>
                     <img src="/assets/images/attorney1.png" className="rounded-circle shadow-sm w-100 h-100" style={{ objectFit: 'cover', border: '4px solid #f8f9fa' }} alt="avatar" />
                 </div>
-                <h4 className="fw-bold mb-1" style={{color: '#002147'}}>Tasnia Sharin</h4>
+                <h5 className="fw-bold mb-1" style={{color: '#002147'}}>Tasnia Sharin</h5>
                 <p className="text-muted mb-0 fs-6">attorney@gmail.com</p>
               </div>
               <div className="p-3 bg-white">
