@@ -1,207 +1,261 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import AttorneyLayout from '../../components/layout/AttorneyLayout';
 
-export default function AppointmentHistory() {
-  const router = useRouter();
-
-  // --- 1. INITIAL DATA ---
+export default function Appointments() {
+  // Real-time State for Appointments
   const [appointments, setAppointments] = useState([
-    { id: 1, attorney: "Adv. Amit Verma", type: "Civil", title: "Verma vs HDFC Bank", date: "2025-12-28", time: "11:00", reason: "Evidence Submission", status: "Scheduled" },
-    { id: 2, attorney: "Adv. Amit Verma", type: "Criminal", title: "State vs Rahul", date: "2025-12-30", time: "14:30", reason: "Cross Examination", status: "Scheduled" },
-    { id: 3, attorney: "Adv. Amit Verma", type: "Family", title: "Sonia vs Vikram", date: "2025-10-15", time: "10:00", reason: "Final Settlement", status: "Completed" },
+    { id: 1, attorney: 'Adv. Tasnia Sharin', type: 'Criminal', title: 'State vs Sharma', date: '2025-01-05', time: '10:30 AM', reason: 'Evidence Discussion', doc: '📁', status: 'Scheduled' },
+    { id: 2, attorney: 'Adv. Tasnia Sharin', type: 'Civil', title: 'Property Dispute', date: '2025-01-12', time: '02:00 PM', reason: 'Client Meeting', doc: '📁', status: 'Scheduled' },
   ]);
 
-  // --- 2. STATES ---
-  const [activeTab, setActiveTab] = useState('new'); // 'new' or 'history'
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    attorney: "Adv. Amit Verma", type: "Civil", title: "", date: "", time: "", reason: ""
-  });
+  const [history, setHistory] = useState([
+    { id: 101, attorney: 'Adv. Tasnia Sharin', type: 'Family', title: 'Divorce Case', date: '2024-12-15', time: '11:00 AM', reason: 'Final Hearing', doc: '📄', status: 'Completed' },
+  ]);
 
-  // --- 3. LOGIC: SEARCH + SORT + TAB FILTER ---
-  const filteredData = useMemo(() => {
-    const today = new Date().toISOString().split('T')[0];
-    
-    // Step 1: Filter by Tab
-    let data = appointments.filter(item => activeTab === 'new' ? item.date >= today : item.date < today);
+  // Modal State
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ attorney: 'Adv. Tasnia Sharin', type: '', title: '', date: '', time: '', reason: '', status: 'Scheduled' });
+  const [editId, setEditId] = useState(null);
 
-    // Step 2: Search Logic
-    if (searchTerm) {
-      data = data.filter(item => 
-        item.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        item.attorney.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
+  // Handle Input Change
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // Step 3: Descending Sort (Latest Date First)
-    return data.sort((a, b) => new Date(b.date) - new Date(a.date));
-  }, [appointments, activeTab, searchTerm]);
-
-  // --- 4. ACTION HANDLERS ---
-  const handleAdd = (e) => {
+  // Add or Re-schedule Appointment
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const newEntry = { ...formData, id: Date.now(), status: "Scheduled" };
-    setAppointments([newEntry, ...appointments]);
-    setIsModalOpen(false);
-    setFormData({ attorney: "Adv. Amit Verma", type: "Civil", title: "", date: "", time: "", reason: "" });
+    if (editId) {
+      // Re-schedule logic
+      setAppointments(appointments.map(app => app.id === editId ? { ...formData, id: editId } : app));
+    } else {
+      // New Appointment (Descending order - add to top)
+      setAppointments([{ ...formData, id: Date.now(), doc: '📁' }, ...appointments]);
+    }
+    setShowModal(false);
+    setEditId(null);
+    setFormData({ attorney: 'Adv. Tasnia Sharin', type: '', title: '', date: '', time: '', reason: '', status: 'Scheduled' });
   };
 
+  // Cancel Appointment
   const handleCancel = (id) => {
-    if (window.confirm("Are you sure you want to cancel/delete this appointment?")) {
-      setAppointments(appointments.filter(item => item.id !== id));
+    if (confirm("Are you sure you want to cancel this appointment?")) {
+      setAppointments(appointments.filter(app => app.id !== id));
     }
   };
 
-  const handleReschedule = () => {
-    alert("Navigating to Organization Users list screen...");
+  // Open Re-schedule Modal
+  const openReschedule = (app) => {
+    setEditId(app.id);
+    setFormData(app);
+    setShowModal(true);
   };
 
   return (
-    <div className="dashboard-page-wrapper">
-      <Head><title>Appointments | LawStick</title></Head>
+    <AttorneyLayout>
+      <Head><title>Lawstick | Appointment History</title></Head>
 
-      <div className="container-fluid px-md-5 pb-5" style={{ paddingTop: '110px' }}>
-        
-        {/* TOP HEADER */}
-        <div className="mb-4 d-flex justify-content-between align-items-end">
-          <div>
-            <h2 className="fw-bold text-navy mb-1">Appointment History</h2>
-            <p className="text-muted small">Manage schedules in descending order as per requirement.</p>
+      <div className="container-fluid px-0">
+        <div className="card border-0 shadow-sm rounded-4 p-3 p-md-5 bg-white w-100">
+          <div className="d-flex justify-content-between align-items-center mb-5">
+            <h3 className="fw-bold mb-0" style={{ fontFamily: 'serif', color: '#002147', fontSize: '26px' }}>Appointment History</h3>
+            <button className="btn text-white px-4 rounded-pill fw-bold" style={{ backgroundColor: '#002147', fontSize: '15px' }} onClick={() => { setEditId(null); setShowModal(true); }}>
+              <i className="bi bi-plus-lg me-2"></i> New Appointment
+            </button>
           </div>
-        </div>
 
-        <div className="row g-4">
-          {/* SIDEBAR */}
-          <div className="col-12 col-lg-2">
-            <div className="card border-0 shadow-sm rounded-4 sidebar-card">
-              <div className="p-3 text-center border-bottom bg-white">
-                <div className="sidebar-avatar-sm mx-auto mb-2 shadow-sm">
-                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=200" alt="Profile" />
-                </div>
-                <h6 className="fw-bold mb-0 text-navy">Tasnia Sharin</h6>
-                <p className="text-muted xx-small mb-0">attorney@gmail.com</p>
-              </div>
-              <nav className="nav flex-column p-2 sidebar-nav-links">
-                <Link href="/attorney-panel"><a className="nav-link"><i className="bi bi-grid-1x2 me-2"></i> Dashboard</a></Link>
-                <Link href="/attorney-panel/cases"><a className="nav-link"><i className="bi bi-clock-history me-2"></i> Case Details</a></Link>
-                <Link href="/attorney-panel/appointments"><a className="nav-link active"><i className="bi bi-calendar-check me-2"></i> Booking</a></Link>
-              </nav>
+          {/* 1. NEW APPOINTMENTS TABLE (Active) */}
+          <div className="mb-5">
+            <h5 className="fw-bold mb-4" style={{ color: '#002147', fontSize: '18px' }}>Active Appointments</h5>
+            <div className="table-responsive border rounded-3">
+              <table className="table table-hover align-middle mb-0">
+                <thead style={{ backgroundColor: '#fcf6ef' }}>
+                  <tr className="text-nowrap" style={{ color: '#002147', fontSize: '14px' }}>
+                    <th className="py-3 px-3">Attorney Name</th>
+                    <th>Case Type</th><th>Case Title</th><th>Date</th><th>Time</th><th>Reason</th><th>Document</th><th>Status</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody style={{ fontSize: '14px' }}>
+                  {appointments.length > 0 ? appointments.map((app) => (
+                    <tr key={app.id} className="text-nowrap">
+                      <td className="px-3 py-3 fw-bold">{app.attorney}</td>
+                      <td>{app.type}</td><td>{app.title}</td><td>{app.date}</td><td>{app.time}</td>
+                      <td><small className="text-muted">{app.reason}</small></td>
+                      <td className="text-center">{app.doc}</td>
+                      <td><span className="badge bg-success-subtle text-success border border-success-subtle">{app.status}</span></td>
+                      <td>
+                        <button className="btn btn-sm btn-outline-primary me-2" onClick={() => openReschedule(app)}>Re-schedule</button>
+                        <button className="btn btn-sm btn-outline-danger" onClick={() => handleCancel(app.id)}>Cancel</button>
+                      </td>
+                    </tr>
+                  )) : <tr><td colSpan="9" className="text-center py-4 text-muted">No Active Appointments</td></tr>}
+                </tbody>
+              </table>
             </div>
           </div>
 
-          {/* MAIN CONTENT AREA (Full Width) */}
-          <div className="col-12 col-lg-10">
-            <div className="card border-0 shadow-sm rounded-4 p-4 bg-white">
-              
-              <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3 border-bottom pb-3">
-                {/* 1. TABS */}
-                <div className="tab-box p-1 bg-light rounded-pill border">
-                  <button onClick={() => setActiveTab('new')} className={`btn rounded-pill px-4 py-1 small fw-bold ${activeTab === 'new' ? 'btn-navy text-white shadow-sm' : 'btn-light'}`}>New Appointment</button>
-                  <button onClick={() => setActiveTab('history')} className={`btn rounded-pill px-4 py-1 small fw-bold ${activeTab === 'history' ? 'btn-navy text-white shadow-sm' : 'btn-light'}`}>Appointment History</button>
-                </div>
-
-                {/* SEARCH & ADD */}
-                <div className="d-flex gap-2">
-                  <input 
-                    type="text" 
-                    className="form-control form-control-sm" 
-                    placeholder="Search Title..." 
-                    style={{width: '200px'}}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  {activeTab === 'new' && (
-                    <button className="btn btn-navy btn-sm px-4 rounded-pill fw-bold" onClick={() => setIsModalOpen(true)}>+ NEW SCHEDULE</button>
-                  )}
-                </div>
-              </div>
-
-              {/* TABLE */}
-              <div className="table-responsive border rounded-3 overflow-hidden">
-                <table className="table table-hover align-middle mb-0">
-                  <thead className="bg-navy text-white">
-                    <tr className="small">
-                      <th className="p-3">Attorney</th>
-                      <th className="p-3">Case Info</th>
-                      <th className="p-3">Date & Time</th>
-                      <th className="p-3">Reason</th>
-                      <th className="p-3 text-center">Status</th>
-                      <th className="p-3 text-center">Action</th>
+          {/* 2. APPOINTMENTS HISTORY TABLE (View Mode Only) */}
+          <div>
+            <h5 className="fw-bold mb-4" style={{ color: '#002147', fontSize: '18px' }}>Previous Appointments</h5>
+            <div className="table-responsive border rounded-3">
+              <table className="table align-middle mb-0" style={{ backgroundColor: '#f8f9fa' }}>
+                <thead style={{ backgroundColor: '#e9ecef' }}>
+                  <tr className="text-nowrap" style={{ color: '#002147', fontSize: '14px' }}>
+                    <th className="py-3 px-3">Attorney Name</th>
+                    <th>Case Type</th><th>Case Title</th><th>Date</th><th>Time</th><th>Reason</th><th>Document</th><th>Status</th>
+                  </tr>
+                </thead>
+                <tbody style={{ fontSize: '14px', color: '#6c757d' }}>
+                  {history.map((app) => (
+                    <tr key={app.id} className="text-nowrap">
+                      <td className="px-3 py-3">{app.attorney}</td>
+                      <td>{app.type}</td><td>{app.title}</td><td>{app.date}</td><td>{app.time}</td>
+                      <td>{app.reason}</td><td className="text-center">{app.doc}</td>
+                      <td><span className="badge bg-secondary-subtle text-secondary">{app.status}</span></td>
                     </tr>
-                  </thead>
-                  <tbody className="bg-white">
-                    {filteredData.length > 0 ? filteredData.map((item) => (
-                      <tr key={item.id} className="small">
-                        <td className="p-3 fw-bold text-navy">{item.attorney}</td>
-                        <td className="p-3"><b>{item.title}</b> <br/><span className="text-gold xx-small fw-bold">{item.type}</span></td>
-                        <td className="p-3"><b>{item.date}</b> <br/><span className="text-muted xx-small">{item.time}</span></td>
-                        <td className="p-3 text-truncate" style={{maxWidth:'150px'}}>{item.reason}</td>
-                        <td className="p-3 text-center"><span className="stage-badge-navy">{item.status}</span></td>
-                        <td className="p-3 text-center">
-                          {activeTab === 'new' ? (
-                            <div className="d-flex justify-content-center gap-2">
-                              <button className="btn btn-outline-navy btn-xs" onClick={handleReschedule}><i className="bi bi-pencil-square"></i></button>
-                              <button className="btn btn-outline-danger btn-xs" onClick={() => handleCancel(item.id)}><i className="bi bi-trash"></i></button>
-                            </div>
-                          ) : <span className="text-muted xx-small">VIEW ONLY</span>}
-                        </td>
-                      </tr>
-                    )) : <tr><td colSpan="6" className="text-center p-5 text-muted small">No records found.</td></tr>}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
 
-      {/* --- ADD MODAL --- */}
-      {isModalOpen && (
+      {/* --- POPUP MODAL (Add / Re-schedule) --- */}
+      {/* {showModal && (
         <div className="modal-overlay">
-          <div className="modal-content-card p-4 rounded-4 shadow-lg animate__animated animate__fadeInDown">
-            <h5 className="fw-bold text-navy mb-4 border-bottom pb-2">Schedule New Appointment</h5>
-            <form onSubmit={handleAdd}>
+          <div className="modal-card card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div className="p-4 text-white d-flex justify-content-between align-items-center" style={{ backgroundColor: '#002147' }}>
+              <h5 className="mb-0 fw-bold">{editId ? 'Re-schedule Appointment' : 'New Appointment'}</h5>
+              <button className="btn-close btn-close-white" onClick={() => setShowModal(false)}></button>
+            </div>
+            <form onSubmit={handleSubmit} className="p-4">
               <div className="row g-3">
-                <div className="col-md-6"><label className="xx-small fw-bold">Case Title</label><input type="text" className="form-control form-control-sm" required onChange={(e)=>setFormData({...formData, title: e.target.value})} /></div>
-                <div className="col-md-6"><label className="xx-small fw-bold">Case Type</label><select className="form-select form-select-sm" onChange={(e)=>setFormData({...formData, type: e.target.value})}><option>Civil</option><option>Criminal</option><option>Family</option></select></div>
-                <div className="col-md-6"><label className="xx-small fw-bold">Date</label><input type="date" className="form-control form-control-sm" required onChange={(e)=>setFormData({...formData, date: e.target.value})} /></div>
-                <div className="col-md-6"><label className="xx-small fw-bold">Time</label><input type="time" className="form-control form-control-sm" required onChange={(e)=>setFormData({...formData, time: e.target.value})} /></div>
-                <div className="col-12"><label className="xx-small fw-bold">Reason</label><textarea className="form-control form-control-sm" rows="2" required onChange={(e)=>setFormData({...formData, reason: e.target.value})}></textarea></div>
+                <div className="col-md-6">
+                  <label className="form-label fw-bold" style={{fontSize: '14px'}}>Case Type</label>
+                  <input type="text" name="type" className="form-control" value={formData.type} onChange={handleChange} required />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label fw-bold" style={{fontSize: '14px'}}>Case Title</label>
+                  <input type="text" name="title" className="form-control" value={formData.title} onChange={handleChange} required />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label fw-bold" style={{fontSize: '14px'}}>Date</label>
+                  <input type="date" name="date" className="form-control" value={formData.date} onChange={handleChange} required />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label fw-bold" style={{fontSize: '14px'}}>Time</label>
+                  <input type="time" name="time" className="form-control" value={formData.time} onChange={handleChange} required />
+                </div>
+                <div className="col-12">
+                  <label className="form-label fw-bold" style={{fontSize: '14px'}}>Reason</label>
+                  <textarea name="reason" className="form-control" rows="3" value={formData.reason} onChange={handleChange} required></textarea>
+                </div>
               </div>
-              <div className="mt-4 d-flex justify-content-end gap-2">
-                <button type="button" className="btn btn-light btn-sm px-4" onClick={()=>setIsModalOpen(false)}>Cancel</button>
-                <button type="submit" className="btn btn-navy btn-sm px-4">Add Schedule</button>
+              <div className="mt-4 d-flex gap-2">
+                <button type="submit" className="btn text-white w-100 fw-bold py-2" style={{ backgroundColor: '#002147' }}>{editId ? 'Update Schedule' : 'Schedule Now'}</button>
+                <button type="button" className="btn btn-light w-100 fw-bold border py-2" onClick={() => setShowModal(false)}>Cancel</button>
               </div>
             </form>
           </div>
         </div>
-      )}
+      )} */}
+      {showModal && (
+  <div className="modal-overlay">
+    <div className="modal-card border-0 shadow-lg">
+      {/* Modal Header */}
+      <div className="p-4 d-flex justify-content-between align-items-center text-white" style={{ backgroundColor: '#002147' }}>
+        <h5 className="mb-0 fw-bold">{editId ? 'Re-schedule Appointment' : 'New Appointment'}</h5>
+        <button className="btn-close btn-close-white" onClick={() => setShowModal(false)}></button>
+      </div>
+
+      {/* Modal Body */}
+      <div className="p-4 bg-white">
+        <form onSubmit={handleSubmit}>
+          <div className="row g-3">
+            <div className="col-md-6">
+              <label className="form-label fw-bold small">Case Type</label>
+              <input type="text" name="type" className="form-control" placeholder="Criminal, Civil etc." value={formData.type} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label fw-bold small">Case Title</label>
+              <input type="text" name="title" className="form-control" placeholder="Case Name" value={formData.title} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label fw-bold small">Date</label>
+              <input type="date" name="date" className="form-control" value={formData.date} onChange={handleChange} required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label fw-bold small">Time</label>
+              <input type="time" name="time" className="form-control" value={formData.time} onChange={handleChange} required />
+            </div>
+            <div className="col-12">
+              <label className="form-label fw-bold small">Reason</label>
+              <textarea name="reason" className="form-control" rows="3" placeholder="Description..." value={formData.reason} onChange={handleChange} required></textarea>
+            </div>
+          </div>
+
+          <div className="mt-4 d-flex gap-2">
+            <button type="submit" className="btn text-white w-100 fw-bold py-2" style={{ backgroundColor: '#002147' }}>
+              {editId ? 'Update Appointment' : 'Schedule Appointment'}
+            </button>
+            <button type="button" className="btn btn-light border w-100 fw-bold py-2" onClick={() => setShowModal(false)}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+)}
+
+      {/* <style jsx>{`
+        .modal-overlay {
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(0, 33, 71, 0.5); display: flex; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .modal-card { width: 100%; max-width: 600px; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .table th, .table td { vertical-align: middle; }
+        .form-control:focus { border-color: #de9f57; box-shadow: none; }
+        :global(.container-fluid) { max-width: 100% !important; }
+      `}</style> */}
 
       <style jsx>{`
-        .dashboard-page-wrapper { background-color: #f4f7fc; min-height: 100vh; }
-        .text-navy { color: #002147; }
-        .bg-navy { background-color: #002147; }
-        .btn-navy { background-color: #002147; color: white; border: none; transition: 0.3s; }
-        .btn-navy:hover { background-color: #001530; color: white; }
-        .text-gold { color: #de9f57; }
-        .small { font-size: 13px !important; }
-        .xx-small { font-size: 11px !important; }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7); /* Black overlay with transparency */
+    backdrop-filter: blur(3px);     /* Background ko halka blur karega */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;                  /* Sabse upar dikhne ke liye */
+    padding: 20px;
+  }
 
-        .stage-badge-navy { background-color: #002147; color: #fff; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+  .modal-card {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: zoomIn 0.3s ease;
+    overflow: hidden;
+  }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-content-card { background: #fff; width: 95%; max-width: 550px; }
-        
-        .sidebar-avatar-sm { width: 55px; height: 55px; border-radius: 10px; overflow: hidden; }
-        .sidebar-avatar-sm img { width: 100%; height: 100%; object-fit: cover; }
-        .sidebar-nav-links .nav-link { color: #4b5563 !important; font-size: 13px; font-weight: 500; padding: 10px 15px; }
-        .sidebar-nav-links .nav-link.active { color: #de9f57 !important; background: #fffaf4; font-weight: 700; border-right: 3px solid #de9f57; }
-        
-        .btn-xs { padding: 2px 6px; font-size: 12px; }
-      `}</style>
-    </div>
+  @keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .form-control:focus {
+    border-color: #de9f57;
+    box-shadow: none;
+  }
+`}</style>
+    </AttorneyLayout>
   );
 }
