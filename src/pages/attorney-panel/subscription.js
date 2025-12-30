@@ -12,7 +12,7 @@ export default function Dashboard() {
     <AttorneyLayout>
       <div className="mb-5">
         <h1 className="fw-bold text-navy display-5">Good Morning, Tasnia</h1>
-        <p className="text-muted fs-5">Here's your performance overview.</p>
+        <p className="text-muted fs-5">Here your performance overview.</p>
       </div>
 
       <div className="row g-4 mb-5">
