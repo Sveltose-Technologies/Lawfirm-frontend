@@ -770,14 +770,14 @@ export default function Appointments() {
           
           {/* TOP HEADER */}
           <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-            <h3 className="fw-bold mb-0" style={{ color: '#002147' }}>Appointment History</h3>
+            <h4 className="fw-bold mb-0" style={{ color: '#002147' }}>Appointment History</h4>
             <div className="d-flex gap-2 align-items-center">
               <div className="btn-group p-1 bg-light rounded-pill">
                 <button className={`btn rounded-pill px-4 ${viewMode === 'list' ? 'btn-white shadow-sm' : 'btn-light border-0'}`} onClick={() => setViewMode('list')}>List</button>
                 <button className={`btn rounded-pill px-4 ${viewMode === 'calendar' ? 'btn-white shadow-sm' : 'btn-light border-0'}`} onClick={() => setViewMode('calendar')}>Calendar</button>
               </div>
-              <button className="btn text-white px-4 rounded-pill fw-bold" style={{ backgroundColor: '#002147' }} onClick={() => setShowModal(true)}>
-                <i className="bi bi-plus-lg me-2"></i> New Appointment
+              <button className="btn text-white  rounded-pill fw-bold" style={{ backgroundColor: '#002147' }} onClick={() => setShowModal(true)}>
+                <i className="bi bi-plus-lg"></i> New Appointment
               </button>
             </div>
           </div>
