@@ -1,6 +1,10 @@
-// import React, { useState } from 'react';
+
+
+// import React, { useState, useEffect } from 'react';
 // import Head from 'next/head';
 // import ClientLayout from '../../components/layout/ClientLayout';
+// // Global component import kiya
+// import { PaginationBar } from '../../common/GlobalComponents';
 
 // export default function CaseManagement() {
 //   const [view, setView] = useState('list'); 
@@ -8,6 +12,10 @@
 //   const [showModal, setShowModal] = useState(false);
 //   const [selectedCase, setSelectedCase] = useState(null);
 //   const [activeTab, setActiveTab] = useState(0); 
+
+//   // --- PAGINATION STATE (Jaisa appointment me hai) ---
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const itemsPerPage = 6;
 
 //   // --- DATA STATE ---
 //   const [cases, setCases] = useState([
@@ -17,6 +25,11 @@
 //       state: 'Maharashtra', city: 'Mumbai', court: 'HC-05', openedDate: '2025-01-10', status: 'Running' 
 //     }
 //   ]);
+
+//   // Reset page when filter changes
+//   useEffect(() => {
+//     setCurrentPage(1);
+//   }, [activeFilter]);
 
 //   // --- FORM STATE ---
 //   const [formData, setFormData] = useState({
@@ -34,6 +47,10 @@
 //     setCases([newCase, ...cases]);
 //     setShowModal(false);
 //   };
+
+//   // --- PAGINATION LOGIC ---
+//   const filteredCases = cases.filter(c => c.status === activeFilter);
+//   const currentCases = filteredCases.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
 //   const tabs = [
 //     "Case Information", "Activity Timeline", "Orders & Judgments", 
@@ -108,7 +125,7 @@
 //                     </tr>
 //                   </thead>
 //                   <tbody style={{ fontSize: '14px' }}>
-//                     {cases.filter(c => c.status === activeFilter).map((item, i) => (
+//                     {currentCases.map((item, i) => (
 //                       <tr key={i} onClick={() => handleRowClick(item)} style={{ cursor: 'pointer' }}>
 //                         <td className="px-4 fw-bold">{item.type}</td>
 //                         <td className="fw-bold">{item.id}</td>
@@ -123,6 +140,12 @@
 //                   </tbody>
 //                 </table>
 //               </div>
+//               {/* Pagination Bar from global component */}
+//               <PaginationBar 
+//                 current={currentPage} 
+//                 total={Math.ceil(filteredCases.length / itemsPerPage)} 
+//                 onPageChange={setCurrentPage} 
+//               />
 //             </div>
 //           </div>
 //         ) : (
@@ -150,9 +173,8 @@
 //               </div>
 //             </div>
 
-//             {/* TAB CONTENT (8 ITEMS) */}
+//             {/* TAB CONTENT */}
 //             <div className="card border-0 shadow-sm rounded-4 p-4 bg-white min-vh-50">
-//               {/* 1. Case Information */}
 //               {activeTab === 0 && (
 //                 <div className="row g-4">
 //                   {[
@@ -175,8 +197,6 @@
 //                   ))}
 //                 </div>
 //               )}
-
-//               {/* 2. Activity Timeline */}
 //               {activeTab === 1 && (
 //                 <div className="py-5">
 //                   <div className="d-flex justify-content-between position-relative timeline-container">
@@ -192,23 +212,11 @@
 //                   </div>
 //                 </div>
 //               )}
-
-//               {/* 3. Orders Library */}
 //               {activeTab === 2 && <div className="p-5 text-center text-muted fw-bold"><i className="bi bi-file-earmark-lock fs-1 d-block mb-3"></i>No Court Orders available yet.</div>}
-              
-//               {/* 4. Documents KYC */}
 //               {activeTab === 3 && <div className="row g-3"><div className="col-md-3"><div className="p-3 border rounded-3 text-center"><i className="bi bi-file-earmark-pdf fs-3 text-danger"></i><p className="mt-2 mb-0 small fw-bold">ID_Proof.pdf</p></div></div></div>}
-              
-//               {/* 5. Notes */}
 //               {activeTab === 4 && <div className="w-100"><textarea className="form-control mb-3" rows="4" placeholder="Add a case note..."></textarea><button className="btn btn-navy btn-sm px-4">Save Note</button></div>}
-
-//               {/* 6. Opposing Party */}
 //               {activeTab === 5 && <div className="row"><div className="col-md-6 border-end"><h6 className="fw-bold text-muted small">Opposing Party</h6><p className="fw-bold">{selectedCase.oppositeParty}</p></div><div className="col-md-6 ps-md-4"><h6 className="fw-bold text-muted small">Counsel Detail</h6><p className="fw-bold mb-0">Adv. Robert Smith</p><small>Mob: +91 9988776655</small></div></div>}
-
-//               {/* 7. Team */}
 //               {activeTab === 6 && <div className="d-flex gap-4"><div className="text-center"><img src="/assets/images/attorney1.png" className="rounded-circle mb-2" width="50" height="50"/><p className="small fw-bold mb-0">Tasnia (Lead)</p></div></div>}
-
-//               {/* 8. Evidence Checklist */}
 //               {activeTab === 7 && <div className="w-50"><h6 className="fw-bold mb-3">Completion Status (60%)</h6><div className="progress rounded-pill mb-3" style={{height: '10px'}}><div className="progress-bar bg-gold" style={{width: '60%'}}></div></div><div className="form-check small fw-bold"><input className="form-check-input" type="checkbox" checked readOnly/><label className="form-check-label">Verified KYC</label></div></div>}
 //             </div>
 //           </div>
@@ -248,24 +256,18 @@
 //         .label-custom { font-weight: bold; color: #6c757d; font-size: 13px; margin-bottom: 5px; display: block; }
 //         .select-custom { font-size: 14px; border-color: #eee; shadow: none; }
 //         .scroll-hide::-webkit-scrollbar { display: none; }
-        
-//         /* Timeline */
 //         .timeline-container { padding: 0 5%; }
 //         .timeline-line { position: absolute; top: 17px; left: 5%; width: 90%; height: 2px; background: #eee; z-index: 0; }
 //         .circle-step { width: 35px; height: 35px; border-radius: 50%; background: #f8f9fa; border: 2px solid #eee; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #adb5bd; transition: 0.3s; }
 //         .circle-step.active { background: #002147; border-color: #002147; color: white; }
-
-//         /* Modal */
 //         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1050; display: flex; align-items: center; justify-content: center; padding: 15px; }
 //         .modal-card { background: white; width: 100%; max-width: 650px; border-radius: 20px; overflow: hidden; }
-        
 //         .animate-fade { animation: fadeIn 0.4s ease-in-out; }
 //         .animate-slide { animation: slideUp 0.3s ease-out; }
 //         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 //         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
 //         .min-vh-50 { min-height: 350px; }
-//         .bg-gold { background-color: #de9f57; }
+//         .bg-gold { background-color: #002147; }
 //       `}</style>
 //     </ClientLayout>
 //   );
@@ -405,7 +407,8 @@ export default function CaseManagement() {
                         <td>{item.state}</td>
                         <td>{item.city}</td>
                         <td>{item.court}</td>
-                        <td><span className="badge bg-warning-subtle text-warning rounded-pill px-3">{item.stage}</span></td>
+                        {/* Yahan text color ko dark brown kiya gaya hai taaki wo yellow background par clear dikhe */}
+                        <td><span className="badge bg-warning-subtle rounded-pill px-3" style={{ color: '#856404' }}>{item.stage}</span></td>
                       </tr>
                     ))}
                   </tbody>
@@ -538,7 +541,7 @@ export default function CaseManagement() {
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .min-vh-50 { min-height: 350px; }
-        .bg-gold { background-color: #de9f57; }
+        .bg-gold { background-color: #002147; }
       `}</style>
     </ClientLayout>
   );

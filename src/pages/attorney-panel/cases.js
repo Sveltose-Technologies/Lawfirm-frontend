@@ -240,12 +240,13 @@ export default function CaseDetails() {
       </Head>
 
       <div className="container-fluid px-0">
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
-          <h4 className="fw-bold m-0" style={{ color: '#002147', fontSize: '22px' }}>Case Details</h4>
-        </div>
+        
+      
 
         <div className="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
-          
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+          <h4 className="fw-bold m-0" style={{ color: '#002147', fontSize: '22px' }}>Case Details</h4>
+        </div>
           {/* 1. Open and Closed Tabs */}
           <div className="d-flex gap-2 mb-4 overflow-auto pb-2 scroll-hide">
             {['open', 'closed'].map((tab) => (

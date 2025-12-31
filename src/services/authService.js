@@ -2,15 +2,33 @@
 import API from './api';
 
 // Signup Function
+
 export const signupUser = async (userData) => {
   try {
+    console.log("1. Sending Payload:", userData); 
+    
     const response = await API.post('/auth/signup', userData);
+    
+    console.log("2. Success Response:", response.data);
     return response.data;
   } catch (error) {
-    throw error.response ? error.response.data : { message: "Server Error" };
+    // Yahan hum error ko poora khol kar dekhenge
+    if (error.response) {
+      // Server ne response diya (e.g. 400, 404, 500)
+      console.error("3. SERVER ERROR DATA:", error.response.data);
+      console.error("4. SERVER STATUS:", error.response.status);
+      throw new Error(error.response.data.message || "Server rejected registration");
+    } else if (error.request) {
+      // Request bheji gayi par response nahi mila (CORS issue ho sakta hai)
+      console.error("3. NO RESPONSE RECEIVED (Network/CORS Error):", error.request);
+      throw new Error("Network error or CORS block. Check Server Logs.");
+    } else {
+      // Kuch aur issue hai code mein
+      console.error("3. REQUEST SETUP ERROR:", error.message);
+      throw new Error(error.message);
+    }
   }
 };
-
 // Login Function
 export const loginUser = async (credentials) => {
   try {

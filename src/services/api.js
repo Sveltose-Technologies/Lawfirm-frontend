@@ -1,9 +1,8 @@
-// src/services/api.js
 import axios from 'axios';
 
-// Base URL setup
 const API = axios.create({
-  baseURL: 'https://lawnode.rxchartsquare.com', // Aapki API ka domain
+  baseURL: 'https://nodejs.nrislawfirm.com', 
+  withCredentials: true, 
   headers: {
     'Content-Type': 'application/json',
   },
