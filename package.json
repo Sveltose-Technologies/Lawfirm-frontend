@@ -24,6 +24,7 @@
     "react-player": "^3.4.0",
     "react-select": "^5.4.0",
     "react-slick": "^0.29.0",
+    "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
     "swiper": "^8.2.4",
     "wowjs": "^1.1.3"

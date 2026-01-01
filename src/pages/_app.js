@@ -59,6 +59,9 @@
 // }
 
 // export default MyApp;
+
+
+
 import Script from "next/script";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -72,6 +75,7 @@ import '../styles/globals.css';
 
 import Layout from "../components/layout/Layout";
 import DisclaimerPopup from "../components/DisclaimerPopup";
+import GlobalToast from "../components/GlobalToast";
 
 function MyApp({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => (
@@ -81,7 +85,11 @@ function MyApp({ Component, pageProps }) {
     </Layout>
   ));
   
-  return getLayout(<Component {...pageProps} />);
+  return <>
+  {getLayout(<Component {...pageProps} />)}
+  <GlobalToast />
+</>
+
 }
 
 export default MyApp;
