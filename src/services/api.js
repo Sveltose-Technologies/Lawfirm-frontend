@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://nodejs.nrislawfirm.com',
+  baseURL: 'http://72.62.87.252:3000',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

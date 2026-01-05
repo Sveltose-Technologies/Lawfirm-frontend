@@ -24,7 +24,7 @@
 
 
 import API from './api';
-
+export const IMG_URL = 'http://72.62.87.252:3000';
 export const signupUser = async (userData) => {
   const response = await API.post('/auth/signup', userData);
   return response.data;
@@ -50,7 +50,7 @@ export const getAllCapabilityCategories = async () => {
 export const getAllCapabilitySubCategories = async () => {
   try {
     const response = await API.get('/capability-subcategory/getall-subcategory');
-    console.log("sub category response",response);
+    console.log("sub- category response",response);
     
     return response.data;
   } catch (error) {
@@ -59,10 +59,10 @@ export const getAllCapabilitySubCategories = async () => {
   }
 };
 
+// --- Location APIs ---
 export const getAllLocationCountries = async () => {
   try {
     const response = await API.get('/location-country/getall');
-    console.log('Location Countries:', response);
     return response.data;
   } catch (error) {
     console.error('Country API Error:', error);
@@ -70,11 +70,9 @@ export const getAllLocationCountries = async () => {
   }
 };
 
-// GET ALL Cities
 export const getAllLocationCities = async () => {
   try {
     const response = await API.get('/location-city/getall');
-    console.log('Location Cities:', response);
     return response.data;
   } catch (error) {
     console.error('City API Error:', error);
@@ -82,11 +80,9 @@ export const getAllLocationCities = async () => {
   }
 };
 
-// GET ALL Location CMS Content
 export const getAllLocationCMS = async () => {
   try {
     const response = await API.get('/location-cms/getall');
-    console.log('Location CMS:', response);
     return response.data;
   } catch (error) {
     console.error('Location CMS API Error:', error);
@@ -94,23 +90,51 @@ export const getAllLocationCMS = async () => {
   }
 };
 
-/* ============================
-   EXPORT SERVICE OBJECT
-============================ */
 
-const authService = {
-  // auth
-  signupUser,
-  loginUser,
-
-  // capability
-  getAllCapabilityCategories,
-  getAllCapabilitySubCategories,
-
-  // location
-  getAllLocationCountries,
-  getAllLocationCities,
-  getAllLocationCMS
+//ourfirm 
+export const getAllOurFirm = async () => {
+  try {
+    const response = await API.get('/ourfirm/getall');
+    console.log("ourfirm", response);
+    return response.data;
+  } catch (error) {
+    console.error("Error in getAllOurFirm:", error);
+    return { success: false, data: [] };
+  }
 };
 
-export default authService;
+
+
+
+//award
+export const getAllAwards = async () => {
+  try {
+    const response = await API.get('/award/getall');
+    console.log("award", response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching awards:", error);
+    return { success: false, data: [] };
+  }
+};
+
+
+export const getAllPromoters = () => 
+  API.get('/promoter/getall')
+     .then(res => res.data)
+     .catch(error => {
+       console.error("Error fetching promoters:", error);
+       return { success: false, data: [] };
+     });
+
+
+     // Contact Inquiry API
+export const createContactInquiry = async (formData) => {
+    try {
+        const response = await axios.post(`${API_URL}/contact/create`, formData);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating inquiry:", error);
+        throw error;
+    }
+};

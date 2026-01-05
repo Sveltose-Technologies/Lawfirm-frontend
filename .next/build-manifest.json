@@ -1,44 +1,312 @@
 {
   "polyfillFiles": [
-    "static/chunks/polyfills.js"
+    "static/chunks/polyfills-0d1b80a048d4787e.js"
   ],
-  "devFiles": [
-    "static/chunks/react-refresh.js"
-  ],
-  "ampDevFiles": [
-    "static/chunks/webpack.js",
-    "static/chunks/amp.js"
-  ],
+  "devFiles": [],
+  "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/GUQMSXcc3AI0Hb1LymlDy/_buildManifest.js",
+    "static/GUQMSXcc3AI0Hb1LymlDy/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
     "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/index-40187016f7da94e5.js"
+    ],
+    "/AdminPanel": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/AdminPanel-694d0073b6172998.js"
     ],
     "/_app": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_app.js"
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/css/693f3803687a93de.css",
+      "static/chunks/pages/_app-96aac94a3b2c6d97.js"
     ],
     "/_error": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_error.js"
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/_error-7891c9bfcd7b3e53.js"
+    ],
+    "/attorney-form": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-form-18a98a7e5660335d.js"
+    ],
+    "/attorney-panel": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel-b960b919cffe44f4.js"
+    ],
+    "/attorney-panel/appointments": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/appointments-a9c9513f53196463.js"
+    ],
+    "/attorney-panel/cases": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/cases-c243a2241462d25a.js"
+    ],
+    "/attorney-panel/clients": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/clients-f64a6c23ac829d34.js"
+    ],
+    "/attorney-panel/messages": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/messages-808d1dcadcf1bd8e.js"
+    ],
+    "/attorney-panel/organization-users": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/organization-users-3de923e51e2a6411.js"
+    ],
+    "/attorney-panel/profile": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/profile-4338092aef8e8a9c.js"
+    ],
+    "/attorney-panel/subscription": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/subscription-aad7cb8315e16d7f.js"
+    ],
+    "/attorney-panel/tickets": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/attorney-panel/tickets-c02e6908c8578ebf.js"
+    ],
+    "/attorneys": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/7618-ce27339154b240a1.js",
+      "static/chunks/pages/attorneys-dd3fb7550d45eb1c.js"
+    ],
+    "/attorneys/[id]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/7618-ce27339154b240a1.js",
+      "static/chunks/pages/attorneys/[id]-bff87cfc839b49b6.js"
+    ],
+    "/awards-ccolades": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/awards-ccolades-8aaf64b5440fea5a.js"
+    ],
+    "/blog": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/blog-bbaa502418ad220b.js"
+    ],
+    "/blog/[id]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/blog/[id]-54003d9c1cdbb21a.js"
     ],
     "/capability": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/capability.js"
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/capability-760368ef7d7a6c73.js"
+    ],
+    "/capability/[slug]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/capability/[slug]-a8551df2dc8f58f0.js"
+    ],
+    "/capability/area-detail-page": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/capability/area-detail-page-9f0215eeedb4234d.js"
+    ],
+    "/capability/area-detail/[slug]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/capability/area-detail/[slug]-f58c9eec309eb5cc.js"
+    ],
+    "/careers": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/careers-95aa9faf7e7ad1aa.js"
+    ],
+    "/client-form": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-form-333a46a3c3686e3d.js"
+    ],
+    "/client-panel": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel-31acbe4a57c6b298.js"
+    ],
+    "/client-panel/appointments": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/appointments-dcdc8129b0e9f001.js"
+    ],
+    "/client-panel/attorneys": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/attorneys-2206a5fb6f5b6517.js"
+    ],
+    "/client-panel/cases": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/cases-bccb4c65faf49c2c.js"
+    ],
+    "/client-panel/document-management": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/document-management-84c18cf42e372a49.js"
+    ],
+    "/client-panel/edit-profile": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/edit-profile-a2df742f983a5088.js"
+    ],
+    "/client-panel/messages": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/messages-e1baa3e816ab7237.js"
+    ],
+    "/client-panel/transaction-management": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/client-panel/transaction-management-ffe5e11ca43d36dc.js"
+    ],
+    "/contact": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/contact-ca621e4950aa063b.js"
+    ],
+    "/events": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/7777-7baa3276ace50893.js",
+      "static/chunks/pages/events-f648c5166aca1f3c.js"
+    ],
+    "/events/[id]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/7777-7baa3276ace50893.js",
+      "static/chunks/pages/events/[id]-62bfdc000cc23614.js"
+    ],
+    "/faq": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/faq-f436ea6da28162d3.js"
+    ],
+    "/location": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/location-81da70b7d4df118a.js"
+    ],
+    "/location/[slug]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/location/[slug]-dff50ed016861dae.js"
+    ],
+    "/login-signup": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/login-signup-3414da9deba2641f.js"
+    ],
+    "/media-contacts": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/media-contacts-ce053c19e75248a1.js"
+    ],
+    "/news": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/news-cced8d1c018db6e5.js"
+    ],
+    "/news/[id]": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/news/[id]-db08f84f7ad7bd8e.js"
+    ],
+    "/our-firm": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/our-firm-424947703d4184ac.js"
+    ],
+    "/private-policy": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/private-policy-75eda385d1a07267.js"
     ],
     "/promoters": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/promoters.js"
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/8914-264771067f1de813.js",
+      "static/chunks/pages/promoters-c427dbe23b026040.js"
+    ],
+    "/term-condition": [
+      "static/chunks/webpack-e0b002999194ca99.js",
+      "static/chunks/framework-d51ece3d757c7ed2.js",
+      "static/chunks/main-da0f383b6142e6da.js",
+      "static/chunks/pages/term-condition-26ef535666936a04.js"
     ]
   },
   "ampFirstPages": []

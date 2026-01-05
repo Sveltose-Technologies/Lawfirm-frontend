@@ -381,7 +381,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="footer-section pt-1">
+      <footer className="footer-section pt-5">
         <div className="footer-top">
           <div className="container-xl container-lg-fluid container">
             <div className="row gy-5">
@@ -557,10 +557,19 @@ function Footer() {
               </div>
               <div className="col-lg-4 d-flex justify-content-center align-items-center">
                 <ul className="f-bottom-list d-flex justify-content-center align-items-center mb-0">
-                  <li><Link href="#">Privacy Notice</Link></li>
-                  <li><Link href="#">Terms of Use</Link></li>
-                  <li><Link href="#">Cookie Settings</Link></li>
-                </ul>
+  <li>
+    <Link href="/term-condition">
+      <a>Terms of Use</a>
+    </Link>
+  </li>
+  <li>
+    <Link href="private-policy">Privacy Notice</Link>
+  </li>
+  <li>
+    <Link href="#">Cookie Settings</Link>
+  </li>
+</ul>
+
               </div>
               <div className="col-lg-4 d-flex justify-content-lg-end justify-content-center text-lg-end text-center">
                 <p className="mb-0">Powered by <Link href="#">Cintrox</Link></p>
