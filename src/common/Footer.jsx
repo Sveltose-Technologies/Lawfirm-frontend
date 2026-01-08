@@ -430,7 +430,7 @@ function Footer() {
                 <div className="footer-item">
                   <h4>Important Links</h4>
                   <ul className="link-list">
-                    <li><Link href="/"><a className={`footer-link `}>Home</a></Link></li>
+                    <li><Link href="https://admin.nrislawfirm.com/admin/login"><a className={`footer-link `}>Login</a></Link></li>
                     <li><Link href="/attorneys"><a className={`footer-link`}>Professionals</a></Link></li>
                     <li><Link href="/capability"><a className={`footer-link')}`}>Capabilities</a></Link></li>
                     <li><Link href="/news"><a className={`footer-link`}>News</a></Link></li>
