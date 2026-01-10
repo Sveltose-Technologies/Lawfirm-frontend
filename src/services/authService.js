@@ -138,3 +138,29 @@ export const createContactInquiry = async (formData) => {
         throw error;
     }
 };
+
+
+// --- Privacy Policy API ---
+export const getAllPrivacyPolicy = async () => {
+  try {
+    const response = await API.get('/privacy-policy/getall');
+    console.log("Privacy Policy API Response:", response);
+    return response.data;
+  } catch (error) {
+    console.error("Privacy Policy API Error:", error);
+    return { success: false, data: [] };
+  }
+};
+
+// --- Terms & Conditions API ---
+export const getAllTermsConditions = async () => {
+  try {
+    const response = await API.get('/terms-condition/getall');
+    console.log("Terms API Response:", response);
+    return response.data;
+  } catch (error) {
+    console.error("Terms API Error:", error);
+    return { success: false, data: [] };
+  }
+};
+

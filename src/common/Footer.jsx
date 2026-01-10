@@ -556,16 +556,18 @@ function Footer() {
                 <p className="mb-0">©2025 NRIS LAW FIRM LLP All rights reserved.</p>
               </div>
               <div className="col-lg-4 d-flex justify-content-center align-items-center">
-                <ul className="f-bottom-list d-flex justify-content-center align-items-center mb-0">
-  <li>
-    <Link href="/term-condition">
-      <a>Terms of Use</a>
-    </Link>
+             <ul className="f-bottom-list d-flex justify-content-center align-items-center mb-0">
+  <li className="d-flex align-items-center">
+    <Link href="/term-condition">Terms of Use</Link>
+    <span className="mx-2">|</span>
   </li>
-  <li>
-    <Link href="private-policy">Privacy Notice</Link>
+
+  <li className="d-flex align-items-center">
+    <Link href="/privacy-policy">Privacy Notice</Link>
+    <span className="mx-2">|</span>
   </li>
-  <li>
+
+  <li className="d-flex align-items-center">
     <Link href="#">Cookie Settings</Link>
   </li>
 </ul>
