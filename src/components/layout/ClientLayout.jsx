@@ -116,6 +116,11 @@ export default function ClientLayout({ children }) {
     { name: 'Attorney', icon: 'bi-person', path: '/client-panel/attorneys' },
     { name: 'Case Details', icon: 'bi-clock-history', path: '/client-panel/cases' },
     { name: 'Appointments', icon: 'bi-calendar-event', path: '/client-panel/appointments' },
+        { name: 'Document Management', icon: 'bi-calendar-event', path: '/client-panel/document-management' },
+    { name: 'Transaction Management', icon: 'bi-calendar-event', path: '/client-panel/transaction-management' },
+    { name: 'Messages', icon: 'bi-calendar-event', path: '/client-panel/messages' },
+    { name: 'Edit profile', icon: 'bi-calendar-event', path: '/client-panel/edit-profile' },
+
   ];
 
   return (
