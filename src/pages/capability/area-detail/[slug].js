@@ -921,6 +921,412 @@
 
 
 
+// //capability/area-detail/[slug].js
+
+// import React, { useState, useEffect } from "react";
+// import Head from "next/head";
+// import Link from "next/link";
+// import { useRouter } from "next/router";
+// import { getAllCapabilitySubCategories, getAllSubcategoryCMS, IMG_URL } from "../../../services/authService";
+
+// export default function CapabilityDetail() {
+//   const router = useRouter();
+//   const { slug: type } = router.query;
+
+//   const [allData, setAllData] = useState([]);
+//   const [selectedCategory, setSelectedCategory] = useState(null);
+//   const [relatedSubcategories, setRelatedSubcategories] = useState([]);
+//   const [relatedCapabilities, setRelatedCapabilities] = useState([]);
+//   const [subCmsData, setSubCmsData] = useState(null); // CMS data state
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   /* ================= STATIC NEWS ================= */
+//   const staticNews = [
+//     {
+//       id: "news-1",
+//       date: "July 23, 2025",
+//       type: "Media Coverage",
+//       title: "Rising Star: Greenberg Traurig's Michael Burshteyn",
+//       source: "Law360",
+//     },
+//     {
+//       id: "news-2",
+//       date: "January 03, 2025",
+//       type: "GT Advisory",
+//       title: "5 Trends to Watch: 2025 Blockchain & Digital Assets",
+//       readTime: "2 min read",
+//     },
+//   ];
+
+//   // useEffect(() => {
+//   //   async function fetchCategories() {
+//   //     setLoading(true);
+//   //     setError(null);
+
+//   //     try {
+//   //       // 1. Fetch Categories & Subcategories
+//   //       const res = await getAllCapabilitySubCategories();
+//   //       // 2. Fetch Subcategory CMS Data
+//   //       const cmsRes = await getAllSubcategoryCMS();
+
+//   //       if (!res?.data?.length) return;
+
+//   //       setAllData(res.data);
+
+//   //       /* -------- Selected Category (Subcategory) -------- */
+//   //       const matched = res.data.find(
+//   //         (cat) =>
+//   //           cat.subcategoryName
+//   //             ?.toLowerCase()
+//   //             .replace(/\s+/g, "-") === type
+//   //       );
+
+//   //       const selected = matched || res.data[0];
+//   //       setSelectedCategory(selected);
+
+//   //       /* -------- Match CMS Content -------- */
+//   //       if (cmsRes?.success && cmsRes.data) {
+//   //         // Admin panel mein jis subcategory ke liye content likha gaya hai use match karna
+//   //         const matchedCMS = cmsRes.data.find(cms => 
+//   //           cms.subcategoryId === selected.id || cms.selectSubcategory === selected.subcategoryName
+//   //         );
+//   //         if (matchedCMS) {
+//   //           console.log("✅ Matched Subcategory CMS:", matchedCMS);
+//   //           setSubCmsData(matchedCMS);
+//   //         }
+//   //       }
+
+//   //       /* -------- Area of Focus (same parent) -------- */
+//   //       const focusItems = res.data.filter(
+//   //         (item) =>
+//   //           item.categoryName === selected.categoryName &&
+//   //           item.id !== selected.id
+//   //       );
+//   //       setRelatedSubcategories(focusItems);
+
+//   //       /* -------- Related Capabilities (other parents) -------- */
+//   //       const otherCats = res.data.filter(
+//   //         (item) => item.categoryName !== selected.categoryName
+//   //       );
+
+//   //       const uniqueCapabilities = [
+//   //         ...new Map(
+//   //           otherCats.map((item) => [item.categoryName, item])
+//   //         ).values(),
+//   //       ];
+
+//   //       setRelatedCapabilities(uniqueCapabilities.slice(0, 6));
+//   //     } catch (err) {
+//   //       console.error("Fetch error:", err);
+//   //       setError("Error fetching data");
+//   //     } finally {
+//   //       setLoading(false);
+//   //     }
+//   //   }
+
+//   //   if (type) fetchCategories();
+//   // }, [type]);
+
+//   useEffect(() => {
+//   async function fetchCategories() {
+//     if (!subId) return;
+
+//     setLoading(true);
+//     setError(null);
+
+//     try {
+//       const res = await getAllCapabilitySubCategories();
+//       const cmsRes = await getAllSubcategoryCMS();
+
+//       if (!res?.data?.length) return;
+
+//       const selected = res.data.find(
+//         (item) => Number(item.id) === Number(subId)
+//       );
+
+//       if (!selected) {
+//         setError("Subcategory not found");
+//         return;
+//       }
+
+//       setSelectedCategory(selected);
+
+//       // CMS Match
+//       if (cmsRes?.success && cmsRes.data) {
+//         const matchedCMS = cmsRes.data.find(
+//           cms => Number(cms.subcategoryId) === Number(selected.id)
+//         );
+//         setSubCmsData(matchedCMS || null);
+//       }
+
+//       // Area of Focus
+//       const focusItems = res.data.filter(
+//         (item) =>
+//           item.categoryName === selected.categoryName &&
+//           item.id !== selected.id
+//       );
+//       setRelatedSubcategories(focusItems);
+
+//       // Related Capabilities
+//       const otherCats = res.data.filter(
+//         (item) => item.categoryName !== selected.categoryName
+//       );
+
+//       const uniqueCapabilities = [
+//         ...new Map(
+//           otherCats.map((item) => [item.categoryName, item])
+//         ).values(),
+//       ];
+
+//       setRelatedCapabilities(uniqueCapabilities.slice(0, 6));
+
+//     } catch (err) {
+//       console.error(err);
+//       setError("Failed to load subcategory");
+//     } finally {
+//       setLoading(false);
+//     }
+//   }
+
+//   fetchCategories();
+// }, [subId]);
+
+
+//   if (loading) return <div className="p-5 text-center">Loading Content...</div>;
+//   if (error) return <div className="p-5 text-center text-danger">{error}</div>;
+//   if (!selectedCategory) return null;
+
+//   // Banner Fix
+//   const bannerUrl = selectedCategory.bannerImage?.startsWith("uploads")
+//     ? `${IMG_URL}/${selectedCategory.bannerImage}`
+//     : selectedCategory.bannerImage;
+
+//   return (
+//     <>
+//       <Head>
+//         <title>{selectedCategory.subcategoryName} | GT Law</title>
+//       </Head>
+
+//       {/* ================= HERO ================= */}
+//       <div
+//         className="hero-section"
+//         style={{
+//           backgroundImage: `url(${bannerUrl})`,
+//         }}
+//       >
+//         <div className="overlay" />
+//         <div className="hero-content text-center">
+//           <h2 className="hero-title font-serif pt-5 mt-5">
+//             {selectedCategory.subcategoryName}
+//           </h2>
+//         </div>
+//       </div>
+
+//       {/* ================= CMS DESCRIPTION SECTION ================= */}
+//       <div className="container py-5">
+//         <div className="row justify-content-center">
+//           <div className="col-lg-10">
+//             {subCmsData ? (
+//               // Admin ne jo Text Editor (CMS) mein likha hai wo yahan dikhega
+//               <div 
+//                 className="cms-content-render"
+//                 dangerouslySetInnerHTML={{ __html: subCmsData.content || subCmsData.textEditorContent }} 
+//               />
+//             ) : (
+//               <div className="text-center">
+//                 <p className="lead-text">{selectedCategory.description}</p>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* ================= AREA OF FOCUS ================= */}
+//       <div className="container py-5 text-center bg-light rounded mb-5">
+//         <h3 className="font-serif fw-bold mb-4">Area of Focus</h3>
+//         <div className="areas-grid">
+//           {relatedSubcategories.map((sub) => {
+//             const slug = sub.subcategoryName
+//               .toLowerCase()
+//               .replace(/\s+/g, "-");
+
+//             return (
+//               <div key={sub.id} className="area-item">
+//                 <span className="bullet">•</span>
+//                 <Link href={`/capability/${slug}`}>
+//                   <a className="area-link">{sub.subcategoryName}</a>
+//                 </Link>
+//               </div>
+//             );
+//           })}
+//         </div>
+//       </div>
+
+//       {/* ================= NEWS (STATIC) ================= */}
+//       <div className="news-section text-start">
+//         <div className="container">
+//           <h2 className="font-serif fw-bold mb-4">
+//             News, Insights & Events
+//           </h2>
+//           {staticNews.map((news) => (
+//             <div key={news.id} className="mb-4">
+//               <div className="small text-uppercase mb-1 opacity-75">
+//                 {news.date} • {news.type}
+//               </div>
+//               <h4 className="news-title font-serif">{news.title}</h4>
+//               <div className="small fst-italic mt-1">
+//                 {news.readTime || news.source}
+//               </div>
+//               <hr className="opacity-25" />
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+
+//       {/* ================= RELATED CAPABILITIES ================= */}
+//       <div className="container py-5 mb-5 text-center">
+//         <h3 className="font-serif fw-bold mb-4">
+//           Related Capabilities
+//         </h3>
+//         <div className="related-grid">
+//           {relatedCapabilities.map((cap) => {
+//             const capSlug = cap.categoryName
+//               .toLowerCase()
+//               .replace(/\s+/g, "-");
+
+//             return (
+//               <Link key={cap.id} href={`/capability/${capSlug}`}>
+//                 <a className="related-pill">{cap.categoryName}</a>
+//               </Link>
+//             );
+//           })}
+//         </div>
+//       </div>
+
+//       <style jsx>{`
+//         :global(:root) {
+//           --gold: #de9f57;
+//           --navy: #002855;
+//         }
+
+//         .hero-section {
+//           height: 60vh;
+//           min-height: 450px;
+//           background-size: cover;
+//           background-position: center;
+//           position: relative;
+//           margin-top: -80px;
+//         }
+
+//         .overlay {
+//           position: absolute;
+//           inset: 0;
+//           background: rgba(0, 40, 85, 0.7);
+//         }
+
+//         .hero-content {
+//           position: relative;
+//           z-index: 2;
+//           color: #fff;
+//           padding-top: 120px;
+//         }
+
+//         .hero-title {
+//           font-size: 3rem;
+//           font-weight: 700;
+//         }
+
+//         .lead-text {
+//           font-size: 1.2rem;
+//           line-height: 1.7;
+//           color: #333;
+//         }
+
+//         /* CMS CONTENT STYLING */
+//         .cms-content-render :global(p) {
+//           font-size: 1.15rem;
+//           line-height: 1.8;
+//           margin-bottom: 1.5rem;
+//           color: #444;
+//         }
+//         .cms-content-render :global(ul) {
+//           margin-bottom: 1.5rem;
+//         }
+//         .cms-content-render :global(li) {
+//           margin-bottom: 0.5rem;
+//         }
+
+//         .areas-grid {
+//           display: grid;
+//           grid-template-columns: repeat(2, auto);
+//           gap: 12px 40px;
+//           justify-content: center;
+//           margin-top: 30px;
+//         }
+
+//         .area-item {
+//           display: flex;
+//           align-items: center;
+//         }
+
+//         .bullet {
+//           color: var(--gold);
+//           font-size: 1.5rem;
+//           margin-right: 10px;
+//         }
+
+//         .area-link {
+//           color: var(--gold);
+//           text-decoration: underline;
+//           font-size: 1.1rem;
+//         }
+
+//         .news-section {
+//           background: #1a1a1a;
+//           color: #fff;
+//           padding: 80px 0;
+//         }
+
+//         .news-title {
+//           color: var(--gold);
+//           font-size: 1.4rem;
+//         }
+
+//         .related-grid {
+//           display: flex;
+//           flex-wrap: wrap;
+//           gap: 12px;
+//           justify-content: center;
+//         }
+
+//         .related-pill {
+//           border: 1px solid #ddd;
+//           padding: 10px 22px;
+//           text-decoration: none;
+//           color: #333;
+//           transition: 0.3s;
+//         }
+
+//         .related-pill:hover {
+//           background: var(--navy);
+//           color: #fff;
+//         }
+
+//         @media (max-width: 768px) {
+//           .areas-grid {
+//             grid-template-columns: 1fr;
+//           }
+//           .area-item {
+//             justify-content: center;
+//           }
+//         }
+//       `}</style>
+//     </>
+//   );
+// }
+
+
 
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
@@ -928,333 +1334,132 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { getAllCapabilitySubCategories, getAllSubcategoryCMS, IMG_URL } from "../../../services/authService";
 
-export default function CapabilityDetail() {
+export default function SubCategoryDetail() {
   const router = useRouter();
   const { slug: type } = router.query;
 
-  const [allData, setAllData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [relatedSubcategories, setRelatedSubcategories] = useState([]);
   const [relatedCapabilities, setRelatedCapabilities] = useState([]);
-  const [subCmsData, setSubCmsData] = useState(null); // CMS data state
+  const [subCmsData, setSubCmsData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  /* ================= STATIC NEWS ================= */
   const staticNews = [
-    {
-      id: "news-1",
-      date: "July 23, 2025",
-      type: "Media Coverage",
-      title: "Rising Star: Greenberg Traurig's Michael Burshteyn",
-      source: "Law360",
-    },
-    {
-      id: "news-2",
-      date: "January 03, 2025",
-      type: "GT Advisory",
-      title: "5 Trends to Watch: 2025 Blockchain & Digital Assets",
-      readTime: "2 min read",
-    },
+    { id: "news-1", date: "July 23, 2025", type: "Media Coverage", title: "Rising Star: Greenberg Traurig's Michael Burshteyn", source: "Law360" },
+    { id: "news-2", date: "January 03, 2025", type: "GT Advisory", title: "5 Trends to Watch: 2025 Blockchain & Digital Assets", readTime: "2 min read" },
   ];
 
   useEffect(() => {
     async function fetchCategories() {
+      if (!type) return;
       setLoading(true);
-      setError(null);
-
       try {
-        // 1. Fetch Categories & Subcategories
         const res = await getAllCapabilitySubCategories();
-        // 2. Fetch Subcategory CMS Data
         const cmsRes = await getAllSubcategoryCMS();
+        if (res?.data) {
+          const selected = res.data.find(item => item.subcategoryName?.toLowerCase().replace(/\s+/g, "-") === type);
+          if (!selected) return;
+          setSelectedCategory(selected);
 
-        if (!res?.data?.length) return;
-
-        setAllData(res.data);
-
-        /* -------- Selected Category (Subcategory) -------- */
-        const matched = res.data.find(
-          (cat) =>
-            cat.subcategoryName
-              ?.toLowerCase()
-              .replace(/\s+/g, "-") === type
-        );
-
-        const selected = matched || res.data[0];
-        setSelectedCategory(selected);
-
-        /* -------- Match CMS Content -------- */
-        if (cmsRes?.success && cmsRes.data) {
-          // Admin panel mein jis subcategory ke liye content likha gaya hai use match karna
-          const matchedCMS = cmsRes.data.find(cms => 
-            cms.subcategoryId === selected.id || cms.selectSubcategory === selected.subcategoryName
-          );
-          if (matchedCMS) {
-            console.log("✅ Matched Subcategory CMS:", matchedCMS);
-            setSubCmsData(matchedCMS);
+          if (cmsRes?.success && cmsRes.data) {
+            const matchedCMS = cmsRes.data.find(cms => Number(cms.subcategoryId) === Number(selected.id));
+            setSubCmsData(matchedCMS || null);
           }
+          const focusItems = res.data.filter(item => item.categoryName === selected.categoryName && item.id !== selected.id);
+          setRelatedSubcategories(focusItems);
+          const otherCats = res.data.filter(item => item.categoryName !== selected.categoryName);
+          const uniqueCapabilities = [...new Map(otherCats.map((item) => [item.categoryName, item])).values()];
+          setRelatedCapabilities(uniqueCapabilities.slice(0, 6));
         }
-
-        /* -------- Area of Focus (same parent) -------- */
-        const focusItems = res.data.filter(
-          (item) =>
-            item.categoryName === selected.categoryName &&
-            item.id !== selected.id
-        );
-        setRelatedSubcategories(focusItems);
-
-        /* -------- Related Capabilities (other parents) -------- */
-        const otherCats = res.data.filter(
-          (item) => item.categoryName !== selected.categoryName
-        );
-
-        const uniqueCapabilities = [
-          ...new Map(
-            otherCats.map((item) => [item.categoryName, item])
-          ).values(),
-        ];
-
-        setRelatedCapabilities(uniqueCapabilities.slice(0, 6));
-      } catch (err) {
-        console.error("Fetch error:", err);
-        setError("Error fetching data");
-      } finally {
-        setLoading(false);
-      }
+      } catch (err) { console.error(err); } finally { setLoading(false); }
     }
-
-    if (type) fetchCategories();
+    fetchCategories();
   }, [type]);
 
   if (loading) return <div className="p-5 text-center">Loading Content...</div>;
-  if (error) return <div className="p-5 text-center text-danger">{error}</div>;
   if (!selectedCategory) return null;
 
-  // Banner Fix
   const bannerUrl = selectedCategory.bannerImage?.startsWith("uploads")
-    ? `${IMG_URL}/${selectedCategory.bannerImage}`
-    : selectedCategory.bannerImage;
+    ? `${IMG_URL}/${selectedCategory.bannerImage}` : selectedCategory.bannerImage;
 
   return (
     <>
-      <Head>
-        <title>{selectedCategory.subcategoryName} | GT Law</title>
-      </Head>
+      <Head><title>{selectedCategory.subcategoryName} | Core Law</title></Head>
 
-      {/* ================= HERO ================= */}
-      <div
-        className="hero-section"
-        style={{
-          backgroundImage: `url(${bannerUrl})`,
-        }}
-      >
+      <div className="hero-section" style={{ backgroundImage: `url(${bannerUrl})` }}>
         <div className="overlay" />
         <div className="hero-content text-center">
-          <h2 className="hero-title font-serif pt-5 mt-5">
-            {selectedCategory.subcategoryName}
-          </h2>
+          <h2 className="hero-title font-serif pt-5 mt-5">{selectedCategory.subcategoryName}</h2>
         </div>
       </div>
 
-      {/* ================= CMS DESCRIPTION SECTION ================= */}
+      {/* 1. AREA OF FOCUS (Moved to Top) */}
+      <div className="container py-5 text-center bg-light rounded mt-5">
+        <h3 className="font-serif fw-bold mb-4">Area of Focus</h3>
+        <div className="areas-grid">
+          {relatedSubcategories.map((sub) => (
+            <div key={sub.id} className="area-item">
+              <span className="bullet">•</span>
+              <Link href={`/capability/area-detail/${sub.subcategoryName.toLowerCase().replace(/\s+/g, "-")}`}><a className="area-link">{sub.subcategoryName}</a></Link>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 2. CMS CONTENT / DESCRIPTION (Moved below Focus) */}
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-10">
             {subCmsData ? (
-              // Admin ne jo Text Editor (CMS) mein likha hai wo yahan dikhega
-              <div 
-                className="cms-content-render"
-                dangerouslySetInnerHTML={{ __html: subCmsData.content || subCmsData.textEditorContent }} 
-              />
+              <div className="cms-content-render" dangerouslySetInnerHTML={{ __html: subCmsData.content || subCmsData.textEditorContent }} />
             ) : (
-              <div className="text-center">
-                <p className="lead-text">{selectedCategory.description}</p>
-              </div>
+              <div className="text-center py-4"><p className="lead-text">{selectedCategory.description}</p></div>
             )}
           </div>
         </div>
       </div>
 
-      {/* ================= AREA OF FOCUS ================= */}
-      <div className="container py-5 text-center bg-light rounded mb-5">
-        <h3 className="font-serif fw-bold mb-4">Area of Focus</h3>
-        <div className="areas-grid">
-          {relatedSubcategories.map((sub) => {
-            const slug = sub.subcategoryName
-              .toLowerCase()
-              .replace(/\s+/g, "-");
-
-            return (
-              <div key={sub.id} className="area-item">
-                <span className="bullet">•</span>
-                <Link href={`/capability/${slug}`}>
-                  <a className="area-link">{sub.subcategoryName}</a>
-                </Link>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ================= NEWS (STATIC) ================= */}
-      <div className="news-section text-start">
+      {/* NEWS (Unchanged) */}
+      <div className="news-section text-start mt-5">
         <div className="container">
-          <h2 className="font-serif fw-bold mb-4">
-            News, Insights & Events
-          </h2>
+          <h2 className="font-serif fw-bold mb-4">News, Insights & Events</h2>
           {staticNews.map((news) => (
             <div key={news.id} className="mb-4">
-              <div className="small text-uppercase mb-1 opacity-75">
-                {news.date} • {news.type}
-              </div>
+              <div className="small text-uppercase mb-1 opacity-75">{news.date} • {news.type}</div>
               <h4 className="news-title font-serif">{news.title}</h4>
-              <div className="small fst-italic mt-1">
-                {news.readTime || news.source}
-              </div>
               <hr className="opacity-25" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* ================= RELATED CAPABILITIES ================= */}
+      {/* RELATED CAPABILITIES (Unchanged) */}
       <div className="container py-5 mb-5 text-center">
-        <h3 className="font-serif fw-bold mb-4">
-          Related Capabilities
-        </h3>
+        <h3 className="font-serif fw-bold mb-4">Related Capabilities</h3>
         <div className="related-grid">
-          {relatedCapabilities.map((cap) => {
-            const capSlug = cap.categoryName
-              .toLowerCase()
-              .replace(/\s+/g, "-");
-
-            return (
-              <Link key={cap.id} href={`/capability/${capSlug}`}>
-                <a className="related-pill">{cap.categoryName}</a>
-              </Link>
-            );
-          })}
+          {relatedCapabilities.map((cap) => (
+            <Link key={cap.id} href={`/capability/${cap.categoryName.toLowerCase().replace(/\s+/g, "-")}`}><a className="related-pill">{cap.categoryName}</a></Link>
+          ))}
         </div>
       </div>
 
       <style jsx>{`
-        :global(:root) {
-          --gold: #de9f57;
-          --navy: #002855;
-        }
-
-        .hero-section {
-          height: 60vh;
-          min-height: 450px;
-          background-size: cover;
-          background-position: center;
-          position: relative;
-          margin-top: -80px;
-        }
-
-        .overlay {
-          position: absolute;
-          inset: 0;
-          background: rgba(0, 40, 85, 0.7);
-        }
-
-        .hero-content {
-          position: relative;
-          z-index: 2;
-          color: #fff;
-          padding-top: 120px;
-        }
-
-        .hero-title {
-          font-size: 3rem;
-          font-weight: 700;
-        }
-
-        .lead-text {
-          font-size: 1.2rem;
-          line-height: 1.7;
-          color: #333;
-        }
-
-        /* CMS CONTENT STYLING */
-        .cms-content-render :global(p) {
-          font-size: 1.15rem;
-          line-height: 1.8;
-          margin-bottom: 1.5rem;
-          color: #444;
-        }
-        .cms-content-render :global(ul) {
-          margin-bottom: 1.5rem;
-        }
-        .cms-content-render :global(li) {
-          margin-bottom: 0.5rem;
-        }
-
-        .areas-grid {
-          display: grid;
-          grid-template-columns: repeat(2, auto);
-          gap: 12px 40px;
-          justify-content: center;
-          margin-top: 30px;
-        }
-
-        .area-item {
-          display: flex;
-          align-items: center;
-        }
-
-        .bullet {
-          color: var(--gold);
-          font-size: 1.5rem;
-          margin-right: 10px;
-        }
-
-        .area-link {
-          color: var(--gold);
-          text-decoration: underline;
-          font-size: 1.1rem;
-        }
-
-        .news-section {
-          background: #1a1a1a;
-          color: #fff;
-          padding: 80px 0;
-        }
-
-        .news-title {
-          color: var(--gold);
-          font-size: 1.4rem;
-        }
-
-        .related-grid {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          justify-content: center;
-        }
-
-        .related-pill {
-          border: 1px solid #ddd;
-          padding: 10px 22px;
-          text-decoration: none;
-          color: #333;
-          transition: 0.3s;
-        }
-
-        .related-pill:hover {
-          background: var(--navy);
-          color: #fff;
-        }
-
-        @media (max-width: 768px) {
-          .areas-grid {
-            grid-template-columns: 1fr;
-          }
-          .area-item {
-            justify-content: center;
-          }
-        }
+        :global(:root) { --gold: #de9f57; --navy: #002855; }
+        .hero-section { height: 60vh; min-height: 450px; background-size: cover; background-position: center; position: relative; margin-top: -80px; }
+        .overlay { position: absolute; inset: 0; background: rgba(0, 40, 85, 0.7); }
+        .hero-content { position: relative; z-index: 2; color: #fff; padding-top: 120px; }
+        .hero-title { font-size: 3rem; font-weight: 700; }
+        .cms-content-render :global(p) { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem; color: #444; }
+        .areas-grid { display: grid; grid-template-columns: repeat(2, auto); gap: 12px 40px; justify-content: center; margin-top: 30px; }
+        .area-item { display: flex; align-items: center; }
+        .bullet { color: var(--gold); font-size: 1.5rem; margin-right: 10px; }
+        .area-link { color: var(--gold); text-decoration: underline; font-size: 1.1rem; }
+        .news-section { background: #1a1a1a; color: #fff; padding: 80px 0; }
+        .news-title { color: var(--gold); font-size: 1.4rem; }
+        .related-grid { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .related-pill { border: 1px solid #ddd; padding: 10px 22px; text-decoration: none; color: #333; transition: 0.3s; }
+        .related-pill:hover { background: var(--navy); color: #fff; }
+        @media (max-width: 768px) { .areas-grid { grid-template-columns: 1fr; } .area-item { justify-content: center; } }
       `}</style>
     </>
   );

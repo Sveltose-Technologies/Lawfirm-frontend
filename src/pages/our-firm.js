@@ -467,7 +467,8 @@ function OurFirm() {
           display: 'flex', 
           alignItems: 'center', 
           justifyContent: 'center',
-          marginTop: '-80px' // Transparent header ke niche dikhne ke liye
+          marginTop: '70px' 
+
         }}
       >
         <div className="container text-center pt-5">

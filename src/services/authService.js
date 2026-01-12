@@ -226,4 +226,39 @@ export const getAllTermsConditions = async () => {
     return { success: false, data: [] };
   }
 };
+// --- News API ---
+export const getAllNews = async () => {
+  try {
+    const response = await API.get('/news/getall');
+    console.log("🚀 Get All News Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ News API Error:", error);
+    return { status: false, data: [] };
+  }
+};
 
+
+// --- Professionals / Attorney API ---
+export const getAllProfessionals = async () => {
+  try {
+    const response = await API.get('/attorney/getall'); // Check karein agar path sahi hai
+    console.log("🚀 Get All Professionals Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("❌ Professionals API Error:", error);
+    return { success: false, data: [] };
+  }
+};
+
+// --- Careers API ---
+export const getAllCareers = async () => {
+  try {
+    const response = await API.get('/career/getall');
+    console.log("🚀 Get All Careers Response:", response.data); // Console print
+    return response.data;
+  } catch (error) {
+    console.error("❌ Careers API Error:", error.response?.data || error.message);
+    return { success: false, data: [] };
+  }
+};

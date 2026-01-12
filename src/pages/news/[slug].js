@@ -1,598 +1,134 @@
-// import React from 'react';
-// import Head from 'next/head';
-// import Link from 'next/link';
-
-// // --- 1. DATA (Jo aapne provide kiya) ---
-// const newsData = {
-//   id: "boston-ai-week",
-//   date: "30 September 2025",
-//   type: "Event",
-//   title: "Boston AI Week Panel & Networking Reception: AI Trends Shaping Innovation, Enterprise, and Investment",
-//   professionals: ["Andrew (A.J.) Tibbetts", "Chinh H. Pham"],
-//   capabilities: [
-//     "Innovation & Artificial Intelligence", 
-//     "Venture Capital & Emerging Technology", 
-//     "Intellectual Property & Technology"
-//   ],
-//   offices: ["Boston"],
-//   locationDetails: {
-//     venue: "Back Bay Social Club",
-//     address: "867 Boylston St, Boston 02116",
-//     registerLink: "https://gtlawinfo.com/rv/ff00f18d5ec81549afbaae18d54ab31961da0d91"
-//   },
-//   content: `
-//     <p>Join Greenberg Traurig during Boston AI Week for a panel discussion and networking reception.</p>
-//     <p>Greenberg Traurig’s AI Group will host a panel discussion on “AI Trends Shaping Innovation, Enterprise, and Investment" featuring insights from experts at the intersection of innovation, enterprise, and capital.</p>
-//     <p>Our panelists Christine Parker, Managing Director of Workplace AI, and Drew Volpe, Founder and Managing Partner of First Star Ventures, will explore the latest AI trends transforming technology, reshaping business strategies, and driving investment decisions.</p>
-//     <p>The panel will be followed by cocktails and light bites.</p>
-//   `
-// };
-
-// // --- 2. RELATED NEWS DATA (Footer ke liye) ---
-// const relatedNews = [
-//   {
-//     id: "1",
-//     date: "January 22, 2026",
-//     type: "Event",
-//     title: "Advanced Data Privacy, Cybersecurity, and TCPA Class Action Litigation 2026",
-//     location: "San Francisco, United States"
-//   },
-//   {
-//     id: "2",
-//     date: "December 15, 2025",
-//     type: "GT Alert",
-//     title: "Trump Administration Issues Executive Order on National AI Policy Framework",
-//     readTime: "2 min read"
-//   },
-//   {
-//     id: "3",
-//     date: "December 10, 2025",
-//     type: "GT Alert",
-//     title: "Florida Gov. Ron DeSantis Announces Proposed Citizens Bill of Rights for Artificial Intelligence",
-//     readTime: "2 min read"
-//   }
-// ];
-
-// export default function NewsDetail() {
-//   return (
-//     <>
-//       <Head>
-//         <title>{newsData.title} | GT Law</title>
-//         {/* Bootstrap Icons Link (Make sure this is in your _document.js or layout if not working) */}
-//         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-//       </Head>
-
-//       {/* ==================== HEADER SECTION (Dark Navy) ==================== */}
-//       <div className="news-header">
-//         <div className="container">
-          
-//           {/* Date & Type */}
-//           <div className="meta-top">
-//             <span className="text-white fw-bold text-uppercase">{newsData.date}</span>
-//             <span className="divider">|</span>
-//             <span className="text-white text-uppercase">{newsData.type}</span>
-//           </div>
-
-//           {/* Main Title (Serif Font) */}
-//           <h3 className="main-title text-white font-serif">
-//             {newsData.title}
-//           </h3>
-
-//           {/* Meta Grid (Professionals, Capabilities, Offices) */}
-//           <div className="meta-grid">
-            
-//             {/* Row 1 */}
-//             <div className="meta-label text-white">Related Professionals</div>
-//             <div className="meta-value">
-//               {newsData.professionals.map((prof, i) => (
-//                 <span key={i} className="text-gold item-link">
-//                   {prof}{i < newsData.professionals.length - 1 && <span className="sep">|</span>}
-//                 </span>
-//               ))}
-//             </div>
-
-//             {/* Row 2 */}
-//             <div className="meta-label text-white">Capabilities</div>
-//             <div className="meta-value">
-//               {newsData.capabilities.map((cap, i) => (
-//                 <span key={i} className="text-gold item-link">
-//                   {cap}{i < newsData.capabilities.length - 1 && <span className="sep">|</span>}
-//                 </span>
-//               ))}
-//             </div>
-
-//             {/* Row 3 */}
-//             <div className="meta-label text-white">Offices</div>
-//             <div className="meta-value">
-//               {newsData.offices.map((off, i) => (
-//                 <span key={i} className="text-gold item-link">{off}</span>
-//               ))}
-//             </div>
-
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ==================== BODY SECTION (White) ==================== */}
-//       <div className="body-section">
-//         <div className="container">
-//           <div className="content-wrapper">
-            
-//             {/* LEFT SIDEBAR (Share Icons) */}
-//             <div className="sidebar">
-//               <span className="share-label">SHARE</span>
-//               <div className="social-icons">
-//                 <i className="bi bi-linkedin icon"></i>
-//                 <i className="bi bi-twitter-x icon"></i>
-//                 <i className="bi bi-facebook icon"></i>
-//                 <i className="bi bi-envelope icon"></i>
-//                 <i className="bi bi-printer icon"></i>
-//               </div>
-//             </div>
-
-//             {/* MAIN TEXT CONTENT */}
-//             <div className="main-text">
-              
-//               {/* Event Location Box */}
-//               <div className="location-box">
-//                 <div className="loc-row">
-//                   <div className="loc-label">Location Details</div>
-//                   <div className="loc-value">
-//                     {newsData.locationDetails.venue}<br/>
-//                     {newsData.locationDetails.address}
-//                   </div>
-//                 </div>
-//                 <div className="loc-row mt-3">
-//                   <div className="loc-label">Registration</div>
-//                   <div className="loc-value">
-//                     <a href={newsData.locationDetails.registerLink} className="register-link">
-//                       {newsData.locationDetails.registerLink}
-//                     </a>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Paragraphs */}
-//               <div className="article-body" dangerouslySetInnerHTML={{ __html: newsData.content }}></div>
-
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ==================== FOOTER SECTION (Darker) ==================== */}
-//       <div className="related-section">
-//         <div className="container">
-//           <h2 className="section-title text-white font-serif">You May Also Be Interested In:</h2>
-          
-//           <div className="related-list">
-//             {relatedNews.map((item, index) => (
-//               <div key={index} className="related-item">
-//                 <div className="related-meta">
-//                   <span className="date">{item.date}</span>
-//                   <span className="type">{item.type}</span>
-//                 </div>
-//                 <Link href="#">
-//                   <a className="related-title font-serif text-gold">{item.title}</a>
-//                 </Link>
-//                 {item.location && <div className="read-time">{item.location}</div>}
-//                 {item.readTime && <div className="read-time"><span className="line"></span> {item.readTime}</div>}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ==================== STYLES (Scoped) ==================== */}
-//       <style jsx>{`
-//         /* --- LAYOUT UTILS --- */
-//         .container {
-//           max-width: 1200px;
-//           margin: 0 auto;
-//           padding: 0 20px;
-//         }
-
-//         /* --- HEADER --- */
-//        .news-header {
-//           background-color: var(--dark-navy, #0a1c38);
-          
-//           /* Yahan padding-top badha diya hai (80px se 140px) */
-//           padding-top: 140px; 
-//           padding-bottom: 80px;
-          
-//           border-bottom: 1px solid rgba(255,255,255,0.1);
-//         }
-
-//         .meta-top {
-//           font-size: 0.9rem;
-//           margin-bottom: 20px;
-//           letter-spacing: 1px;
-//           /* Agar aur extra space chahiye text ke upar to margin-top de sakte hain */
-//           /* margin-top: 20px; */ 
-//         }
-
-//         .divider { margin: 0 15px; color: #666; }
-        
-//         /* --- TITLE SIZE FIX --- */
-//         .main-title {
-//           font-family: var(--font-serif);
-          
-//           /* SIZE YAHAN SE CONTROL KAREIN */
-//           /* Pehle: clamp(2rem, 5vw, 3.5rem); */
-//           /* Ab (Chhota): */
-//           font-size: clamp(1rem, 3vw, 2.5rem); 
-          
-//           line-height: 1.3;
-//           margin-bottom: 50px;
-//           color: white;
-//           max-width: 900px; /* Line zyada lambi na ho */
-//         }
-//         /* META GRID (Table-like layout) */
-//         .meta-grid {
-//           display: grid;
-//           grid-template-columns: 200px 1fr;
-//           gap: 15px 30px;
-//           border-top: 1px solid rgba(255,255,255,0.1);
-//           padding-top: 30px;
-//         }
-//         .meta-label {
-//           font-weight: 600;
-//           font-size: 1rem;
-//         }
-//         .meta-value {
-//           font-size: 1rem;
-//           line-height: 1.5;
-//         }
-//         .text-gold { color: var(--primary-gold, #de9f57); }
-//         .item-link { cursor: pointer; transition: 0.3s; }
-//         .item-link:hover { text-decoration: underline; color: #fff; }
-//         .sep { color: #666; margin: 0 10px; }
-
-//         /* --- BODY SECTION --- */
-//         .body-section {
-//           background-color: #fff;
-//           padding: 60px 0;
-//           color: var(--text-dark, #212529);
-//         }
-//         .content-wrapper {
-//           display: flex;
-//           gap: 50px;
-//         }
-        
-//         /* SIDEBAR */
-//         .sidebar {
-//           width: 80px;
-//           flex-shrink: 0;
-//           text-align: center;
-//           padding-top: 10px;
-//         }
-//         .share-label {
-//           display: block;
-//           font-size: 0.75rem;
-//           font-weight: bold;
-//           color: #999;
-//           margin-bottom: 20px;
-//           letter-spacing: 1px;
-//         }
-//         .social-icons {
-//           display: flex;
-//           flex-direction: column;
-//           gap: 20px;
-//         }
-//         .icon {
-//           font-size: 1.2rem;
-//           color: #666;
-//           cursor: pointer;
-//           transition: color 0.3s;
-//         }
-//         .icon:hover { color: var(--primary-gold, #de9f57); }
-
-//         /* MAIN TEXT */
-//         .main-text {
-//           flex-grow: 1;
-//           max-width: 900px;
-//         }
-//         .location-box {
-//           margin-bottom: 40px;
-//           padding-bottom: 30px;
-//           border-bottom: 1px solid #eee;
-//         }
-//         .loc-row {
-//           display: grid;
-//           grid-template-columns: 180px 1fr;
-//           gap: 20px;
-//         }
-//         .loc-label {
-//           font-weight: bold;
-//           color: var(--dark-navy, #0a1c38);
-//         }
-//         .register-link {
-//           color: var(--primary-gold, #de9f57);
-//           text-decoration: underline;
-//           word-break: break-all;
-//         }
-        
-//         .article-body {
-//           font-size: 1.15rem;
-//           line-height: 1.8;
-//         }
-//         /* Style paragraphs inside dangerouslySetInnerHTML */
-//         .article-body :global(p) {
-//           margin-bottom: 25px;
-//         }
-
-//         /* --- RELATED FOOTER --- */
-//         .related-section {
-//           background-color: #1a1a1a; /* Darker than header */
-//           padding: 80px 0;
-//           color: white;
-//         }
-//         .section-title {
-//           font-size: 2.5rem;
-//           margin-bottom: 50px;
-//           padding-bottom: 20px;
-//           border-bottom: 1px solid #444;
-//         }
-//         .related-item {
-//           margin-bottom: 40px;
-//           padding-bottom: 40px;
-//           border-bottom: 1px solid #333;
-//         }
-//         .related-item:last-child { border-bottom: none; }
-        
-//         .related-meta {
-//           margin-bottom: 10px;
-//           font-size: 0.85rem;
-//           font-weight: bold;
-//           text-transform: uppercase;
-//         }
-//         .related-meta .type {
-//           margin-left: 15px;
-//           font-weight: normal;
-//           border: 1px solid #666;
-//           padding: 2px 8px;
-//         }
-        
-//         .related-title {
-//           display: block;
-//           font-size: 1.8rem;
-//           margin-bottom: 15px;
-//           line-height: 1.3;
-//         }
-//         .related-title:hover { text-decoration: underline; }
-        
-//         .read-time {
-//           font-size: 0.9rem;
-//           color: #999;
-//           font-style: italic;
-//           display: flex;
-//           align-items: center;
-//         }
-//         .line {
-//           display: inline-block;
-//           width: 30px;
-//           height: 1px;
-//           background-color: #666;
-//           margin-right: 10px;
-//         }
-
-//         /* --- RESPONSIVE --- */
-//         @media (max-width: 991px) {
-//           .meta-grid { grid-template-columns: 1fr; gap: 10px; }
-//           .content-wrapper { flex-direction: column; }
-//           .sidebar { width: 100%; display: flex; align-items: center; gap: 20px; padding-bottom: 30px; border-bottom: 1px solid #eee; margin-bottom: 30px; }
-//           .social-icons { flex-direction: row; }
-//           .loc-row { grid-template-columns: 1fr; gap: 5px; margin-bottom: 15px; }
-//         }
-//       `}</style>
-//     </>
-//   );
-// }
-
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Link from 'next/link';
+import { 
+  getAllCareers, 
+  getAllLocationCities, 
+  getAllCapabilityCategories 
+} from '../../services/authService';
 
-// --- 1. DATA COLLECTION (Aap ise alag file mein bhi rakh sakte hain) ---
-const allNewsData = [
-  {
-    slug: "boston-ai-week", // URL ke liye slug
-    date: "30 September 2025",
-    type: "Event",
-    title: "Boston AI Week Panel & Networking Reception: AI Trends Shaping Innovation, Enterprise, and Investment",
-    professionals: ["Andrew (A.J.) Tibbetts", "Chinh H. Pham"],
-    capabilities: [
-      "Innovation & Artificial Intelligence", 
-      "Venture Capital & Emerging Technology", 
-      "Intellectual Property & Technology"
-    ],
-    offices: ["Boston"],
-    locationDetails: {
-      venue: "Back Bay Social Club",
-      address: "867 Boylston St, Boston 02116",
-      registerLink: "https://gtlawinfo.com/rv/ff00f18d5ec81549afbaae18d54ab31961da0d91"
-    },
-    content: `
-      <p>Join Greenberg Traurig during Boston AI Week for a panel discussion and networking reception.</p>
-      <p>Greenberg Traurig’s AI Group will host a panel discussion on “AI Trends Shaping Innovation, Enterprise, and Investment" featuring insights from experts at the intersection of innovation, enterprise, and capital.</p>
-      <p>The panel will be followed by cocktails and light bites.</p>
-    `
-  },
-  // Aap yaha dusre news items add kar sakte hain...
-];
-
-const relatedNews = [
-  { id: "1", date: "January 22, 2026", type: "Event", title: "Advanced Data Privacy, Cybersecurity, and TCPA Class Action Litigation 2026", location: "San Francisco, United States" },
-  { id: "2", date: "December 15, 2025", type: "GT Alert", title: "Trump Administration Issues Executive Order on National AI Policy Framework", readTime: "2 min read" }
-];
-
-export default function NewsDetail() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const [news, setNews] = useState(null);
+export default function CareerOpenings() {
+  const [jobs, setJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    if (router.isReady && slug) {
-       // Slug ke aadhar par news dhundna
-       const found = allNewsData.find(item => item.slug === slug);
-       setNews(found);
-    }
-  }, [router.isReady, slug]);
+    const fetchData = async () => {
+      try {
+        console.log("🚀 Fetching Careers...");
+        const careerRes = await getAllCareers();
+        
+        // --- DATA MAPPING FIX ---
+        // Aapke log ke mutabiq data 'jobs' key ke andar hai
+        if (careerRes && careerRes.jobs) {
+          console.log("✅ Jobs found in API:", careerRes.jobs);
+          setJobs(careerRes.jobs);
+          setFilteredJobs(careerRes.jobs);
+        } else {
+          console.warn("⚠️ 'jobs' array not found in response", careerRes);
+        }
 
-  if (!slug) return <div className="text-center py-5">Loading...</div>;
-  
-  if (!news) return (
-    <div className="text-center py-5">
-      <h3>News Not Found</h3>
-      <Link href="/news"><a className="btn btn-primary">Back to News</a></Link>
-    </div>
-  );
+      } catch (error) {
+        console.error("❌ API Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Filter Logic
+  const handleSearch = () => {
+    const query = searchQuery.toLowerCase();
+    const temp = jobs.filter(job => 
+      job.jobTitle?.toLowerCase().includes(query) || 
+      job.jobCode?.toLowerCase().includes(query)
+    );
+    setFilteredJobs(temp);
+  };
+
+  if (loading) return <div className="text-center py-5">Loading Jobs...</div>;
 
   return (
     <>
-      <Head>
-        <title>{news.title} | GT Law</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-      </Head>
-
-      {/* HEADER SECTION */}
-      <div className="news-header">
-        <div className="container">
-          <div className="meta-top">
-            <span className="text-white fw-bold text-uppercase">{news.date}</span>
-            <span className="divider">|</span>
-            <span className="text-white text-uppercase">{news.type}</span>
-          </div>
-
-          <h3 className="main-title text-white font-serif">{news.title}</h3>
-
-          <div className="meta-grid">
-            <div className="meta-label text-white">Related Professionals</div>
-            <div className="meta-value">
-              {news.professionals.map((prof, i) => (
-                <span key={i} className="text-gold item-link">
-                  {prof}{i < news.professionals.length - 1 && <span className="sep">|</span>}
-                </span>
-              ))}
-            </div>
-
-            <div className="meta-label text-white">Capabilities</div>
-            <div className="meta-value">
-              {news.capabilities.map((cap, i) => (
-                <span key={i} className="text-gold item-link">
-                  {cap}{i < news.capabilities.length - 1 && <span className="sep">|</span>}
-                </span>
-              ))}
-            </div>
-
-            <div className="meta-label text-white">Offices</div>
-            <div className="meta-value">
-              {news.offices.map((off, i) => (
-                <span key={i} className="text-gold item-link">{off}</span>
-              ))}
+      <Head><title>Career Openings</title></Head>
+      
+      <div style={{ backgroundColor: '#f4f4f4', minHeight: '100vh', paddingBottom: '50px' }}>
+        
+        {/* Search Strip */}
+        <div style={{ background: '#002855', padding: '40px 0' }}>
+          <div className="container">
+            <div className="bg-white p-3 rounded d-flex gap-2">
+              <input 
+                type="text" 
+                className="form-control" 
+                placeholder="Search by Title or Job Code..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button className="btn btn-warning px-4 fw-bold" onClick={handleSearch} style={{backgroundColor: '#cfa144', color: '#fff'}}>SEARCH</button>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* BODY SECTION */}
-      <div className="body-section">
-        <div className="container">
-          <div className="content-wrapper">
-            <div className="sidebar">
-              <span className="share-label">SHARE</span>
-              <div className="social-icons">
-                <i className="bi bi-linkedin icon"></i>
-                <i className="bi bi-twitter-x icon"></i>
-                <i className="bi bi-facebook icon"></i>
-                <i className="bi bi-envelope icon"></i>
-                <i className="bi bi-printer icon"></i>
-              </div>
-            </div>
+        <div className="container mt-5">
+          <div className="row">
+            <div className="col-lg-8">
+              {/* Job Count */}
+              <h5 className="mb-4 fw-bold">{filteredJobs.length} JOBS FOUND</h5>
 
-            <div className="main-text">
-              {news.locationDetails && (
-                <div className="location-box">
-                  <div className="loc-row">
-                    <div className="loc-label">Location Details</div>
-                    <div className="loc-value">
-                      {news.locationDetails.venue}<br/>
-                      {news.locationDetails.address}
+              {/* Job List */}
+              {filteredJobs.length > 0 ? (
+                filteredJobs.map((job) => (
+                  <div key={job.id} className="card border-0 shadow-sm mb-3 p-4" style={{borderLeft: '5px solid #cfa144'}}>
+                    <div className="d-flex justify-content-between">
+                      <h4 style={{ color: '#002855', fontWeight: '700' }}>{job.jobTitle}</h4>
+                      <span className="badge bg-light text-dark border">{job.jobCode}</span>
+                    </div>
+                    
+                    <div className="d-flex gap-4 mt-2 text-muted small">
+                      <span><i className="bi bi-geo-alt-fill me-1"></i> {job.location}</span>
+                      <span><i className="bi bi-briefcase-fill me-1"></i> {job.jobType}</span>
+                      <span><i className="bi bi-calendar-event me-1"></i> Posted: {job.postDate}</span>
+                    </div>
+
+                    <p className="mt-3 text-muted small">
+                      <i className="bi bi-building me-1"></i> {job.address}
+                    </p>
+
+                    <div className="mt-3 d-flex justify-content-between align-items-center">
+                       <div className="small text-muted">Posted on: {new Date(job.createdAt).toLocaleDateString()}</div>
+                       <button className="btn btn-sm fw-bold" style={{color: '#cfa144', border: '1px solid #cfa144'}}>View Details</button>
                     </div>
                   </div>
-                  <div className="loc-row mt-3">
-                    <div className="loc-label">Registration</div>
-                    <div className="loc-value">
-                      <a href={news.locationDetails.registerLink} className="register-link" target="_blank" rel="noreferrer">
-                        {news.locationDetails.registerLink}
-                      </a>
-                    </div>
-                  </div>
+                ))
+              ) : (
+                <div className="bg-white p-5 text-center rounded shadow-sm">
+                  <p className="text-muted">No jobs available at the moment.</p>
                 </div>
               )}
-
-              <div className="article-body" dangerouslySetInnerHTML={{ __html: news.content }}></div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* FOOTER RELATED SECTION */}
-      <div className="related-section">
-        <div className="container">
-          <h2 className="section-title text-white font-serif">You May Also Be Interested In:</h2>
-          <div className="related-list">
-            {relatedNews.map((item, index) => (
-              <div key={index} className="related-item">
-                <div className="related-meta">
-                  <span className="date">{item.date}</span>
-                  <span className="type">{item.type}</span>
-                </div>
-                <Link href={`/news/${item.id}`}>
-                  <a className="related-title font-serif text-gold">{item.title}</a>
-                </Link>
-                {item.location && <div className="read-time">{item.location}</div>}
-                {item.readTime && <div className="read-time"><span className="line"></span> {item.readTime}</div>}
-              </div>
-            ))}
+            {/* Sidebar Widgets (As per your image) */}
+            <div className="col-lg-4">
+               <div className="bg-white p-4 shadow-sm mb-4">
+                  <h6 className="fw-bold border-bottom pb-2">About Us</h6>
+                  <p className="small text-muted">Core Law provides the platform clients need to operate in today's global network.</p>
+                  <a href="#" className="small text-decoration-none fw-bold">Read More</a>
+               </div>
+               <div className="bg-white p-4 shadow-sm">
+                  <h6 className="fw-bold border-bottom pb-2">Reasonable Accommodation</h6>
+                  <p className="small text-muted">If you need assistance during the recruitment process, contact our HR team.</p>
+               </div>
+            </div>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .news-header { background-color: #0a1c38; padding-top: 140px; padding-bottom: 80px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .meta-top { font-size: 0.9rem; margin-bottom: 20px; letter-spacing: 1px; }
-        .divider { margin: 0 15px; color: #666; }
-        .main-title { font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.3; margin-bottom: 50px; color: white; max-width: 900px; }
-        .meta-grid { display: grid; grid-template-columns: 200px 1fr; gap: 15px 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; }
-        .meta-label { font-weight: 600; }
-        .text-gold { color: #de9f57; }
-        .item-link:hover { text-decoration: underline; color: #fff; cursor: pointer; }
-        .sep { color: #666; margin: 0 10px; }
-        .body-section { background-color: #fff; padding: 60px 0; }
-        .content-wrapper { display: flex; gap: 50px; }
-        .sidebar { width: 80px; text-align: center; }
-        .social-icons { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
-        .icon { font-size: 1.2rem; color: #666; cursor: pointer; }
-        .icon:hover { color: #de9f57; }
-        .main-text { flex-grow: 1; max-width: 900px; }
-        .location-box { margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid #eee; }
-        .loc-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; }
-        .loc-label { font-weight: bold; color: #0a1c38; }
-        .register-link { color: #de9f57; text-decoration: underline; word-break: break-all; }
-        .article-body { font-size: 1.15rem; line-height: 1.8; }
-        .related-section { background-color: #1a1a1a; padding: 80px 0; color: white; }
-        .section-title { font-size: 2.5rem; margin-bottom: 50px; border-bottom: 1px solid #444; padding-bottom: 20px; }
-        .related-item { margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid #333; }
-        .related-title { display: block; font-size: 1.8rem; margin-bottom: 15px; }
-        @media (max-width: 991px) {
-          .meta-grid { grid-template-columns: 1fr; }
-          .content-wrapper { flex-direction: column; }
-          .sidebar { width: 100%; flex-direction: row; display: flex; gap: 20px; justify-content: center; }
-          .social-icons { flex-direction: row; }
-        }
+        .container { max-width: 1140px; }
+        .card { transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
       `}</style>
     </>
   );
